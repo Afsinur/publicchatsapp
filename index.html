@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <!--script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script-->
+  </head>
+  <body>
+    <div id="app">
+      <ul id="up_buttons">
+        <li v-if="button_conditions.fst">
+          <button @click="show_posts(0)">
+            First
+          </button>
+        </li>
+        <li v-for="(button, index) in buttons" :key="index">
+          <button
+            @click="show_posts(button-1)"
+            v-if="button_conditions.curent_button==button"
+            :style="button_conditions.activeButtonStyle"
+          >
+            {{button}}
+          </button>
+          <button
+            @click="show_posts(button-1)"
+            v-else-if="button_conditions.curent_button!=button"
+          >
+            {{button}}
+          </button>
+        </li>
+        <li v-if="button_conditions.lst">
+          <button @click="show_posts_last()">
+            Last
+          </button>
+        </li>
+      </ul>
+      <div id="posts_div" v-if="button_conditions.noWarning">
+        <ul>
+          <li v-for="(post, index) in showPosts" :key="index">{{post}}</li>
+        </ul>
+      </div>
+    </div>
+    <!-- 
+      x-template scripts..
+     -->
+
+    <!--
+      Vue sources are here..
+    -->
+    <script src="vue/rootvue.js"></script>
+    <script src="vue/news_posts/new_posts.js"></script>
+    <script src="vue/app.js"></script>
+  </body>
+</html>

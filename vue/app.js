@@ -4,6 +4,13 @@ window.addEventListener("load", () => {
     show_button_s1: 5, // Alhamdulillah this is editable.. //(buttons)
     min_sButtons: 5, //Alhamdulillah this is editable..    //(default:5)
   };
+  var body = document.body;
+  var html = document.documentElement;
+  var html_and_body = body && html;
+  var scrollTopFunction = () => {
+    console.log("scrollTopFunction()");
+    html_and_body.scrollTop = 0;
+  };
   new Vue({
     el: "#app",
     data: {
@@ -69,11 +76,12 @@ window.addEventListener("load", () => {
         this.posts.forEach((post, i) => {
           var extra_i_work = i + 1;
           if (extra_i_work <= e_up && extra_i_work >= e_down) {
-            this.showPosts.push(post.post);
+            this.showPosts.push(post);
           }
         });
       },
       show_posts(e) {
+        scrollTopFunction();
         this.showPosts = [];
         var e_1 = e + 1;
         this.button_conditions.curent_button = e_1;
@@ -186,11 +194,12 @@ window.addEventListener("load", () => {
         this.posts.forEach((post, i) => {
           var extra_i_work = i + 1;
           if (extra_i_work <= e_up && extra_i_work >= e_down) {
-            this.showPosts.push(post.post);
+            this.showPosts.push(post);
           }
         });
       },
       show_posts_last() {
+        scrollTopFunction();
         this.showPosts = [];
         var e_1 = this.button_conditions.lst_button_value;
         this.button_conditions.curent_button = e_1;
@@ -222,7 +231,7 @@ window.addEventListener("load", () => {
         this.posts.forEach((post, i) => {
           var extra_i_work = i + 1;
           if (extra_i_work <= e_up && extra_i_work >= e_down) {
-            this.showPosts.push(post.post);
+            this.showPosts.push(post);
           }
         });
       },

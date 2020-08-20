@@ -8,37 +8,44 @@
     <!--script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script-->
   </head>
   <body>
+    <div class="news_title">
+      <h1>News</h1>
+    </div>
     <div id="app">
-      <ul id="up_buttons">
-        <li v-if="button_conditions.fst">
-          <button @click="show_posts(0)">
-            First
-          </button>
-        </li>
-        <li v-for="(button, index) in buttons" :key="index">
-          <button
-            @click="show_posts(button-1)"
-            v-if="button_conditions.curent_button==button"
-            :style="button_conditions.activeButtonStyle"
-          >
-            {{button}}
-          </button>
-          <button
-            @click="show_posts(button-1)"
-            v-else-if="button_conditions.curent_button!=button"
-          >
-            {{button}}
-          </button>
-        </li>
-        <li v-if="button_conditions.lst">
-          <button @click="show_posts_last()">
-            Last
-          </button>
-        </li>
-      </ul>
-      <div id="posts_div" v-if="button_conditions.noWarning">
-        <ul>
-          <li v-for="(post, index) in showPosts" :key="index">{{post}}</li>
+      <div class="uper_app">
+        <div id="posts_div" v-if="button_conditions.noWarning">
+          <div v-for="(post, index) in showPosts" :key="index">
+            <h2>{{post.title}}</h2>
+            <p class="sub_title_class">{{post.sub_title}}</p>
+            <p>{{post.post}}</p>
+          </div>
+        </div>
+        <ul id="up_buttons">
+          <li v-if="button_conditions.fst">
+            <button @click="show_posts(0)">
+              First
+            </button>
+          </li>
+          <li v-for="(button, index) in buttons" :key="index">
+            <button
+              @click="show_posts(button-1)"
+              v-if="button_conditions.curent_button==button"
+              :style="button_conditions.activeButtonStyle"
+            >
+              {{button}}
+            </button>
+            <button
+              @click="show_posts(button-1)"
+              v-else-if="button_conditions.curent_button!=button"
+            >
+              {{button}}
+            </button>
+          </li>
+          <li v-if="button_conditions.lst">
+            <button @click="show_posts_last()">
+              Last
+            </button>
+          </li>
         </ul>
       </div>
     </div>

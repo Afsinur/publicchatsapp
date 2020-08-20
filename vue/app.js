@@ -1,7 +1,8 @@
 window.addEventListener("load", () => {
   var button_controls = {
-    posts_per_page: 5, // Alhamdulillah this is editable..
-    show_button_s1: 10, // Alhamdulillah this is editable..
+    posts_per_page: 5, // Alhamdulillah this is editable.. //(posts)
+    show_button_s1: 5, // Alhamdulillah this is editable.. //(buttons)
+    min_sButtons: 5, //Alhamdulillah this is editable..    //(default:5)
   };
   new Vue({
     el: "#app",
@@ -33,14 +34,13 @@ window.addEventListener("load", () => {
         if (dividing_length_of_posts > button_s) {
           console.log(`${button_s} er boro =`, dividing_length_of_posts);
           //making custom buttons with fst and lst..
-          if (button_s > 3) {
+          if (button_s >= button_controls.min_sButtons) {
             this.button_conditions.lst = true;
             for (let x = 1; x <= button_controls.show_button_s1 - 1; x++) {
               this.buttons.push(x);
             }
           } else {
-            var alert_or_log_message =
-              "Warning: {{ button_controls.show_button_s1, this value can not be less than 4! }}.";
+            var alert_or_log_message = `Warning: {{ (button_controls.show_button_s1), this value can not be less than ${button_controls.min_sButtons}! / You can not get less than ${button_controls.min_sButtons} buttons!}}.`;
             alert(alert_or_log_message);
             console.log(alert_or_log_message);
             this.button_conditions.noWarning = false;

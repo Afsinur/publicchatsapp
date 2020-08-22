@@ -2,6 +2,7 @@ window.addEventListener("load", () => {
   //---------------------------------------------------------
   //[for deleting all the users..]
   //--------------------------------------------------
+  //---------------------------------------------------------
   //
   //------------------------------------------------
   //------------------------------------------------
@@ -15,6 +16,7 @@ window.addEventListener("load", () => {
       myName: "",
       changeName: "Go",
       changePlaceholder: "Please type a (unique) name: minimum 10 carecters..",
+      messagePlaceholder: "Write your message..",
       replace_unique_name_typing: true,
       addMassageText: "",
       publicMessageFromWeb: [],

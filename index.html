@@ -90,6 +90,7 @@
               name="addMassageInput"
               v-model.trim="addMassageText"
               @keyup.13="addMessage(myName)"
+              :placeholder="messagePlaceholder"
             />
             <button @click="addMessage(myName)">Send</button>
           </div>

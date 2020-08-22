@@ -5,59 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="css/app.css" />
-    <!--script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script-->
+    <!-- 
+      for Ajax requiests from axios..
+     -->
+    <!--script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+      integrity="sha512-VZ6m0F78+yo3sbu48gElK4irv2dzPoep8oo9LEjxviigcnnnNvnTOJRSrIhuFk68FMLOpiNz+T77nNY89rnWDg=="
+      crossorigin="anonymous"
+    ></script-->
+    <!-- 
+      Online Vue 
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div class="news_title">
-      <h1>News</h1>
+      <h1>
+        Public Chats
+      </h1>
     </div>
     <div id="app">
       <div class="uper_app">
-        <div id="posts_div" v-if="button_conditions.noWarning">
-          <div v-for="(post, index) in showPosts" :key="index">
-            <h2>{{post.title}}</h2>
-            <p class="sub_title_class">{{post.sub_title}}</p>
-            <p>{{post.post}}</p>
+        <div class="loading_div" v-if="button_conditions.loading">
+          loading..
+        </div>
+        <div
+          class="sending_current_message_div"
+          v-if="replace_unique_name_typing"
+        >
+          <input
+            type="text"
+            name="send_message"
+            :placeholder="changePlaceholder"
+            v-model.trim="myName"
+            @keyup.13="log_in(myName)"
+            minlength="10"
+          />
+          <button id="sendCurrentMessage" @click="log_in(myName)">
+            {{ changeName }}
+          </button>
+        </div>
+        <!--chating div..-->
+        <div v-if="!replace_unique_name_typing" class="userUseDiv">
+          <div class="username_class">
+            <div v-if="present_user" class="newWelcomeNote">
+              <i><b>{{myName.slice(0,5)+'..'}}</b></i> the new user,<br />On our
+              behalf to you assalamuyalaikum!
+            </div>
+            <div class="userN_hide_show">
+              <h2 v-if="seeMe">{{myName}}</h2>
+              <h2 v-if="!seeMe">Me</h2>
+              <button @click="seeMe=!seeMe">
+                <span v-if="seeMe">Hide username</span>
+                <span v-else>Show username</span>
+              </button>
+            </div>
+          </div>
+          <div id="iDmessages_div" class="messages_div">
+            <div
+              v-for="(publicMessage_one, index) in publicMessageFromWeb"
+              :key="index"
+            >
+              <div v-if="publicMessage_one.userName == myName" id="me_divColor">
+                <p class="userDirectName">
+                  {{publicMessage_one.userName.slice(0,5)+'..'}}
+                </p>
+                <p>
+                  {{publicMessage_one.publicMessage}}
+                </p>
+              </div>
+              <div v-else-if="publicMessage_one.userName != myName">
+                <p class="userDirectName">
+                  {{publicMessage_one.userName.slice(0,5)+'..'}}
+                </p>
+                <p>
+                  {{publicMessage_one.publicMessage}}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="messgaeInputDiv">
+            <input
+              type="text"
+              name="addMassageInput"
+              v-model.trim="addMassageText"
+              @keyup.13="addMessage(myName)"
+            />
+            <button @click="addMessage(myName)">Send</button>
           </div>
         </div>
-        <ul id="up_buttons">
-          <li v-if="button_conditions.fst">
-            <button @click="show_posts(0)">
-              First
-            </button>
-          </li>
-          <li v-for="(button, index) in buttons" :key="index">
-            <button
-              @click="show_posts(button-1)"
-              v-if="button_conditions.curent_button==button"
-              :style="button_conditions.activeButtonStyle"
-            >
-              {{button}}
-            </button>
-            <button
-              @click="show_posts(button-1)"
-              v-else-if="button_conditions.curent_button!=button"
-            >
-              {{button}}
-            </button>
-          </li>
-          <li v-if="button_conditions.lst">
-            <button @click="show_posts_last()">
-              Last
-            </button>
-          </li>
-        </ul>
       </div>
     </div>
-    <!-- 
-      x-template scripts..
-     -->
-
     <!--
       Vue sources are here..
     -->
-    <script src="vue/rootvue.js"></script>
-    <script src="vue/news_posts/new_posts.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-firestore.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAGtEGmjU4ejz5HuLoRIngwde2EaHccMlQ",
+        authDomain: "fir-afsin.firebaseapp.com",
+        databaseURL: "https://fir-afsin.firebaseio.com",
+        projectId: "fir-afsin",
+        storageBucket: "fir-afsin.appspot.com",
+        messagingSenderId: "721220896624",
+        appId: "1:721220896624:web:454c20dfd9b17da55ab1b5",
+        measurementId: "G-CXF5NBB3MW",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      const db = firebase.firestore();
+    </script>
+    <!--script src="vue/rootvue.js"></script--><!-- Offline Vue -->
     <script src="vue/app.js"></script>
   </body>
 </html>

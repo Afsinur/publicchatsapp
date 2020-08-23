@@ -192,8 +192,13 @@ div.messages_div {
   color: #303030;
 }
 div.messages_div > div {
-  background: rgba(255, 255, 255, 0.7);
   margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+div.messages_div > div > div {
+  width: 80%;
 }
 p.userDirectName {
   font-size: 26px;
@@ -225,6 +230,11 @@ div.messgaeInputDiv > button {
 }
 div#me_divColor {
   background-color: rgba(0, 250, 250, 0.7);
+  align-self: flex-end;
+}
+div#amnot_me_divColor {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.7);
 }
 @media screen and (max-width: 640px) {
   div.news_title > h1 {

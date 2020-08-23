@@ -37,7 +37,8 @@ window.addEventListener("load", () => {
                     name: e,
                   })
                   .then(() => {
-                    //same(except:this.present_user) starts..
+                    //same(onSnapshot: publicMessagesDatabase,
+                    // except: this.present_user) starts..
                     //---------------------------------------------
                     this.timeDate = new Date();
                     db.collection("publicMessagesDatabase")
@@ -64,29 +65,21 @@ window.addEventListener("load", () => {
                     //----------------------------------------------
                   });
               } else {
-                //same(except: this.present_user) starts..
+                //same(onSnapshot: publicMessagesDatabase,
+                // except: this.present_user) starts..
                 //---------------------------------------------
-                this.timeDate = new Date();
                 db.collection("publicMessagesDatabase")
-                  .add({
-                    userName: e,
-                    publicMessage: "Welcome to Puclic Chats",
-                    newDate: this.timeDate,
-                  })
-                  .then(() => {
-                    db.collection("publicMessagesDatabase")
-                      .orderBy("newDate", "asc")
-                      .onSnapshot((data) => {
-                        data.docChanges().forEach((docChange) => {
-                          let changeValue = docChange.doc.data();
-                          if (docChange.type == "added") {
-                            this.publicMessageFromWeb.unshift(changeValue);
-                          }
-                        });
-                        this.replace_unique_name_typing = false;
-                        this.button_conditions.loading = false;
-                        this.present_user = false;
-                      });
+                  .orderBy("newDate", "asc")
+                  .onSnapshot((data) => {
+                    data.docChanges().forEach((docChange) => {
+                      let changeValue = docChange.doc.data();
+                      if (docChange.type == "added") {
+                        this.publicMessageFromWeb.unshift(changeValue);
+                      }
+                    });
+                    this.replace_unique_name_typing = false;
+                    this.button_conditions.loading = false;
+                    this.present_user = false;
                   });
                 //----------------------------------------------
               }

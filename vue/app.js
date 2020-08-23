@@ -85,7 +85,7 @@ window.addEventListener("load", () => {
               }
             });
         } else {
-          alert("Type minimum 10 carecters");
+          alert("Type minimum 11 carecters");
         }
       },
       addMessage(e) {

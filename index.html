@@ -31,7 +31,6 @@
             :placeholder="changePlaceholder"
             v-model.trim="myName"
             @keyup.13="log_in(myName)"
-            minlength="10"
           />
           <button id="sendCurrentMessage" @click="log_in(myName)">
             {{ changeName }}

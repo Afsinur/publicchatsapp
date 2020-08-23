@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
       present_user: false,
       myName: "",
       changeName: "Go",
-      changePlaceholder: "Please type a (unique) name: minimum 10 carecters..",
+      changePlaceholder: "Please type a (unique) name: minimum 11 carecters..",
       messagePlaceholder: "Write your message..",
       replace_unique_name_typing: true,
       addMassageText: "",

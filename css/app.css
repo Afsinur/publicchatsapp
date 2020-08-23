@@ -200,7 +200,8 @@ div.messages_div > div {
   width: 100%;
 }
 div.messages_div > div > div {
-  width: 80%;
+  max-width: 80%;
+  padding: 10px;
 }
 p.userDirectName {
   font-size: 26px;

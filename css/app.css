@@ -15,9 +15,6 @@ body {
   background-position: center;
   background-attachment: fixed;
 }
-div#app {
-  display: none;
-}
 div.news_title {
   height: 40vh;
   padding: 10px;

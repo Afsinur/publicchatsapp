@@ -6,6 +6,7 @@ window.addEventListener("load", () => {
   //
   //------------------------------------------------
   //------------------------------------------------
+  var news_title = document.querySelector(".news_title");
   new Vue({
     el: "#app",
     data: {
@@ -15,7 +16,7 @@ window.addEventListener("load", () => {
       present_user: false,
       myName: "",
       changeName: "Go",
-      changePlaceholder: "Please type a (unique) name: minimum 11 carecters..",
+      changePlaceholder: "Username..",
       messagePlaceholder: "Write your message..",
       replace_unique_name_typing: true,
       addMassageText: "",
@@ -60,6 +61,7 @@ window.addEventListener("load", () => {
                             this.replace_unique_name_typing = false;
                             this.button_conditions.loading = false;
                             this.present_user = true;
+                            news_title.remove();
                           });
                       });
                     //----------------------------------------------
@@ -80,6 +82,7 @@ window.addEventListener("load", () => {
                     this.replace_unique_name_typing = false;
                     this.button_conditions.loading = false;
                     this.present_user = false;
+                    news_title.remove();
                   });
                 //----------------------------------------------
               }

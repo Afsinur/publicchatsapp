@@ -48,6 +48,7 @@ div.loading_div {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 #posts_div {
   position: relative;
@@ -180,6 +181,7 @@ div.userN_hide_show > button {
   border: none;
   color: #303030;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 div.messages_div {
   position: relative;
@@ -206,7 +208,6 @@ p.userDirectName {
 }
 div.messgaeInputDiv {
   position: relative;
-  background: #f00;
   width: 80%;
   display: flex;
   flex-direction: row;
@@ -227,6 +228,7 @@ div.messgaeInputDiv > input {
 }
 div.messgaeInputDiv > button {
   width: 20%;
+  cursor: pointer;
 }
 div#me_divColor {
   background-color: rgba(0, 250, 250, 0.7);
@@ -239,5 +241,14 @@ div#amnot_me_divColor {
 @media screen and (max-width: 640px) {
   div.news_title > h1 {
     font-size: 50px;
+  }
+  div.messages_div {
+    width: 95%;
+  }
+  div.messgaeInputDiv {
+    width: 95%;
+  }
+  div.username_class {
+    width: 95%;
   }
 }

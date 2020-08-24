@@ -6,12 +6,46 @@ window.addEventListener("load", () => {
   //
   //------------------------------------------------
   //------------------------------------------------
+  var thisBody = document.querySelector("body");
   var news_title = document.querySelector(".news_title");
   var publicchatsapp_idApp = document.querySelector("div#app");
   publicchatsapp_idApp.style.display = "block";
   new Vue({
     el: "#app",
     data: {
+      pictures: [
+        "flowers_bag_flower_89155_1366x768.jpg",
+        "3d_fruit_glass_95074_1366x768.jpg",
+        "unnamed (1).png",
+        "unnamed (3).jpg",
+        "unnamed (4).jpg",
+        "unnamed (10).jpg",
+        "unnamed (11).jpg",
+        "unnamed (14).jpg",
+        "unnamed (15).jpg",
+        "unnamed (16).jpg",
+        "unnamed (17).png",
+      ],
+      myAndPublicColors: [
+        "rgba(0, 250, 250, 0.7)",
+        "rgba(0, 150, 250, 0.7)",
+        "rgba(100, 250, 150, 0.7)",
+        "rgba(255, 255, 255, 0.7)",
+        "rgba(250, 0, 250, 0.7)",
+        "rgba(250, 250, 0, 0.7)",
+        "rgba(80, 80, 80, 0.7)",
+        "rgba(250, 80, 80, 0.7)",
+      ],
+      activeImage: "flowers_bag_flower_89155_1366x768.jpg",
+      activeSettings: false,
+      updatemyColor: {
+        backgroundColor: "rgba(0, 250, 250, 0.7)",
+      },
+      updatepublicsColor: {
+        backgroundColor: "rgba(255, 255, 255, 0.7)",
+      },
+      activeSelectedColorMe: "rgba(0, 250, 250, 0.7)",
+      activeSelectedColorPublic: "rgba(255, 255, 255, 0.7)",
       button_conditions: {
         loading: false,
       },
@@ -108,6 +142,24 @@ window.addEventListener("load", () => {
               this.button_conditions.loading = false;
             });
         }
+      },
+      activeImagethis(e) {
+        this.activeImage = e;
+        thisBody.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/background/${this.activeImage}')`;
+      },
+      activeTheSettings() {
+        this.activeSettings = true;
+      },
+      deactiveSettings() {
+        this.activeSettings = false;
+      },
+      changemycolor(e) {
+        this.activeSelectedColorMe = e;
+        this.updatemyColor.backgroundColor = e;
+      },
+      changePubliccolor(e) {
+        this.activeSelectedColorPublic = e;
+        this.updatepublicsColor.backgroundColor = e;
       },
     },
   });

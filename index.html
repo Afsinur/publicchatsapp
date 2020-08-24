@@ -63,14 +63,14 @@
                     <li v-for="(picture, index) in pictures" :key="index">
                       <img
                         v-if="activeImage == picture"
-                        :src="'img/background/'+picture"
+                        :src="'img/onloadBackground/'+picture"
                         alt="picture"
                         id="activeImage"
                         @click="activeImagethis(picture)"
                       />
                       <img
                         v-else-if="activeImage != picture"
-                        :src="'img/background/'+picture"
+                        :src="'img/onloadBackground/'+picture"
                         alt="picture"
                         @click="activeImagethis(picture)"
                       />

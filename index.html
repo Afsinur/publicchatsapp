@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
+    <div class="loading_div">
+      loading..
+    </div>
     <div class="news_title">
       <h1>
         Public Chats
@@ -52,8 +55,12 @@
               </span>
             </div>
             <div v-if="activeSettings" id="moreOptionsDiv">
+              <div id="deactiveSettingsContainerDiv">
+                <span>
+                  <div id="offSettings" @click="deactiveSettings()"></div>
+                </span>
+              </div>
               <div id="moreOptionsDiv_inside">
-                <div id="offSettings" @click="deactiveSettings()"></div>
                 <div>
                   <h2>More</h2>
                 </div>

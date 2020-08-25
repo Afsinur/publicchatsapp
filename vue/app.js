@@ -9,7 +9,9 @@ window.addEventListener("load", () => {
   var thisBody = document.querySelector("body");
   var news_title = document.querySelector(".news_title");
   var publicchatsapp_idApp = document.querySelector("div#app");
+  var div_loading_div = document.querySelector("div.loading_div");
   publicchatsapp_idApp.style.display = "block";
+  div_loading_div.remove();
   new Vue({
     el: "#app",
     data: {

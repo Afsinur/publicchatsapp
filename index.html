@@ -123,6 +123,19 @@
                     </li>
                   </ul>
                 </div>
+                <div id="myAndPublicColors">
+                  <p>Message times</p>
+                  <ul>
+                    <li>
+                      <button v-if="usersTimeShowAc" @click="usersTimeShow()">
+                        Show time
+                      </button>
+                      <button v-if="usersTimeShowDe" @click="usersTimeNoShow()">
+                        Hide time
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -135,24 +148,32 @@
                 v-if="publicMessage_one.userName == myName"
                 id="me_divColor"
                 :style="updatemyColor"
+                :title="publicMessage_one.newDate.toDate()"
               >
                 <p class="userDirectName">
                   {{publicMessage_one.userName.slice(0,5)+'..'}}
                 </p>
                 <p>
                   {{publicMessage_one.publicMessage}}
+                </p>
+                <p class="classUsersTime" v-if="usersTime">
+                  {{ publicMessage_one.newDate.toDate() }}
                 </p>
               </div>
               <div
                 v-else-if="publicMessage_one.userName != myName"
                 id="amnot_me_divColor"
                 :style="updatepublicsColor"
+                :title="publicMessage_one.newDate.toDate()"
               >
                 <p class="userDirectName">
                   {{publicMessage_one.userName.slice(0,5)+'..'}}
                 </p>
                 <p>
                   {{publicMessage_one.publicMessage}}
+                </p>
+                <p class="classUsersTime" v-if="usersTime">
+                  {{ publicMessage_one.newDate.toDate() }}
                 </p>
               </div>
             </div>

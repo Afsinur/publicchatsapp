@@ -74,10 +74,14 @@ window.addEventListener("load", () => {
       publicMessageFromWeb: [],
       timeDate: "",
       seeMe: true,
+      usersTime: false,
+      usersTimeShowAc: true,
+      usersTimeShowDe: false,
     },
     methods: {
       log_in(e) {
         if (e != "" && e.length > 10) {
+          var titleCounter = 0;
           this.button_conditions.loading = true;
           db.collection("users")
             .where("name", "==", e)
@@ -113,6 +117,11 @@ window.addEventListener("load", () => {
                             this.button_conditions.loading = false;
                             this.present_user = true;
                             news_title.remove();
+                            if (titleCounter > 0) {
+                              document.title =
+                                "Public Chats (" + titleCounter + ")";
+                            }
+                            titleCounter++;
                           });
                       });
                     //----------------------------------------------
@@ -134,6 +143,10 @@ window.addEventListener("load", () => {
                     this.button_conditions.loading = false;
                     this.present_user = false;
                     news_title.remove();
+                    if (titleCounter > 0) {
+                      document.title = "Public Chats (" + titleCounter + ")";
+                    }
+                    titleCounter++;
                   });
                 //----------------------------------------------
               }
@@ -175,6 +188,16 @@ window.addEventListener("load", () => {
       changePubliccolor(e) {
         this.activeSelectedColorPublic = e;
         this.updatepublicsColor.backgroundColor = e;
+      },
+      usersTimeShow() {
+        this.usersTimeShowAc = false;
+        this.usersTimeShowDe = true;
+        this.usersTime = true;
+      },
+      usersTimeNoShow() {
+        this.usersTimeShowAc = true;
+        this.usersTimeShowDe = false;
+        this.usersTime = false;
       },
     },
   });

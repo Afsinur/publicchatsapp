@@ -7,16 +7,13 @@
     <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-    <div class="loading_div">
-      loading..
-    </div>
+    <div class="loading_div">loading..</div>
     <div class="news_title">
-      <h1>
-        Public Chats
-      </h1>
+      <h1>Public Chats</h1>
     </div>
-    <div id="app" style="display: none;">
+    <div id="app" style="display: none">
       <div class="uper_app">
+        <!-- before login -->
         <div class="loading_div" v-if="button_conditions.loading">
           loading..
         </div>
@@ -38,9 +35,11 @@
         <!--chating div..-->
         <div v-if="!replace_unique_name_typing" class="userUseDiv">
           <div class="username_class">
+            <!-- welcome note -->
             <div v-if="present_user" class="newWelcomeNote">
               Assalamuyalaikum! <i><b>{{myName.slice(0,5)+'..'}}</b></i>
             </div>
+            <!-- Top bar -->
             <div class="userN_hide_show">
               <h2 v-if="seeMe">{{myName}}</h2>
               <h2 v-if="!seeMe">Me</h2>
@@ -54,98 +53,803 @@
                 </button>
               </span>
             </div>
+            <!--
+              More options..
+            -->
             <div v-if="activeSettings" id="moreOptionsDiv">
+              <!-- red cancel button -->
               <div id="deactiveSettingsContainerDiv">
                 <span>
                   <div id="offSettings" @click="deactiveSettings()"></div>
                 </span>
               </div>
+              <!-- inside of more div -->
               <div id="moreOptionsDiv_inside">
                 <div>
                   <h2>More</h2>
                 </div>
-                <div id="background_settings_images">
-                  <p>Background</p>
-                  <ul>
-                    <li v-for="(picture, index) in pictures" :key="index">
-                      <img
-                        v-if="activeImage == picture"
-                        :src="'img/onloadBackground/'+picture"
-                        alt="picture"
-                        id="activeImage"
-                        @click="activeImagethis(picture)"
-                      />
-                      <img
-                        v-else-if="activeImage != picture"
-                        :src="'img/onloadBackground/'+picture"
-                        alt="picture"
-                        @click="activeImagethis(picture)"
-                      />
-                    </li>
-                  </ul>
-                </div>
-                <div id="myAndPublicColors">
-                  <p>My colors</p>
-                  <ul>
-                    <li
-                      v-for="(myAndPublicColor, index) in myAndPublicColors"
-                      :key="index"
+                <!-- site stile and group going way.. -->
+                <ul id="likeMorenavTypeBar">
+                  <li @click="activeSitenav()">
+                    <span v-if="moreSettingsAllControls.activeSite"
+                      ><u>Site Styles</u></span
                     >
-                      <div
-                        v-if="activeSelectedColorMe == myAndPublicColor"
-                        id="myColorSpanId"
-                        :style="{background:myAndPublicColor}"
-                        @click="changemycolor(myAndPublicColor)"
-                        class="activeColorSelectedFor"
-                      ></div>
-                      <div
-                        v-else-if="activeSelectedColorMe != myAndPublicColor"
-                        id="myColorSpanId"
-                        :style="{background:myAndPublicColor}"
-                        @click="changemycolor(myAndPublicColor)"
-                      ></div>
-                    </li>
-                  </ul>
-                </div>
-                <div id="myAndPublicColors">
-                  <p>Public colors</p>
-                  <ul>
-                    <li
-                      v-for="(myAndPublicColor, index) in myAndPublicColors"
-                      :key="index"
+                    <span v-else-if="!moreSettingsAllControls.activeSite"
+                      >Site Styles</span
                     >
-                      <div
-                        v-if="activeSelectedColorPublic == myAndPublicColor"
-                        id="myColorSpanId"
-                        :style="{background:myAndPublicColor}"
-                        @click="changePubliccolor(myAndPublicColor)"
-                        class="activeColorSelectedFor"
-                      ></div>
-                      <div
-                        v-else-if="activeSelectedColorPublic != myAndPublicColor"
-                        id="myColorSpanId"
-                        :style="{background:myAndPublicColor}"
-                        @click="changePubliccolor(myAndPublicColor)"
-                      ></div>
-                    </li>
-                  </ul>
+                  </li>
+                  <li @click="activeGroupnav()">
+                    <span v-if="moreSettingsAllControls.activeGroup"
+                      ><u>Groups</u></span
+                    >
+                    <span v-else-if="!moreSettingsAllControls.activeGroup"
+                      >Groups</span
+                    >
+                  </li>
+                </ul>
+                <!-- site stile -->
+                <div v-if="!moreSettingsAllControls.deactiveSite">
+                  <!--
+                      Background Images..
+                    -->
+                  <div id="background_settings_images">
+                    <p>Background</p>
+                    <ul>
+                      <li v-for="(picture, index) in pictures" :key="index">
+                        <img
+                          v-if="activeImage == picture"
+                          :src="'img/onloadBackground/'+picture"
+                          alt="picture"
+                          id="activeImage"
+                          @click="activeImagethis(picture)"
+                        />
+                        <img
+                          v-else-if="activeImage != picture"
+                          :src="'img/onloadBackground/'+picture"
+                          alt="picture"
+                          @click="activeImagethis(picture)"
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
+                      My Colors..
+                    -->
+                  <div id="myAndPublicColors">
+                    <p>My colors</p>
+                    <ul>
+                      <li
+                        v-for="(myAndPublicColor, index) in myAndPublicColors"
+                        :key="index"
+                      >
+                        <div
+                          v-if="activeSelectedColorMe == myAndPublicColor"
+                          id="myColorSpanId"
+                          :style="{background:myAndPublicColor}"
+                          @click="changemycolor(myAndPublicColor)"
+                          class="activeColorSelectedFor"
+                        ></div>
+                        <div
+                          v-else-if="activeSelectedColorMe != myAndPublicColor"
+                          id="myColorSpanId"
+                          :style="{background:myAndPublicColor}"
+                          @click="changemycolor(myAndPublicColor)"
+                        ></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
+                      Public Colors..
+                    -->
+                  <div id="myAndPublicColors">
+                    <p>Public colors</p>
+                    <ul>
+                      <li
+                        v-for="(myAndPublicColor, index) in myAndPublicColors"
+                        :key="index"
+                      >
+                        <div
+                          v-if="activeSelectedColorPublic == myAndPublicColor"
+                          id="myColorSpanId"
+                          :style="{background:myAndPublicColor}"
+                          @click="changePubliccolor(myAndPublicColor)"
+                          class="activeColorSelectedFor"
+                        ></div>
+                        <div
+                          v-else-if="activeSelectedColorPublic != myAndPublicColor"
+                          id="myColorSpanId"
+                          :style="{background:myAndPublicColor}"
+                          @click="changePubliccolor(myAndPublicColor)"
+                        ></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
+                      Show message times..
+                    -->
+                  <div id="myAndPublicColors">
+                    <p>Message times</p>
+                    <ul>
+                      <li>
+                        <button v-if="usersTimeShowAc" @click="usersTimeShow()">
+                          Show time
+                        </button>
+                        <button
+                          v-if="usersTimeShowDe"
+                          @click="usersTimeNoShow()"
+                        >
+                          Hide time
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-                <div id="myAndPublicColors">
-                  <p>Message times</p>
-                  <ul>
-                    <li>
-                      <button v-if="usersTimeShowAc" @click="usersTimeShow()">
-                        Show time
-                      </button>
-                      <button v-if="usersTimeShowDe" @click="usersTimeNoShow()">
-                        Hide time
-                      </button>
-                    </li>
-                  </ul>
+                <!-- group -->
+                <div v-if="moreSettingsAllControls.deactiveSite">
+                  <div id="groupContainer">
+                    <!-- my groups and make groups -->
+                    <div id="groupOptionsContainer">
+                      <ul>
+                        <li @click="func_ShowMyGroups()">
+                          <span v-if="moreSettingsAllControls.showMyGroups">
+                            <u>My groups</u>
+                          </span>
+                          <span
+                            v-else-if="!moreSettingsAllControls.showMyGroups"
+                          >
+                            My groups
+                          </span>
+                        </li>
+                        <li @click="func_MakeGroups()">
+                          <span v-if="!moreSettingsAllControls.showMyGroups">
+                            <u>Make groups</u>
+                          </span>
+                          <span
+                            v-else-if="moreSettingsAllControls.showMyGroups"
+                          >
+                            Make groups
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- inside my groups and make groups container div -->
+                    <div id="groupAsideContainer">
+                      <div
+                        id="my_Groups_Container"
+                        v-if="moreSettingsAllControls.showMyGroups"
+                      >
+                        <!-- my all groups -->
+                        <div id="all_LocalGroupsContainer">
+                          <p>Groups</p>
+                          <ul>
+                            <li
+                              v-for="(mainLocalGroupOne, index) in moreSettingsAllControls.mainLocalGroups"
+                              :key="index"
+                            >
+                              <div
+                                v-if="mainLocalGroupOne==moreSettingsAllControls.mainLocalGroups_ActiveOne"
+                                id="mainLocalGroups_ActiveOne_id"
+                                @click="mainLocalGroups_ActiveOne_press(mainLocalGroupOne)"
+                              >
+                                {{mainLocalGroupOne}}
+                              </div>
+                              <div
+                                v-else-if="mainLocalGroupOne!=moreSettingsAllControls.mainLocalGroups_ActiveOne"
+                                @click="mainLocalGroups_ActiveOne_press(mainLocalGroupOne)"
+                              >
+                                {{mainLocalGroupOne}}
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- my all groups header -->
+                        <div id="containerOfOverflowGroupName">
+                          <h2>
+                            {{moreSettingsAllControls.mainLocalGroups_ActiveOne}}
+                          </h2>
+                        </div>
+                        <!-- my all groups activities -->
+                        <div id="me_and_myfriends_chatsContainer">
+                          <div id="myfriend_chatsContainer">
+                            <button
+                              @click="togglrSettingsFor_Groups(moreSettingsAllControls.Show_settings)"
+                            >
+                              <span v-if="moreSettingsAllControls.Show_settings"
+                                >Hide settings</span
+                              >
+                              <span
+                                v-else-if="!moreSettingsAllControls.Show_settings"
+                                >Show settings</span
+                              >
+                            </button>
+                            <!-- my all groups settings -->
+                            <div v-if="moreSettingsAllControls.Show_settings">
+                              <div
+                                v-if="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
+                              >
+                                <ul
+                                  id="almostAllAboutGroupAndItsSetting_ul_id"
+                                  v-for="(almostActiveGroup_element, index) in moreSettingsAllControls.almostActiveGroup"
+                                  :key="index"
+                                >
+                                  <div
+                                    v-if="almostActiveGroup_element.leader == myName"
+                                    id="me_LeaderID"
+                                  >
+                                    <ul>
+                                      <li>
+                                        Leader:
+                                        <span v-if="seeMe">{{myName}}</span>
+                                        <span v-if="!seeMe">Me</span>
+                                        <button
+                                          @click="showG_pControls(moreSettingsAllControls.showG_pControls_true)"
+                                        >
+                                          <span
+                                            v-if="moreSettingsAllControls.showG_pControls_true"
+                                            ><u>Controls</u></span
+                                          >
+                                          <span
+                                            v-else-if="!moreSettingsAllControls.showG_pControls_true"
+                                            >Controls</span
+                                          >
+                                        </button>
+                                        <ul
+                                          v-if="moreSettingsAllControls.showG_pControls_true"
+                                        >
+                                          <li>
+                                            Co-leader:
+                                            {{almostActiveGroup_element.coLeader.slice(0,5)+".."}}
+                                            <button
+                                              @click="shoko_co(moreSettingsAllControls.changeRadio)"
+                                            >
+                                              <span
+                                                v-if="!moreSettingsAllControls.changeRadio"
+                                                >Change</span
+                                              >
+                                              <span
+                                                v-else-if="moreSettingsAllControls.changeRadio"
+                                                ><u>Change</u></span
+                                              >
+                                            </button>
+                                            <ul
+                                              v-if="moreSettingsAllControls.changeRadio"
+                                            >
+                                              <div>
+                                                <p>
+                                                  Select a member:
+                                                  <i
+                                                    >{{moreSettingsAllControls.picked.slice(0,5)+".."}}</i
+                                                  >
+                                                </p>
+                                                <div
+                                                  v-for="(member, index) in almostActiveGroup_element.members"
+                                                  :key="index"
+                                                >
+                                                  <input
+                                                    type="radio"
+                                                    :id="index"
+                                                    :value="member"
+                                                    v-model.trim="moreSettingsAllControls.picked"
+                                                  />
+                                                  <label :for="index"
+                                                    >{{member.slice(0,5)+".."}}</label
+                                                  >
+                                                </div>
+                                                <div>
+                                                  <button
+                                                    v-if="moreSettingsAllControls.picked != ''"
+                                                    @click="makeCo(moreSettingsAllControls.picked, almostActiveGroup_element.coLeader, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                  >
+                                                    Make co-leader
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </ul>
+                                          </li>
+                                          <li>
+                                            Add or remove members:
+                                            <button
+                                              @click="grPmembersPrs(moreSettingsAllControls.grPmembersPrsButton)"
+                                            >
+                                              <span
+                                                v-if="!moreSettingsAllControls.grPmembersPrsButton"
+                                                >Show</span
+                                              >
+                                              <span
+                                                v-else-if="moreSettingsAllControls.grPmembersPrsButton"
+                                                >Hide</span
+                                              >
+                                            </button>
+                                            <ul
+                                              v-if="moreSettingsAllControls.grPmembersPrsButton"
+                                            >
+                                              <li>
+                                                <button
+                                                  @click="expand_addAC(moreSettingsAllControls.ex_Ac)"
+                                                >
+                                                  <span
+                                                    v-if="moreSettingsAllControls.ex_Ac"
+                                                    ><u>Expand add</u></span
+                                                  >
+                                                  <span
+                                                    v-else-if="!moreSettingsAllControls.ex_Ac"
+                                                    >Expand add</span
+                                                  >
+                                                </button>
+                                                <ul
+                                                  v-if="moreSettingsAllControls.ex_Ac"
+                                                >
+                                                  <li>
+                                                    <input
+                                                      type="text"
+                                                      v-model.trim="moreSettingsAllControls.searchForAdding_Members"
+                                                      @keyup.13="find_himMemberOne(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    />
+                                                    <button
+                                                      @click="find_himMemberOne(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    >
+                                                      Search
+                                                    </button>
+                                                  </li>
+                                                  <li>
+                                                    <button
+                                                      v-if="moreSettingsAllControls.addTrBt"
+                                                      @click="addMemberToThisGp(moreSettingsAllControls.wantToaddMem, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    >
+                                                      Add
+                                                    </button>
+                                                    <span
+                                                      v-html="moreSettingsAllControls.searchingMem"
+                                                    ></span>
+                                                  </li>
+                                                </ul>
+                                              </li>
+                                              <li
+                                                v-for="(mini_member,index) in almostActiveGroup_element.members"
+                                                :key="index"
+                                              >
+                                                <button
+                                                  @click="thisMemberRemove(almostActiveGroup_element.groupName,mini_member)"
+                                                >
+                                                  Remove
+                                                </button>
+                                                {{mini_member.slice(0,5)+".."}}
+                                              </li>
+                                            </ul>
+                                          </li>
+                                          <li>
+                                            Want to stay as:
+                                            <button
+                                              @click="Ac_coSelected(moreSettingsAllControls.Ac_co)"
+                                            >
+                                              <span
+                                                v-if="!moreSettingsAllControls.Ac_co"
+                                                >Co-leader</span
+                                              >
+                                              <span
+                                                v-else-if="moreSettingsAllControls.Ac_co"
+                                                ><u>Co-leader</u></span
+                                              >
+                                            </button>
+                                            <button
+                                              @click="Ac_mmSelected(moreSettingsAllControls.Ac_mm)"
+                                            >
+                                              <span
+                                                v-if="!moreSettingsAllControls.Ac_mm"
+                                                >Member</span
+                                              >
+                                              <span
+                                                v-else-if="moreSettingsAllControls.Ac_mm"
+                                                ><u>Member</u></span
+                                              >
+                                            </button>
+                                            <ul>
+                                              <div
+                                                v-if="moreSettingsAllControls.Ac_co"
+                                              >
+                                                <p>
+                                                  Group's preview: (If you stay
+                                                  as a co-leader)
+                                                </p>
+                                                <p>
+                                                  Leader:
+                                                  <i
+                                                    >{{almostActiveGroup_element.coLeader.slice(0,5)+".."}}</i
+                                                  >
+                                                </p>
+                                                <p>
+                                                  Co-leader:
+                                                  <span v-if="seeMe"
+                                                    >{{myName}}</span
+                                                  >
+                                                  <span v-if="!seeMe">Me</span>
+                                                </p>
+                                                <ul>
+                                                  <li>
+                                                    Members:
+                                                    <ul>
+                                                      <li
+                                                        v-for="(member, index) in almostActiveGroup_element.members"
+                                                        :key="index"
+                                                      >
+                                                        <i
+                                                          >{{member.slice(0,5)+".."}}</i
+                                                        >
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                                </ul>
+                                                <button
+                                                  @click="mkCoLd(almostActiveGroup_element.coLeader,almostActiveGroup_element.leader,moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                >
+                                                  Make me co-leader
+                                                </button>
+                                              </div>
+                                              <div
+                                                v-else-if="moreSettingsAllControls.Ac_mm"
+                                              >
+                                                <p>
+                                                  Group's preview: (If you stay
+                                                  as a member)
+                                                </p>
+                                                <p>
+                                                  Leader:
+                                                  <i
+                                                    >{{almostActiveGroup_element.coLeader.slice(0,5)+".."}}</i
+                                                  >
+                                                </p>
+                                                <ul>
+                                                  <div>
+                                                    <p>
+                                                      Select a co-leader from
+                                                      members:
+                                                      <i
+                                                        >{{moreSettingsAllControls.picked.slice(0,5)+".."}}</i
+                                                      >
+                                                    </p>
+                                                    <div
+                                                      v-for="(member, index) in almostActiveGroup_element.members"
+                                                      :key="index"
+                                                    >
+                                                      <input
+                                                        type="radio"
+                                                        :id="index"
+                                                        :value="member"
+                                                        v-model.trim="moreSettingsAllControls.picked"
+                                                      />
+                                                      <label :for="index"
+                                                        >{{member.slice(0,5)+".."}}</label
+                                                      >
+                                                    </div>
+                                                  </div>
+                                                </ul>
+                                                <ul>
+                                                  <li>
+                                                    Members:
+                                                    <ul>
+                                                      <li
+                                                        v-for="(member, index) in almostActiveGroup_element.members"
+                                                        v-if="moreSettingsAllControls.picked != member"
+                                                        :key="index"
+                                                      >
+                                                        <i
+                                                          >{{member.slice(0,5)+".."}}</i
+                                                        >
+                                                      </li>
+                                                      <li>
+                                                        <span v-if="seeMe"
+                                                          >{{myName}}</span
+                                                        >
+                                                        <span v-if="!seeMe"
+                                                          >Me</span
+                                                        >
+                                                      </li>
+                                                    </ul>
+                                                  </li>
+                                                </ul>
+                                                <button
+                                                  @click="mkmmLd(almostActiveGroup_element.coLeader,moreSettingsAllControls.picked,moreSettingsAllControls.mainLocalGroups_ActiveOne, myName)"
+                                                >
+                                                  Make me member
+                                                </button>
+                                              </div>
+                                            </ul>
+                                          </li>
+                                          <li>
+                                            Delete group:
+                                            <button
+                                              @click="delG(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                            >
+                                              Delete
+                                            </button>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <div
+                                    v-if="almostActiveGroup_element.coLeader == myName"
+                                    id="anotherPartCo"
+                                  >
+                                    <ul>
+                                      <li>
+                                        Leader:
+                                        {{almostActiveGroup_element.leader.slice(0,5)+".."}}
+                                      </li>
+                                      <li>
+                                        Co-leader:
+                                        <span v-if="seeMe">{{myName}}</span>
+                                        <span v-if="!seeMe">Me</span>
+                                        <button
+                                          @click="partCo_f(moreSettingsAllControls.partCo)"
+                                        >
+                                          <span
+                                            v-if="!moreSettingsAllControls.partCo"
+                                            >Controls</span
+                                          >
+                                          <span
+                                            v-else-if="moreSettingsAllControls.partCo"
+                                            ><u>Controls</u></span
+                                          >
+                                        </button>
+                                        <ul
+                                          v-if="moreSettingsAllControls.partCo"
+                                        >
+                                          <li>
+                                            Add members:
+                                            <button
+                                              @click="grPmembersPrs(moreSettingsAllControls.grPmembersPrsButton)"
+                                            >
+                                              <span
+                                                v-if="!moreSettingsAllControls.grPmembersPrsButton"
+                                                >Show</span
+                                              >
+                                              <span
+                                                v-else-if="moreSettingsAllControls.grPmembersPrsButton"
+                                                >Hide</span
+                                              >
+                                            </button>
+                                            <ul
+                                              v-if="moreSettingsAllControls.grPmembersPrsButton"
+                                            >
+                                              <li>
+                                                <button
+                                                  @click="expand_addAC(moreSettingsAllControls.ex_Ac)"
+                                                >
+                                                  <span
+                                                    v-if="moreSettingsAllControls.ex_Ac"
+                                                    ><u>Expand add</u></span
+                                                  >
+                                                  <span
+                                                    v-else-if="!moreSettingsAllControls.ex_Ac"
+                                                    >Expand add</span
+                                                  >
+                                                </button>
+                                                <ul
+                                                  v-if="moreSettingsAllControls.ex_Ac"
+                                                >
+                                                  <li>
+                                                    <input
+                                                      type="text"
+                                                      v-model.trim="moreSettingsAllControls.searchForAdding_Members"
+                                                      @keyup.13="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    />
+                                                    <button
+                                                      @click="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    >
+                                                      Search
+                                                    </button>
+                                                  </li>
+                                                  <li>
+                                                    <button
+                                                      v-if="moreSettingsAllControls.addTrBt"
+                                                      @click="addMemberToThisGp(moreSettingsAllControls.wantToaddMem, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    >
+                                                      Add
+                                                    </button>
+                                                    <span
+                                                      v-html="moreSettingsAllControls.searchingMem"
+                                                    ></span>
+                                                  </li>
+                                                </ul>
+                                              </li>
+                                              <li
+                                                v-for="(mini_member,index) in almostActiveGroup_element.members"
+                                                :key="index"
+                                              >
+                                                {{mini_member.slice(0,5)+".."}}
+                                              </li>
+                                            </ul>
+                                          </li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                  <div
+                                    v-else-if="almostActiveGroup_element.leader != myName"
+                                    id="normalGroupId_11"
+                                  >
+                                    <li>
+                                      Group's leader:
+                                      {{almostActiveGroup_element.leader.slice(0,5)+".."}}
+                                    </li>
+                                    <li>
+                                      Group's Co-leader:
+                                      {{almostActiveGroup_element.coLeader.slice(0,5)+".."}}
+                                    </li>
+                                    <li>
+                                      <button
+                                        @click="toggleMembersInActiveGroup(moreSettingsAllControls.toggleMembersInActiveGroupFalse)"
+                                      >
+                                        <span
+                                          v-if="!moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                          >Members</span
+                                        >
+                                        <span
+                                          v-else-if="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                          ><u>Members</u></span
+                                        >
+                                      </button>
+                                      <ul
+                                        v-if="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                      >
+                                        <li
+                                          v-for="(memberOneInThisGroup, index) in almostActiveGroup_element.members"
+                                          :key="index"
+                                          v-if="memberOneInThisGroup!=myName"
+                                        >
+                                          {{memberOneInThisGroup.slice(0,5)+".."}}
+                                        </li>
+                                        <li>
+                                          <span v-if="seeMe">{{myName}}</span>
+                                          <span v-if="!seeMe">Me</span>
+                                        </li>
+                                      </ul>
+                                    </li>
+                                  </div>
+                                </ul>
+                              </div>
+                              <div
+                                v-else-if="moreSettingsAllControls.mainLocalGroups_ActiveOne==''"
+                              >
+                                No group selected
+                              </div>
+                            </div>
+                          </div>
+                          <!-- my all groups after settings chat box for group -->
+                          <div id="me_chatsContainer">
+                            <div>
+                              <div
+                                id="notSelectedGrp_mg1"
+                                v-if="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
+                              >
+                                <div
+                                  v-for="(groupMessage, index) in publicMessageFromGroupWeb"
+                                  :key="index"
+                                  id="notSelectedGrp_mg1_nDiv"
+                                >
+                                  <div
+                                    v-if="groupMessage.userName==myName"
+                                    :style="updatemyColor"
+                                    id="notSelectedGrp_mg1_nDiv_1"
+                                  >
+                                    <p class="upUs">
+                                      {{groupMessage.userName.slice(0,5)+".."}}
+                                    </p>
+                                    <p>{{groupMessage.publicMessage}}</p>
+                                    <p class="classUsersTime" v-if="usersTime">
+                                      {{ groupMessage.newDate.toDate() }}
+                                    </p>
+                                  </div>
+                                  <div
+                                    v-else-if="groupMessage.userName!=myName"
+                                    :style="updatepublicsColor"
+                                    id="notSelectedGrp_mg1_nDiv_2"
+                                  >
+                                    <p class="upUs">
+                                      {{groupMessage.userName.slice(0,5)+".."}}
+                                    </p>
+                                    <p>{{groupMessage.publicMessage}}</p>
+                                    <p class="classUsersTime" v-if="usersTime">
+                                      {{ groupMessage.newDate.toDate() }}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div
+                                id="notSelectedGrp_mg2"
+                                v-else-if="moreSettingsAllControls.mainLocalGroups_ActiveOne==''"
+                              >
+                                <p>Please make or select a group to chat.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- my all groups after settings chat box for group input-->
+                        <div
+                          v-if="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
+                          id="containerOfGroupChatsInputs"
+                        >
+                          <input
+                            type="text"
+                            name="groupChatsInput"
+                            id="groupChatsInput_id"
+                            :placeholder="messagePlaceholder"
+                            v-model.trim="sendGrMgvM"
+                            @keyup.13="sendGrMg(moreSettingsAllControls.mainLocalGroups_ActiveOne,myName,sendGrMgvM)"
+                          />
+                          <button
+                            @click="sendGrMg(moreSettingsAllControls.mainLocalGroups_ActiveOne,myName,sendGrMgvM)"
+                          >
+                            <span>{{tmSndGpmg}}</span>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- making groups -->
+                      <div
+                        id="make_Groups_Container"
+                        v-else-if="!moreSettingsAllControls.showMyGroups"
+                      >
+                        <div>
+                          <div>
+                            <p>
+                              Group name:
+                              <input
+                                type="text"
+                                v-model.trim="nameGroupMine"
+                                placeholder="Example.."
+                                @keyup.13="goforComGrp(nameGroupMine, myName)"
+                              />
+                              <button
+                                @click="goforComGrp(nameGroupMine, myName)"
+                              >
+                                Go
+                              </button>
+                            </p>
+                          </div>
+                          <div>
+                            <h2>Preview Group</h2>
+                            <p>Group name: <i>{{nameGroupMine}}</i></p>
+                            <p>
+                              Leader:
+                              <i
+                                ><span v-if="seeMe">{{myName}}</span>
+                                <span v-if="!seeMe">Me</span></i
+                              >
+                            </p>
+                            <p>
+                              Co-leader:
+                              <i>
+                                <mark
+                                  >(First you should add minimum 3
+                                  members)</mark
+                                >
+                                once you make a group then you can choose
+                                someone from members as your group's
+                                co-leader.</i
+                              >
+                            </p>
+                            <p>
+                              Members:
+                              <i>
+                                <mark
+                                  >(First you should add minimum 3
+                                  members)</mark
+                                >
+                                once you make a group then you can choose
+                                someone as your group's member.</i
+                              >
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- public chat -->
           <div id="iDmessages_div" class="messages_div">
             <div
               v-for="(publicMessage_one, index) in publicMessageFromWeb"
@@ -160,9 +864,7 @@
                 <p class="userDirectName">
                   {{publicMessage_one.userName.slice(0,5)+'..'}}
                 </p>
-                <p>
-                  {{publicMessage_one.publicMessage}}
-                </p>
+                <p>{{publicMessage_one.publicMessage}}</p>
                 <p class="classUsersTime" v-if="usersTime">
                   {{ publicMessage_one.newDate.toDate() }}
                 </p>
@@ -176,15 +878,14 @@
                 <p class="userDirectName">
                   {{publicMessage_one.userName.slice(0,5)+'..'}}
                 </p>
-                <p>
-                  {{publicMessage_one.publicMessage}}
-                </p>
+                <p>{{publicMessage_one.publicMessage}}</p>
                 <p class="classUsersTime" v-if="usersTime">
                   {{ publicMessage_one.newDate.toDate() }}
                 </p>
               </div>
             </div>
           </div>
+          <!-- public chat input -->
           <div class="messgaeInputDiv">
             <input
               type="text"
@@ -201,16 +902,21 @@
     <!--
       Vue sources are here..
     -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <!-- 
+      The core Firebase JS SDK is always required and must be listed first 
+    -->
     <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!--
+      setup#available-libraries
+    
+    -->
     <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-firestore.js"></script>
 
     <script>
       // Your web app's Firebase configuration
+
       var firebaseConfig = {
         apiKey: "AIzaSyAGtEGmjU4ejz5HuLoRIngwde2EaHccMlQ",
         authDomain: "fir-afsin.firebaseapp.com",
@@ -221,17 +927,23 @@
         appId: "1:721220896624:web:454c20dfd9b17da55ab1b5",
         measurementId: "G-CXF5NBB3MW",
       };
+
       // Initialize Firebase
+
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
       const db = firebase.firestore();
     </script>
-    <!-- Offline Vue -->
-    <!--script src="vue/rootvue.js"></script-->
+    <!-- 
+      Offline Vue 
+      
+    <script src="vue/rootvue.js"></script>
+-->
     <!-- 
       Online Vue 
     -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
     <script src="vue/app.js"></script>
   </body>
 </html>

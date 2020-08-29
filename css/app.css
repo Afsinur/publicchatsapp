@@ -361,6 +361,11 @@ div.userN_hide_show > span > button {
   font-size: 20px;
   font-weight: 500;
 }
+#notSelectedGrp_mg1_nDiv .classUsersTime_1 {
+  color: #303030;
+  font-size: 14px;
+  font-weight: 500;
+}
 #notSelectedGrp_mg1_nDiv_1 {
   position: relative;
   display: flex;
@@ -635,8 +640,8 @@ div#amnot_me_divColor {
   align-self: flex-start;
 }
 #iDmessages_div .classUsersTime {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
 }
 @media screen and (max-width: 640px) {
   div.news_title > h1 {

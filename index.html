@@ -2,9 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="May peace of Allah be upon you. Enjoy groups and public communication with 'Public Chats'."
+    />
+    <meta
+      name="keywords"
+      content="Public Chats, public chats, afsinur public chats"
+    />
+    <meta name="author" content="Afsinur" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Public Chats</title>
     <link rel="stylesheet" href="css/app.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-175520136-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-175520136-1");
+    </script>
   </head>
   <body>
     <div class="loading_div">loading..</div>
@@ -737,7 +760,7 @@
                                       {{groupMessage.userName.slice(0,5)+".."}}
                                     </p>
                                     <p>{{groupMessage.publicMessage}}</p>
-                                    <p class="classUsersTime" v-if="usersTime">
+                                    <p class="classUsersTime_1" v-if="usersTime">
                                       {{ groupMessage.newDate.toDate() }}
                                     </p>
                                   </div>
@@ -750,7 +773,7 @@
                                       {{groupMessage.userName.slice(0,5)+".."}}
                                     </p>
                                     <p>{{groupMessage.publicMessage}}</p>
-                                    <p class="classUsersTime" v-if="usersTime">
+                                    <p class="classUsersTime_1" v-if="usersTime">
                                       {{ groupMessage.newDate.toDate() }}
                                     </p>
                                   </div>

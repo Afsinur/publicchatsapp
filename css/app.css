@@ -23,7 +23,7 @@ div.news_title {
   justify-content: center;
 }
 div.news_title > h1 {
-  color: #fff;
+  color: #fff !important;
   font-size: 60px;
   font-weight: bold;
   text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
@@ -39,7 +39,6 @@ div.loading_div {
   position: fixed;
   top: 0;
   left: 0;
-  color: #000;
   background: var(--content_background-);
   font-size: 30px;
   font-weight: 500;
@@ -70,24 +69,20 @@ div.loading_div {
   margin-right: 10px;
   font-size: 18px;
   font-weight: 500;
-  color: #303030;
 }
 #posts_div > div > h2 {
   font-size: 26px;
   font-weight: 500;
-  color: #202020;
   margin: 10px;
 }
 #posts_div > div > p {
   font-size: 20px;
   font-weight: 500;
-  color: #303030;
   margin: 10px;
 }
 #posts_div > div > p.sub_title_class {
   font-size: 22px;
   font-weight: 500;
-  color: #303030;
   margin: 25px 10px 10px 10px;
 }
 #up_buttons {
@@ -100,7 +95,6 @@ div.loading_div {
 #up_buttons li button {
   font-size: 18px;
   padding: 5px 8px;
-  color: #303030;
   font-weight: 500;
   cursor: pointer;
   border: none;
@@ -119,12 +113,11 @@ div.sending_current_message_div {
 div.sending_current_message_div > input,
 div.sending_current_message_div > button {
   position: relative;
-  padding: 15px 0;
+  padding: 15px 5px;
   border: none;
   outline: none;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 24px;
-  color: #303030;
 }
 div.sending_current_message_div > input {
   width: 80%;
@@ -156,7 +149,6 @@ div.newWelcomeNote {
   text-align: center;
   font-size: 20px;
   font-weight: 500;
-  color: #303030;
   background: rgba(255, 255, 255, 0.7);
 }
 div.userN_hide_show {
@@ -167,12 +159,13 @@ div.userN_hide_show {
   flex-direction: column;
   justify-content: space-between;
   margin: 10px 0 25px 0;
-  background: rgba(255, 255, 255, 0.7);
 }
 div.userN_hide_show > h2 {
   font-size: 30px;
   font-weight: 500;
-  color: #303030;
+}
+div.userN_hide_show > h2 > span {
+  margin-left: 10px;
 }
 div.userN_hide_show > span {
   position: relative;
@@ -186,7 +179,6 @@ div.userN_hide_show > span > button {
   padding: 0 10px 0 10px;
   outline: none;
   border: none;
-  color: #303030;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   margin: 0 10px 0 0;
@@ -214,7 +206,6 @@ div.userN_hide_show > span > button {
   flex-direction: column;
   width: 85%;
   height: 90vh;
-  background-color: rgba(255, 255, 255, 0.7);
   padding: 15px;
   overflow: auto;
 }
@@ -249,7 +240,6 @@ div.userN_hide_show > span > button {
 #groupOptionsContainer > ul > li {
   margin-right: 15px;
   font-weight: bold;
-  color: #303030;
   cursor: pointer;
 }
 #groupAsideContainer {
@@ -274,11 +264,9 @@ div.userN_hide_show > span > button {
 }
 #make_Groups_Container h2 {
   font-weight: 500;
-  color: #303030;
 }
 #make_Groups_Container button {
   font-weight: 500;
-  color: #303030;
   padding: 5px;
   margin: 10px 0;
   cursor: pointer;
@@ -290,7 +278,6 @@ div.userN_hide_show > span > button {
 }
 #all_LocalGroupsContainer > p {
   font-weight: bold;
-  color: #303030;
 }
 #all_LocalGroupsContainer > ul {
   position: relative;
@@ -310,7 +297,6 @@ div.userN_hide_show > span > button {
   padding: 5px;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
   font-weight: 500;
-  color: #303030;
 }
 #mainLocalGroups_ActiveOne_id {
   border: 4px solid #00f;
@@ -339,7 +325,6 @@ div.userN_hide_show > span > button {
   flex-direction: column;
 }
 #notSelectedGrp_mg2 p {
-  color: #303030;
   font-size: 24px;
   font-weight: 500;
   margin: 5px 0;
@@ -351,18 +336,15 @@ div.userN_hide_show > span > button {
   margin: 10px 0;
 }
 #notSelectedGrp_mg1_nDiv .upUs {
-  color: #303030;
   font-size: 24px;
   font-weight: 500;
   margin: 5px 0;
 }
 #notSelectedGrp_mg1_nDiv p {
-  color: #303030;
   font-size: 20px;
   font-weight: 500;
 }
 #notSelectedGrp_mg1_nDiv .classUsersTime_1 {
-  color: #303030;
   font-size: 14px;
   font-weight: 500;
 }
@@ -395,7 +377,6 @@ div.userN_hide_show > span > button {
   cursor: pointer;
   border: none;
   outline: none;
-  color: #303030;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
 }
 #almostAllAboutGroupAndItsSetting_ul_id {
@@ -424,7 +405,10 @@ div.userN_hide_show > span > button {
 #me_LeaderID ul li,
 #me_LeaderID ul li button {
   font-weight: 500;
-  color: #303030;
+}
+#me_LeaderID > ul > li > ul > li:nth-child(4) button {
+  color: #fff !important;
+  background-color: #f00 !important;
 }
 #normalGroupId_11 {
   position: relative;
@@ -436,7 +420,6 @@ div.userN_hide_show > span > button {
 }
 #normalGroupId_11 li {
   font-weight: 500;
-  color: #303030;
 }
 #anotherPartCo {
   position: relative;
@@ -448,12 +431,10 @@ div.userN_hide_show > span > button {
 }
 #anotherPartCo li {
   font-weight: 500;
-  color: #303030;
 }
 #likeMorenavTypeBar > li {
   font-size: 18px;
   font-weight: 500;
-  color: #000;
   margin: 0 15px 0 0;
   cursor: pointer;
 }
@@ -464,17 +445,15 @@ div.userN_hide_show > span > button {
   flex-direction: row;
 }
 #containerOfGroupChatsInputs > input {
-  padding: 10px 0;
+  padding: 10px 5px;
   font-size: 20px;
-  color: #303030;
   width: 80%;
   border: none;
   outline: none;
 }
 #containerOfGroupChatsInputs > button {
-  padding: 10px 0;
+  padding: 10px 5px;
   font-size: 20px;
-  color: #303030;
   width: 20%;
   border: none;
   outline: none;
@@ -496,7 +475,6 @@ div.userN_hide_show > span > button {
 }
 #background_settings_images > p {
   font-weight: bold;
-  color: #303030;
   margin: 10px 0;
 }
 #background_settings_images > ul {
@@ -553,7 +531,6 @@ div.userN_hide_show > span > button {
 }
 #myAndPublicColors > p {
   font-weight: bold;
-  color: #303030;
   margin: 10px 0;
 }
 #myAndPublicColors > ul {
@@ -568,7 +545,6 @@ div.userN_hide_show > span > button {
   margin: 10px;
 }
 #myAndPublicColors > ul > li > button {
-  color: #303030;
   font-weight: 500;
   padding: 5px;
   outline: none;
@@ -594,7 +570,6 @@ div.messages_div {
   text-align: left;
   font-size: 20px;
   font-weight: 500;
-  color: #303030;
 }
 div.messages_div > div {
   margin: 10px 0;
@@ -620,9 +595,8 @@ div.messgaeInputDiv {
 }
 div.messgaeInputDiv > input,
 div.messgaeInputDiv > button {
-  padding: 15px 0;
+  padding: 15px 5px;
   font-size: 24px;
-  color: #303030;
   outline: none;
   border: none;
 }

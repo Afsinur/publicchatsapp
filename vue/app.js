@@ -1,86 +1,36 @@
 window.addEventListener("load", () => {
-  //---------------------------------------------------------
-  //[for deleting all the users..]
-  //--------------------------------------------------
-  //---------------------------------------------------------
+  //------------------------------------------------
+  //------------------------------------------------
   //tests..
-  var randomM = Math.random() * 10000000000;
-  var randomM_St = randomM.toString();
-  var outPtRandom = randomM_St.slice(0, 5);
-
-  /*db.collection("publicGroups")
-    .add({
-      leader: "sayem",
-      coLeader: "se",
-      groupName: "Ban" + outPtRandom,
-      groupNewDate: new Date(),
-      members: ["afsinu", "afsinnnna", "afsin01794642816"],
-    })
-    .then(() => {
-      console.log("ADDED");
-    });*/
-
-  //
-
-  /*db.collection("publicGroups")
-    .where("groupName", "==", "Ban45146")
-    .get()
-    .then((data) => {
-      data.docs.forEach((doc) => {
-        var normalOldArrayFromMem = doc.data().members;
-        if (doc.data().members.includes("afsin01794642816") == true) {
-          const promise1 = new Promise((resolve, reject) => {
-            var TpAgainInputMem = [];
-            doc.data().members.forEach((member) => {
-              if (member != "afsin01794642816") {
-                TpAgainInputMem.push(member);
-              }
-            });
-            resolve(TpAgainInputMem);
-          });
-          promise1.then((value) => {
-            db.collection("publicGroups").doc(doc.id).update({
-              coLeader: "afsin01794642816",
-              members: value,
-            });
-          });
-        } else {
-          db.collection("publicGroups").doc(doc.id).update({
-            coLeader: "afsin01794642816",
-            members: normalOldArrayFromMem,
-          });
-        }
-      });
-    });*/
-
-  //
-  /*db.collection("group1")
-    .add({
-      userName: "Ban" + outPtRandom,
-      publicMessage: "assalamuyalaikum from " + "Ban" + outPtRandom,
-      newDate: new Date(),
-    })
-    .then(() => {
-      console.log("added to group1!");
-    });
-  //
-  db.collection("group1")
-    .add({
-      userName: "afsin01794642816",
-      publicMessage: "assalamuyalaikum from me",
-      newDate: new Date(),
-    })
-    .then(() => {
-      console.log("added to group1!");
-    });*/
   //------------------------------------------------
   //------------------------------------------------
+  var allTag = document.getElementsByTagName("*");
+  var allTag_button = document.querySelectorAll("button");
   var thisBody = document.querySelector("body");
   var news_title = document.querySelector(".news_title");
   var publicchatsapp_idApp = document.querySelector("div#app");
   var div_loading_div = document.querySelector("div.loading_div");
   var snapCounter2 = 0;
   var snapCounterPushes = [];
+  var colorArr = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+  ];
+  //
   //show app div..
   publicchatsapp_idApp.style.display = "block";
   div_loading_div.remove();
@@ -125,11 +75,13 @@ window.addEventListener("load", () => {
         "rgba(80, 80, 80, 0.7)",
         "rgba(250, 80, 80, 0.7)",
         "rgba(245, 45, 5, 0.7)",
-        "rgba(212, 1, 254, 0.94)",
-        "rgba(219, 215, 238, 0.4)",
-        "rgba(2, 0, 20, 0.9)",
-        "rgba(0, 174, 255, 0.04)",
+        "rgba(212, 1, 254, 0.7)",
+        "rgba(219, 215, 238, 0.7)",
+        "rgba(2, 0, 20, 0.7)",
+        "rgba(0, 174, 255, 0.7)",
       ],
+      opcityAgreeWith: 0,
+      usersopAgr: true,
       activeImage: "flowers_bag_flower_89155_1366x768.jpg",
       activeSettings: false, //default false
       updatemyColor: {
@@ -145,6 +97,8 @@ window.addEventListener("load", () => {
       },
       present_user: false,
       myName: "",
+      divOpacity: "7",
+      divOpacity_1: "0",
       changeName: "Go",
       changePlaceholder: "Username..",
       messagePlaceholder: "Write your message..",
@@ -153,6 +107,7 @@ window.addEventListener("load", () => {
       sendGrMgvM: "",
       nameGroupMine: "",
       tmSndGpmg: "Send",
+      tmSndGpmg_11: "Send",
       publicMessageFromWeb: [],
       publicMessageFromGroupWeb: [],
       timeDate: "",
@@ -160,6 +115,28 @@ window.addEventListener("load", () => {
       usersTime: false,
       usersTimeShowAc: true,
       usersTimeShowDe: false,
+      divOpacity_styles: {
+        state1: {
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+        },
+      },
+      divOpacity_styles_c1: {
+        state_c1: {
+          color: "",
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+        },
+        state_c10: {
+          color: "",
+          backgroundColor: "rgba(255, 255, 255, 0.7)",
+        },
+        state_c2: {
+          backgroundColor: "#5af",
+        },
+        state_c3: {
+          color: "#fff",
+          backgroundColor: "#ad0000",
+        },
+      },
       moreSettingsAllControls: {
         almostActiveGroup: [],
         groupNewDate: "",
@@ -207,13 +184,17 @@ window.addEventListener("load", () => {
                           tr_or_fls = 1;
                           resolve(tr_or_fls);
                         } else if (data.docs.length == index + 1) {
-                          resolve(tr_or_fls);
+                          if (tr_or_fls != 1) {
+                            resolve(tr_or_fls);
+                            console.log(0);
+                          }
                         }
                       });
                     });
                 });
                 promise_5.then((data) => {
                   if (data == 0) {
+                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
                     db.collection("users")
                       .add({
                         name: e,
@@ -255,10 +236,13 @@ window.addEventListener("load", () => {
                         //----------------------------------------------
                       });
                   } else {
+                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
                     alert("You can not take this name!");
+                    this.button_conditions.loading = false;
                   }
                 });
               } else {
+                this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
                 //same(onSnapshot: publicMessagesDatabase,
                 // except: this.present_user) starts..
                 //---------------------------------------------
@@ -284,11 +268,14 @@ window.addEventListener("load", () => {
               }
             });
         } else {
+          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
           alert("Type minimum 11 carecters");
         }
       },
       addMessage(e) {
         if (this.addMassageText != "") {
+          this.tmSndGpmg_11 = "Sending..";
+          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
           this.button_conditions.loading = true;
           this.timeDate = new Date();
           db.collection("publicMessagesDatabase")
@@ -300,6 +287,8 @@ window.addEventListener("load", () => {
             .then(() => {
               this.addMassageText = "";
               this.button_conditions.loading = false;
+              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+              this.tmSndGpmg_11 = "Send";
             });
         }
       },
@@ -909,6 +898,7 @@ window.addEventListener("load", () => {
       },
       sendGrMg(e1, e2, e3) {
         if (e3 != "") {
+          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
           this.tmSndGpmg = "Sending..";
           db.collection(e1)
             .add({
@@ -917,6 +907,7 @@ window.addEventListener("load", () => {
               newDate: new Date(),
             })
             .then(() => {
+              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
               this.sendGrMgvM = "";
               this.tmSndGpmg = "Send";
             });
@@ -962,6 +953,88 @@ window.addEventListener("load", () => {
               db.collection("publicGroups").doc(doc.id).delete();
             });
           });
+      },
+      chn_op(e) {
+        if (this.opcityAgreeWith == 1) {
+          var div_ofE = e / 10;
+          //
+          var comaCount = 0;
+          var str = this.updatemyColor.backgroundColor;
+          for (let i = 0; i < str.length; i++) {
+            var element = str[i];
+            if (element == ",") {
+              comaCount++;
+              if (comaCount == 3) {
+                var slcOfComa = str.slice(0, i + 1);
+                var concatedValuedOutp = slcOfComa.concat(" " + div_ofE + ")");
+                this.updatemyColor.backgroundColor = concatedValuedOutp;
+                this.activeSelectedColorMe = concatedValuedOutp;
+              }
+            }
+          }
+          //
+          var comaCount_1 = 0;
+          var str_1 = this.updatepublicsColor.backgroundColor;
+          for (let i = 0; i < str_1.length; i++) {
+            var element_1 = str_1[i];
+            if (element_1 == ",") {
+              comaCount_1++;
+              if (comaCount_1 == 3) {
+                var slcOfComa_1 = str_1.slice(0, i + 1);
+                var concatedValuedOutp_1 = slcOfComa_1.concat(
+                  " " + div_ofE + ")"
+                );
+                this.updatepublicsColor.backgroundColor = concatedValuedOutp_1;
+                this.activeSelectedColorPublic = concatedValuedOutp_1;
+              }
+            }
+          }
+          //
+          var myAndPublicColors_15 = this.myAndPublicColors;
+          this.myAndPublicColors = [];
+          var div_ofE_15 = e / 10;
+          myAndPublicColors_15.forEach((element) => {
+            var comaCount_15 = 0;
+            for (let i = 0; i < element.length; i++) {
+              var element_1 = element[i];
+              if (element_1 == ",") {
+                comaCount_15++;
+                if (comaCount_15 == 3) {
+                  var slcOfComa_15 = element.slice(0, i + 1);
+                  var concatedValuedOutp_15 = slcOfComa_15.concat(
+                    " " + div_ofE_15 + ")"
+                  );
+                  this.myAndPublicColors.push(concatedValuedOutp_15);
+                }
+              }
+            }
+          });
+        }
+        //
+        var clrforBOcy = `rgba(255, 255, 255, ${e / 10})`;
+        this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+        for (let i = 0; i < allTag_button.length; i++) {
+          allTag_button[i].style.backgroundColor = clrforBOcy;
+          this.divOpacity_styles_c1.state_c10.backgroundColor = clrforBOcy;
+        }
+        this.divOpacity_styles.state1.backgroundColor = clrforBOcy;
+      },
+      chn_op_1(e) {
+        var clrforBOcy_c1 = "#" + colorArr[e] + colorArr[e] + colorArr[e];
+        this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+        this.divOpacity_styles_c1.state_c10.color = clrforBOcy_c1;
+        for (var i = 0; i < allTag.length; i++) {
+          allTag[i].style.color = clrforBOcy_c1;
+        }
+      },
+      usersopAgr_f1(e) {
+        if (e == false) {
+          this.usersopAgr = true;
+          this.opcityAgreeWith = 0;
+        } else {
+          this.usersopAgr = false;
+          this.opcityAgreeWith = 1;
+        }
       },
     },
   });

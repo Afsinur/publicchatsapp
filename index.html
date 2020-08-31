@@ -14,11 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Public Chats</title>
     <link rel="stylesheet" href="css/app.css" />
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics 
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-175520136-1"
     ></script>
+   
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -28,6 +29,7 @@
 
       gtag("config", "UA-175520136-1");
     </script>
+     -->
   </head>
   <body>
     <div class="loading_div">loading..</div>
@@ -37,12 +39,12 @@
     <div id="app" style="display: none">
       <div class="uper_app">
         <!-- before login -->
-        <div class="loading_div" v-if="button_conditions.loading">
+        <div class="loading_div" v-show="button_conditions.loading">
           loading..
         </div>
         <div
           class="sending_current_message_div"
-          v-if="replace_unique_name_typing"
+          v-show="replace_unique_name_typing"
         >
           <input
             type="text"
@@ -51,27 +53,38 @@
             v-model.trim="myName"
             @keyup.13="log_in(myName)"
           />
-          <button id="sendCurrentMessage" @click="log_in(myName)">
+          <button
+            id="sendCurrentMessage"
+            @click="log_in(myName)"
+            :style="divOpacity_styles_c1.state_c1"
+          >
             {{ changeName }}
           </button>
         </div>
         <!--chating div..-->
-        <div v-if="!replace_unique_name_typing" class="userUseDiv">
+        <div v-show="!replace_unique_name_typing" class="userUseDiv">
           <div class="username_class">
             <!-- welcome note -->
-            <div v-if="present_user" class="newWelcomeNote">
+            <div v-show="present_user" class="newWelcomeNote">
               Assalamuyalaikum! <i><b>{{myName.slice(0,5)+'..'}}</b></i>
             </div>
             <!-- Top bar -->
-            <div class="userN_hide_show">
-              <h2 v-if="seeMe">{{myName}}</h2>
-              <h2 v-if="!seeMe">Me</h2>
+            <div class="userN_hide_show" :style="divOpacity_styles.state1">
+              <h2 v-show="seeMe"><span>{{myName}}</span></h2>
+              <h2 v-show="!seeMe"><span>Me</span></h2>
               <span>
-                <button @click="seeMe=!seeMe">
-                  <span v-if="seeMe">Hide username</span>
-                  <span v-else>Show username</span>
+                <button
+                  @click="seeMe=!seeMe"
+                  :style="divOpacity_styles_c1.state_c1"
+                >
+                  <span v-show="seeMe">Hide username</span>
+                  <span v-show="!seeMe">Show username</span>
                 </button>
-                <button class="moreOptionsButton" @click="activeTheSettings()">
+                <button
+                  class="moreOptionsButton"
+                  @click="activeTheSettings()"
+                  :style="divOpacity_styles_c1.state_c1"
+                >
                   More
                 </button>
               </span>
@@ -79,7 +92,7 @@
             <!--
               More options..
             -->
-            <div v-if="activeSettings" id="moreOptionsDiv">
+            <div v-show="activeSettings" id="moreOptionsDiv">
               <!-- red cancel button -->
               <div id="deactiveSettingsContainerDiv">
                 <span>
@@ -87,31 +100,31 @@
                 </span>
               </div>
               <!-- inside of more div -->
-              <div id="moreOptionsDiv_inside">
+              <div id="moreOptionsDiv_inside" :style="divOpacity_styles.state1">
                 <div>
                   <h2>More</h2>
                 </div>
                 <!-- site stile and group going way.. -->
                 <ul id="likeMorenavTypeBar">
                   <li @click="activeSitenav()">
-                    <span v-if="moreSettingsAllControls.activeSite"
+                    <span v-show="moreSettingsAllControls.activeSite"
                       ><u>Site Styles</u></span
                     >
-                    <span v-else-if="!moreSettingsAllControls.activeSite"
+                    <span v-show="!moreSettingsAllControls.activeSite"
                       >Site Styles</span
                     >
                   </li>
                   <li @click="activeGroupnav()">
-                    <span v-if="moreSettingsAllControls.activeGroup"
+                    <span v-show="moreSettingsAllControls.activeGroup"
                       ><u>Groups</u></span
                     >
-                    <span v-else-if="!moreSettingsAllControls.activeGroup"
+                    <span v-show="!moreSettingsAllControls.activeGroup"
                       >Groups</span
                     >
                   </li>
                 </ul>
-                <!-- site stile -->
-                <div v-if="!moreSettingsAllControls.deactiveSite">
+                <!-- site style -->
+                <div v-show="!moreSettingsAllControls.deactiveSite">
                   <!--
                       Background Images..
                     -->
@@ -120,14 +133,14 @@
                     <ul>
                       <li v-for="(picture, index) in pictures" :key="index">
                         <img
-                          v-if="activeImage == picture"
+                          v-show="activeImage == picture"
                           :src="'img/onloadBackground/'+picture"
                           alt="picture"
                           id="activeImage"
                           @click="activeImagethis(picture)"
                         />
                         <img
-                          v-else-if="activeImage != picture"
+                          v-show="activeImage != picture"
                           :src="'img/onloadBackground/'+picture"
                           alt="picture"
                           @click="activeImagethis(picture)"
@@ -146,14 +159,14 @@
                         :key="index"
                       >
                         <div
-                          v-if="activeSelectedColorMe == myAndPublicColor"
+                          v-show="activeSelectedColorMe == myAndPublicColor"
                           id="myColorSpanId"
                           :style="{background:myAndPublicColor}"
                           @click="changemycolor(myAndPublicColor)"
                           class="activeColorSelectedFor"
                         ></div>
                         <div
-                          v-else-if="activeSelectedColorMe != myAndPublicColor"
+                          v-show="activeSelectedColorMe != myAndPublicColor"
                           id="myColorSpanId"
                           :style="{background:myAndPublicColor}"
                           @click="changemycolor(myAndPublicColor)"
@@ -172,18 +185,80 @@
                         :key="index"
                       >
                         <div
-                          v-if="activeSelectedColorPublic == myAndPublicColor"
+                          v-show="activeSelectedColorPublic == myAndPublicColor"
                           id="myColorSpanId"
                           :style="{background:myAndPublicColor}"
                           @click="changePubliccolor(myAndPublicColor)"
                           class="activeColorSelectedFor"
                         ></div>
                         <div
-                          v-else-if="activeSelectedColorPublic != myAndPublicColor"
+                          v-show="activeSelectedColorPublic != myAndPublicColor"
                           id="myColorSpanId"
                           :style="{background:myAndPublicColor}"
                           @click="changePubliccolor(myAndPublicColor)"
                         ></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
+                      opacity agreements..
+                    -->
+                  <div id="myAndPublicColors">
+                    <p>Opacity with colors</p>
+                    <ul>
+                      <li>
+                        <button
+                          v-show="usersopAgr"
+                          @click="usersopAgr_f1(usersopAgr)"
+                          :style="divOpacity_styles_c1.state_c1"
+                        >
+                          Agree
+                        </button>
+                        <button
+                          v-show="!usersopAgr"
+                          @click="usersopAgr_f1(usersopAgr)"
+                          :style="divOpacity_styles_c1.state_c1"
+                        >
+                          Disagree
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
+                    site opacity..
+                  -->
+                  <div id="myAndPublicColors">
+                    <p>Site opacity</p>
+                    <ul>
+                      <li>
+                        <input
+                          type="range"
+                          id="vol_op"
+                          name="vol"
+                          min="0"
+                          max="10"
+                          v-model="divOpacity"
+                          @input="chn_op(divOpacity)"
+                        />
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
+                    text opacity..
+                  -->
+                  <div id="myAndPublicColors">
+                    <p>Text opacity</p>
+                    <ul>
+                      <li>
+                        <input
+                          type="range"
+                          id="vol_op_1"
+                          name="vol_1"
+                          min="0"
+                          max="15"
+                          v-model="divOpacity_1"
+                          @input="chn_op_1(divOpacity_1)"
+                        />
                       </li>
                     </ul>
                   </div>
@@ -194,12 +269,17 @@
                     <p>Message times</p>
                     <ul>
                       <li>
-                        <button v-if="usersTimeShowAc" @click="usersTimeShow()">
+                        <button
+                          v-show="usersTimeShowAc"
+                          @click="usersTimeShow()"
+                          :style="divOpacity_styles_c1.state_c1"
+                        >
                           Show time
                         </button>
                         <button
-                          v-if="usersTimeShowDe"
+                          v-show="usersTimeShowDe"
                           @click="usersTimeNoShow()"
+                          :style="divOpacity_styles_c1.state_c1"
                         >
                           Hide time
                         </button>
@@ -208,28 +288,24 @@
                   </div>
                 </div>
                 <!-- group -->
-                <div v-if="moreSettingsAllControls.deactiveSite">
+                <div v-show="moreSettingsAllControls.deactiveSite">
                   <div id="groupContainer">
                     <!-- my groups and make groups -->
                     <div id="groupOptionsContainer">
                       <ul>
                         <li @click="func_ShowMyGroups()">
-                          <span v-if="moreSettingsAllControls.showMyGroups">
+                          <span v-show="moreSettingsAllControls.showMyGroups">
                             <u>My groups</u>
                           </span>
-                          <span
-                            v-else-if="!moreSettingsAllControls.showMyGroups"
-                          >
+                          <span v-show="!moreSettingsAllControls.showMyGroups">
                             My groups
                           </span>
                         </li>
                         <li @click="func_MakeGroups()">
-                          <span v-if="!moreSettingsAllControls.showMyGroups">
+                          <span v-show="!moreSettingsAllControls.showMyGroups">
                             <u>Make groups</u>
                           </span>
-                          <span
-                            v-else-if="moreSettingsAllControls.showMyGroups"
-                          >
+                          <span v-show="moreSettingsAllControls.showMyGroups">
                             Make groups
                           </span>
                         </li>
@@ -239,7 +315,7 @@
                     <div id="groupAsideContainer">
                       <div
                         id="my_Groups_Container"
-                        v-if="moreSettingsAllControls.showMyGroups"
+                        v-show="moreSettingsAllControls.showMyGroups"
                       >
                         <!-- my all groups -->
                         <div id="all_LocalGroupsContainer">
@@ -250,15 +326,17 @@
                               :key="index"
                             >
                               <div
-                                v-if="mainLocalGroupOne==moreSettingsAllControls.mainLocalGroups_ActiveOne"
+                                v-show="mainLocalGroupOne==moreSettingsAllControls.mainLocalGroups_ActiveOne"
                                 id="mainLocalGroups_ActiveOne_id"
                                 @click="mainLocalGroups_ActiveOne_press(mainLocalGroupOne)"
+                                :style="divOpacity_styles.state1"
                               >
                                 {{mainLocalGroupOne}}
                               </div>
                               <div
-                                v-else-if="mainLocalGroupOne!=moreSettingsAllControls.mainLocalGroups_ActiveOne"
+                                v-show="mainLocalGroupOne!=moreSettingsAllControls.mainLocalGroups_ActiveOne"
                                 @click="mainLocalGroups_ActiveOne_press(mainLocalGroupOne)"
+                                :style="divOpacity_styles.state1"
                               >
                                 {{mainLocalGroupOne}}
                               </div>
@@ -276,19 +354,21 @@
                           <div id="myfriend_chatsContainer">
                             <button
                               @click="togglrSettingsFor_Groups(moreSettingsAllControls.Show_settings)"
+                              :style="divOpacity_styles_c1.state_c1"
                             >
-                              <span v-if="moreSettingsAllControls.Show_settings"
+                              <span
+                                v-show="moreSettingsAllControls.Show_settings"
                                 >Hide settings</span
                               >
                               <span
-                                v-else-if="!moreSettingsAllControls.Show_settings"
+                                v-show="!moreSettingsAllControls.Show_settings"
                                 >Show settings</span
                               >
                             </button>
                             <!-- my all groups settings -->
-                            <div v-if="moreSettingsAllControls.Show_settings">
+                            <div v-show="moreSettingsAllControls.Show_settings">
                               <div
-                                v-if="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
+                                v-show="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
                               >
                                 <ul
                                   id="almostAllAboutGroupAndItsSetting_ul_id"
@@ -296,46 +376,48 @@
                                   :key="index"
                                 >
                                   <div
-                                    v-if="almostActiveGroup_element.leader == myName"
+                                    v-show="almostActiveGroup_element.leader == myName"
                                     id="me_LeaderID"
                                   >
                                     <ul>
                                       <li>
                                         Leader:
-                                        <span v-if="seeMe">{{myName}}</span>
-                                        <span v-if="!seeMe">Me</span>
+                                        <span v-show="seeMe">{{myName}}</span>
+                                        <span v-show="!seeMe">Me</span>
                                         <button
                                           @click="showG_pControls(moreSettingsAllControls.showG_pControls_true)"
+                                          :style="divOpacity_styles_c1.state_c1"
                                         >
                                           <span
-                                            v-if="moreSettingsAllControls.showG_pControls_true"
+                                            v-show="moreSettingsAllControls.showG_pControls_true"
                                             ><u>Controls</u></span
                                           >
                                           <span
-                                            v-else-if="!moreSettingsAllControls.showG_pControls_true"
+                                            v-show="!moreSettingsAllControls.showG_pControls_true"
                                             >Controls</span
                                           >
                                         </button>
                                         <ul
-                                          v-if="moreSettingsAllControls.showG_pControls_true"
+                                          v-show="moreSettingsAllControls.showG_pControls_true"
                                         >
                                           <li>
                                             Co-leader:
                                             {{almostActiveGroup_element.coLeader.slice(0,5)+".."}}
                                             <button
                                               @click="shoko_co(moreSettingsAllControls.changeRadio)"
+                                              :style="divOpacity_styles_c1.state_c1"
                                             >
                                               <span
-                                                v-if="!moreSettingsAllControls.changeRadio"
+                                                v-show="!moreSettingsAllControls.changeRadio"
                                                 >Change</span
                                               >
                                               <span
-                                                v-else-if="moreSettingsAllControls.changeRadio"
+                                                v-show="moreSettingsAllControls.changeRadio"
                                                 ><u>Change</u></span
                                               >
                                             </button>
                                             <ul
-                                              v-if="moreSettingsAllControls.changeRadio"
+                                              v-show="moreSettingsAllControls.changeRadio"
                                             >
                                               <div>
                                                 <p>
@@ -360,8 +442,9 @@
                                                 </div>
                                                 <div>
                                                   <button
-                                                    v-if="moreSettingsAllControls.picked != ''"
+                                                    v-show="moreSettingsAllControls.picked != ''"
                                                     @click="makeCo(moreSettingsAllControls.picked, almostActiveGroup_element.coLeader, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                    :style="divOpacity_styles_c1.state_c1"
                                                   >
                                                     Make co-leader
                                                   </button>
@@ -373,34 +456,36 @@
                                             Add or remove members:
                                             <button
                                               @click="grPmembersPrs(moreSettingsAllControls.grPmembersPrsButton)"
+                                              :style="divOpacity_styles_c1.state_c1"
                                             >
                                               <span
-                                                v-if="!moreSettingsAllControls.grPmembersPrsButton"
+                                                v-show="!moreSettingsAllControls.grPmembersPrsButton"
                                                 >Show</span
                                               >
                                               <span
-                                                v-else-if="moreSettingsAllControls.grPmembersPrsButton"
+                                                v-show="moreSettingsAllControls.grPmembersPrsButton"
                                                 >Hide</span
                                               >
                                             </button>
                                             <ul
-                                              v-if="moreSettingsAllControls.grPmembersPrsButton"
+                                              v-show="moreSettingsAllControls.grPmembersPrsButton"
                                             >
                                               <li>
                                                 <button
                                                   @click="expand_addAC(moreSettingsAllControls.ex_Ac)"
+                                                  :style="divOpacity_styles_c1.state_c1"
                                                 >
                                                   <span
-                                                    v-if="moreSettingsAllControls.ex_Ac"
+                                                    v-show="moreSettingsAllControls.ex_Ac"
                                                     ><u>Expand add</u></span
                                                   >
                                                   <span
-                                                    v-else-if="!moreSettingsAllControls.ex_Ac"
+                                                    v-show="!moreSettingsAllControls.ex_Ac"
                                                     >Expand add</span
                                                   >
                                                 </button>
                                                 <ul
-                                                  v-if="moreSettingsAllControls.ex_Ac"
+                                                  v-show="moreSettingsAllControls.ex_Ac"
                                                 >
                                                   <li>
                                                     <input
@@ -410,14 +495,16 @@
                                                     />
                                                     <button
                                                       @click="find_himMemberOne(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                      :style="divOpacity_styles_c1.state_c1"
                                                     >
                                                       Search
                                                     </button>
                                                   </li>
                                                   <li>
                                                     <button
-                                                      v-if="moreSettingsAllControls.addTrBt"
+                                                      v-show="moreSettingsAllControls.addTrBt"
                                                       @click="addMemberToThisGp(moreSettingsAllControls.wantToaddMem, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                      :style="divOpacity_styles_c1.state_c1"
                                                     >
                                                       Add
                                                     </button>
@@ -433,6 +520,7 @@
                                               >
                                                 <button
                                                   @click="thisMemberRemove(almostActiveGroup_element.groupName,mini_member)"
+                                                  :style="divOpacity_styles_c1.state_c1"
                                                 >
                                                   Remove
                                                 </button>
@@ -444,35 +532,37 @@
                                             Want to stay as:
                                             <button
                                               @click="Ac_coSelected(moreSettingsAllControls.Ac_co)"
+                                              :style="divOpacity_styles_c1.state_c1"
                                             >
                                               <span
-                                                v-if="!moreSettingsAllControls.Ac_co"
+                                                v-show="!moreSettingsAllControls.Ac_co"
                                                 >Co-leader</span
                                               >
                                               <span
-                                                v-else-if="moreSettingsAllControls.Ac_co"
+                                                v-show="moreSettingsAllControls.Ac_co"
                                                 ><u>Co-leader</u></span
                                               >
                                             </button>
                                             <button
                                               @click="Ac_mmSelected(moreSettingsAllControls.Ac_mm)"
+                                              :style="divOpacity_styles_c1.state_c1"
                                             >
                                               <span
-                                                v-if="!moreSettingsAllControls.Ac_mm"
+                                                v-show="!moreSettingsAllControls.Ac_mm"
                                                 >Member</span
                                               >
                                               <span
-                                                v-else-if="moreSettingsAllControls.Ac_mm"
+                                                v-show="moreSettingsAllControls.Ac_mm"
                                                 ><u>Member</u></span
                                               >
                                             </button>
                                             <ul>
                                               <div
-                                                v-if="moreSettingsAllControls.Ac_co"
+                                                v-show="moreSettingsAllControls.Ac_co"
                                               >
                                                 <p>
-                                                  Group's preview: (If you stay
-                                                  as a co-leader)
+                                                  Group's preview: (show you
+                                                  stay as a co-leader)
                                                 </p>
                                                 <p>
                                                   Leader:
@@ -482,10 +572,12 @@
                                                 </p>
                                                 <p>
                                                   Co-leader:
-                                                  <span v-if="seeMe"
+                                                  <span v-show="seeMe"
                                                     >{{myName}}</span
                                                   >
-                                                  <span v-if="!seeMe">Me</span>
+                                                  <span v-show="!seeMe"
+                                                    >Me</span
+                                                  >
                                                 </p>
                                                 <ul>
                                                   <li>
@@ -504,12 +596,13 @@
                                                 </ul>
                                                 <button
                                                   @click="mkCoLd(almostActiveGroup_element.coLeader,almostActiveGroup_element.leader,moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                  :style="divOpacity_styles_c1.state_c1"
                                                 >
                                                   Make me co-leader
                                                 </button>
                                               </div>
                                               <div
-                                                v-else-if="moreSettingsAllControls.Ac_mm"
+                                                v-show="moreSettingsAllControls.Ac_mm"
                                               >
                                                 <p>
                                                   Group's preview: (If you stay
@@ -552,7 +645,7 @@
                                                     <ul>
                                                       <li
                                                         v-for="(member, index) in almostActiveGroup_element.members"
-                                                        v-if="moreSettingsAllControls.picked != member"
+                                                        v-show="moreSettingsAllControls.picked != member"
                                                         :key="index"
                                                       >
                                                         <i
@@ -560,10 +653,10 @@
                                                         >
                                                       </li>
                                                       <li>
-                                                        <span v-if="seeMe"
+                                                        <span v-show="seeMe"
                                                           >{{myName}}</span
                                                         >
-                                                        <span v-if="!seeMe"
+                                                        <span v-show="!seeMe"
                                                           >Me</span
                                                         >
                                                       </li>
@@ -572,6 +665,7 @@
                                                 </ul>
                                                 <button
                                                   @click="mkmmLd(almostActiveGroup_element.coLeader,moreSettingsAllControls.picked,moreSettingsAllControls.mainLocalGroups_ActiveOne, myName)"
+                                                  :style="divOpacity_styles_c1.state_c1"
                                                 >
                                                   Make me member
                                                 </button>
@@ -591,7 +685,7 @@
                                     </ul>
                                   </div>
                                   <div
-                                    v-if="almostActiveGroup_element.coLeader == myName"
+                                    v-show="almostActiveGroup_element.coLeader == myName"
                                     id="anotherPartCo"
                                   >
                                     <ul>
@@ -601,55 +695,58 @@
                                       </li>
                                       <li>
                                         Co-leader:
-                                        <span v-if="seeMe">{{myName}}</span>
-                                        <span v-if="!seeMe">Me</span>
+                                        <span v-show="seeMe">{{myName}}</span>
+                                        <span v-show="!seeMe">Me</span>
                                         <button
                                           @click="partCo_f(moreSettingsAllControls.partCo)"
+                                          :style="divOpacity_styles_c1.state_c1"
                                         >
                                           <span
-                                            v-if="!moreSettingsAllControls.partCo"
+                                            v-show="!moreSettingsAllControls.partCo"
                                             >Controls</span
                                           >
                                           <span
-                                            v-else-if="moreSettingsAllControls.partCo"
+                                            v-show="moreSettingsAllControls.partCo"
                                             ><u>Controls</u></span
                                           >
                                         </button>
                                         <ul
-                                          v-if="moreSettingsAllControls.partCo"
+                                          v-show="moreSettingsAllControls.partCo"
                                         >
                                           <li>
                                             Add members:
                                             <button
                                               @click="grPmembersPrs(moreSettingsAllControls.grPmembersPrsButton)"
+                                              :style="divOpacity_styles_c1.state_c1"
                                             >
                                               <span
-                                                v-if="!moreSettingsAllControls.grPmembersPrsButton"
+                                                v-show="!moreSettingsAllControls.grPmembersPrsButton"
                                                 >Show</span
                                               >
                                               <span
-                                                v-else-if="moreSettingsAllControls.grPmembersPrsButton"
+                                                v-show="moreSettingsAllControls.grPmembersPrsButton"
                                                 >Hide</span
                                               >
                                             </button>
                                             <ul
-                                              v-if="moreSettingsAllControls.grPmembersPrsButton"
+                                              v-show="moreSettingsAllControls.grPmembersPrsButton"
                                             >
                                               <li>
                                                 <button
                                                   @click="expand_addAC(moreSettingsAllControls.ex_Ac)"
+                                                  :style="divOpacity_styles_c1.state_c1"
                                                 >
                                                   <span
-                                                    v-if="moreSettingsAllControls.ex_Ac"
+                                                    v-show="moreSettingsAllControls.ex_Ac"
                                                     ><u>Expand add</u></span
                                                   >
                                                   <span
-                                                    v-else-if="!moreSettingsAllControls.ex_Ac"
+                                                    v-show="!moreSettingsAllControls.ex_Ac"
                                                     >Expand add</span
                                                   >
                                                 </button>
                                                 <ul
-                                                  v-if="moreSettingsAllControls.ex_Ac"
+                                                  v-show="moreSettingsAllControls.ex_Ac"
                                                 >
                                                   <li>
                                                     <input
@@ -659,14 +756,16 @@
                                                     />
                                                     <button
                                                       @click="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                      :style="divOpacity_styles_c1.state_c1"
                                                     >
                                                       Search
                                                     </button>
                                                   </li>
                                                   <li>
                                                     <button
-                                                      v-if="moreSettingsAllControls.addTrBt"
+                                                      v-show="moreSettingsAllControls.addTrBt"
                                                       @click="addMemberToThisGp(moreSettingsAllControls.wantToaddMem, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                      :style="divOpacity_styles_c1.state_c1"
                                                     >
                                                       Add
                                                     </button>
@@ -689,7 +788,7 @@
                                     </ul>
                                   </div>
                                   <div
-                                    v-else-if="almostActiveGroup_element.leader != myName"
+                                    v-show="almostActiveGroup_element.leader != myName && almostActiveGroup_element.coLeader != myName"
                                     id="normalGroupId_11"
                                   >
                                     <li>
@@ -703,29 +802,30 @@
                                     <li>
                                       <button
                                         @click="toggleMembersInActiveGroup(moreSettingsAllControls.toggleMembersInActiveGroupFalse)"
+                                        :style="divOpacity_styles_c1.state_c1"
                                       >
                                         <span
-                                          v-if="!moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                          v-show="!moreSettingsAllControls.toggleMembersInActiveGroupFalse"
                                           >Members</span
                                         >
                                         <span
-                                          v-else-if="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                          v-show="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
                                           ><u>Members</u></span
                                         >
                                       </button>
                                       <ul
-                                        v-if="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                        v-show="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
                                       >
                                         <li
                                           v-for="(memberOneInThisGroup, index) in almostActiveGroup_element.members"
                                           :key="index"
-                                          v-if="memberOneInThisGroup!=myName"
+                                          v-show="memberOneInThisGroup!=myName"
                                         >
                                           {{memberOneInThisGroup.slice(0,5)+".."}}
                                         </li>
                                         <li>
-                                          <span v-if="seeMe">{{myName}}</span>
-                                          <span v-if="!seeMe">Me</span>
+                                          <span v-show="seeMe">{{myName}}</span>
+                                          <span v-show="!seeMe">Me</span>
                                         </li>
                                       </ul>
                                     </li>
@@ -733,7 +833,7 @@
                                 </ul>
                               </div>
                               <div
-                                v-else-if="moreSettingsAllControls.mainLocalGroups_ActiveOne==''"
+                                v-show="moreSettingsAllControls.mainLocalGroups_ActiveOne==''"
                               >
                                 No group selected
                               </div>
@@ -744,7 +844,7 @@
                             <div>
                               <div
                                 id="notSelectedGrp_mg1"
-                                v-if="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
+                                v-show="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
                               >
                                 <div
                                   v-for="(groupMessage, index) in publicMessageFromGroupWeb"
@@ -752,7 +852,7 @@
                                   id="notSelectedGrp_mg1_nDiv"
                                 >
                                   <div
-                                    v-if="groupMessage.userName==myName"
+                                    v-show="groupMessage.userName==myName"
                                     :style="updatemyColor"
                                     id="notSelectedGrp_mg1_nDiv_1"
                                   >
@@ -760,12 +860,15 @@
                                       {{groupMessage.userName.slice(0,5)+".."}}
                                     </p>
                                     <p>{{groupMessage.publicMessage}}</p>
-                                    <p class="classUsersTime_1" v-if="usersTime">
+                                    <p
+                                      class="classUsersTime_1"
+                                      v-show="usersTime"
+                                    >
                                       {{ groupMessage.newDate.toDate() }}
                                     </p>
                                   </div>
                                   <div
-                                    v-else-if="groupMessage.userName!=myName"
+                                    v-show="groupMessage.userName!=myName"
                                     :style="updatepublicsColor"
                                     id="notSelectedGrp_mg1_nDiv_2"
                                   >
@@ -773,7 +876,10 @@
                                       {{groupMessage.userName.slice(0,5)+".."}}
                                     </p>
                                     <p>{{groupMessage.publicMessage}}</p>
-                                    <p class="classUsersTime_1" v-if="usersTime">
+                                    <p
+                                      class="classUsersTime_1"
+                                      v-show="usersTime"
+                                    >
                                       {{ groupMessage.newDate.toDate() }}
                                     </p>
                                   </div>
@@ -781,7 +887,7 @@
                               </div>
                               <div
                                 id="notSelectedGrp_mg2"
-                                v-else-if="moreSettingsAllControls.mainLocalGroups_ActiveOne==''"
+                                v-show="moreSettingsAllControls.mainLocalGroups_ActiveOne==''"
                               >
                                 <p>Please make or select a group to chat.</p>
                               </div>
@@ -790,7 +896,7 @@
                         </div>
                         <!-- my all groups after settings chat box for group input-->
                         <div
-                          v-if="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
+                          v-show="moreSettingsAllControls.mainLocalGroups_ActiveOne!=''"
                           id="containerOfGroupChatsInputs"
                         >
                           <input
@@ -800,9 +906,11 @@
                             :placeholder="messagePlaceholder"
                             v-model.trim="sendGrMgvM"
                             @keyup.13="sendGrMg(moreSettingsAllControls.mainLocalGroups_ActiveOne,myName,sendGrMgvM)"
+                            :style="divOpacity_styles.state1"
                           />
                           <button
                             @click="sendGrMg(moreSettingsAllControls.mainLocalGroups_ActiveOne,myName,sendGrMgvM)"
+                            :style="divOpacity_styles_c1.state_c1"
                           >
                             <span>{{tmSndGpmg}}</span>
                           </button>
@@ -811,7 +919,7 @@
                       <!-- making groups -->
                       <div
                         id="make_Groups_Container"
-                        v-else-if="!moreSettingsAllControls.showMyGroups"
+                        v-show="!moreSettingsAllControls.showMyGroups"
                       >
                         <div>
                           <div>
@@ -822,9 +930,11 @@
                                 v-model.trim="nameGroupMine"
                                 placeholder="Example.."
                                 @keyup.13="goforComGrp(nameGroupMine, myName)"
+                                :style="divOpacity_styles.state1"
                               />
                               <button
                                 @click="goforComGrp(nameGroupMine, myName)"
+                                :style="divOpacity_styles_c1.state_c1"
                               >
                                 Go
                               </button>
@@ -836,8 +946,8 @@
                             <p>
                               Leader:
                               <i
-                                ><span v-if="seeMe">{{myName}}</span>
-                                <span v-if="!seeMe">Me</span></i
+                                ><span v-show="seeMe">{{myName}}</span>
+                                <span v-show="!seeMe">Me</span></i
                               >
                             </p>
                             <p>
@@ -879,7 +989,7 @@
               :key="index"
             >
               <div
-                v-if="publicMessage_one.userName == myName"
+                v-show="publicMessage_one.userName == myName"
                 id="me_divColor"
                 :style="updatemyColor"
                 :title="publicMessage_one.newDate.toDate()"
@@ -888,12 +998,12 @@
                   {{publicMessage_one.userName.slice(0,5)+'..'}}
                 </p>
                 <p>{{publicMessage_one.publicMessage}}</p>
-                <p class="classUsersTime" v-if="usersTime">
+                <p class="classUsersTime" v-show="usersTime">
                   {{ publicMessage_one.newDate.toDate() }}
                 </p>
               </div>
               <div
-                v-else-if="publicMessage_one.userName != myName"
+                v-show="publicMessage_one.userName != myName"
                 id="amnot_me_divColor"
                 :style="updatepublicsColor"
                 :title="publicMessage_one.newDate.toDate()"
@@ -902,7 +1012,7 @@
                   {{publicMessage_one.userName.slice(0,5)+'..'}}
                 </p>
                 <p>{{publicMessage_one.publicMessage}}</p>
-                <p class="classUsersTime" v-if="usersTime">
+                <p class="classUsersTime" v-show="usersTime">
                   {{ publicMessage_one.newDate.toDate() }}
                 </p>
               </div>
@@ -916,8 +1026,14 @@
               v-model.trim="addMassageText"
               @keyup.13="addMessage(myName)"
               :placeholder="messagePlaceholder"
+              :style="divOpacity_styles.state1"
             />
-            <button @click="addMessage(myName)">Send</button>
+            <button
+              @click="addMessage(myName)"
+              :style="divOpacity_styles_c1.state_c1"
+            >
+              <span>{{tmSndGpmg_11}}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -966,7 +1082,6 @@
       Online Vue 
     -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <script src="vue/app.js"></script>
   </body>
 </html>

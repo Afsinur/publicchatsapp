@@ -14,12 +14,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Public Chats</title>
     <link rel="stylesheet" href="css/app.css" />
-    <!-- Global site tag (gtag.js) - Google Analytics 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=UA-175520136-1"
     ></script>
-   
+
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -29,7 +29,6 @@
 
       gtag("config", "UA-175520136-1");
     </script>
-     -->
   </head>
   <body>
     <div class="loading_div">loading..</div>
@@ -855,6 +854,7 @@
                                     v-show="groupMessage.userName==myName"
                                     :style="updatemyColor"
                                     id="notSelectedGrp_mg1_nDiv_1"
+                                    :title="groupMessage.newDate.toDate()"
                                   >
                                     <p class="upUs">
                                       {{groupMessage.userName.slice(0,5)+".."}}
@@ -871,6 +871,7 @@
                                     v-show="groupMessage.userName!=myName"
                                     :style="updatepublicsColor"
                                     id="notSelectedGrp_mg1_nDiv_2"
+                                    :title="groupMessage.newDate.toDate()"
                                   >
                                     <p class="upUs">
                                       {{groupMessage.userName.slice(0,5)+".."}}
@@ -884,6 +885,7 @@
                                     </p>
                                   </div>
                                 </div>
+                                <div id="chatScVT1"></div>
                               </div>
                               <div
                                 id="notSelectedGrp_mg2"
@@ -1017,6 +1019,7 @@
                 </p>
               </div>
             </div>
+            <div id="chatScVT15"></div>
           </div>
           <!-- public chat input -->
           <div class="messgaeInputDiv">

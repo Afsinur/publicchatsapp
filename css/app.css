@@ -7,6 +7,27 @@
 :root {
   --content_background-: rgba(250, 250, 250, 0.7);
 }
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(2, 119, 253);
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 38, 255);
+}
 body {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../img/background/flowers_bag_flower_89155_1366x768.jpg");
@@ -48,6 +69,11 @@ div.loading_div {
   align-items: center;
   justify-content: center;
   z-index: 1;
+}
+#chatScVT1 {
+  position: relative;
+  width: 100%;
+  background-color: aqua;
 }
 #posts_div {
   position: relative;

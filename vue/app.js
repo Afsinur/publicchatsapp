@@ -11,6 +11,7 @@ window.addEventListener("load", () => {
   var publicchatsapp_idApp = document.querySelector("div#app");
   var div_loading_div = document.querySelector("div.loading_div");
   var snapCounter2 = 0;
+  var titleCounter = 0;
   var snapCounterPushes = [];
   var colorArr = [
     "0",
@@ -30,6 +31,7 @@ window.addEventListener("load", () => {
     "e",
     "f",
   ];
+  var blinkingTimes = 250;
   //
   //show app div..
   publicchatsapp_idApp.style.display = "block";
@@ -130,7 +132,8 @@ window.addEventListener("load", () => {
           backgroundColor: "rgba(255, 255, 255, 0.7)",
         },
         state_c2: {
-          backgroundColor: "#5af",
+          color: "",
+          backgroundColor: "#57f",
         },
         state_c3: {
           color: "#fff",
@@ -166,7 +169,6 @@ window.addEventListener("load", () => {
     methods: {
       log_in(e) {
         if (e != "" && e.length > 10) {
-          var titleCounter = 0;
           this.button_conditions.loading = true;
           db.collection("users")
             .where("name", "==", e)
@@ -217,9 +219,27 @@ window.addEventListener("load", () => {
                                 data.docChanges().forEach((docChange) => {
                                   let changeValue = docChange.doc.data();
                                   if (docChange.type == "added") {
-                                    this.publicMessageFromWeb.unshift(
-                                      changeValue
-                                    );
+                                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                                    const prom11255 = new Promise((resolve) => {
+                                      this.publicMessageFromWeb.push(
+                                        changeValue
+                                      );
+                                      resolve(0);
+                                    });
+                                    prom11255.then((rdata) => {
+                                      if (rdata == 0) {
+                                        setTimeout(() => {
+                                          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                                        }, blinkingTimes);
+                                        var chatScVT1_varId_1an = document.getElementById(
+                                          "chatScVT15"
+                                        );
+                                        chatScVT1_varId_1an.scrollIntoView({
+                                          behavior: "smooth",
+                                          block: "start",
+                                        });
+                                      }
+                                    });
                                   }
                                 });
                                 this.replace_unique_name_typing = false;
@@ -252,7 +272,25 @@ window.addEventListener("load", () => {
                     data.docChanges().forEach((docChange) => {
                       let changeValue = docChange.doc.data();
                       if (docChange.type == "added") {
-                        this.publicMessageFromWeb.unshift(changeValue);
+                        this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                        const prom1125 = new Promise((resolve) => {
+                          this.publicMessageFromWeb.push(changeValue);
+                          resolve(0);
+                        });
+                        prom1125.then((rdata) => {
+                          if (rdata == 0) {
+                            setTimeout(() => {
+                              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                            }, blinkingTimes);
+                            var chatScVT1_varId_1an = document.getElementById(
+                              "chatScVT15"
+                            );
+                            chatScVT1_varId_1an.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            });
+                          }
+                        });
                       }
                     });
                     this.replace_unique_name_typing = false;
@@ -276,7 +314,6 @@ window.addEventListener("load", () => {
         if (this.addMassageText != "") {
           this.tmSndGpmg_11 = "Sending..";
           this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
-          this.button_conditions.loading = true;
           this.timeDate = new Date();
           db.collection("publicMessagesDatabase")
             .add({
@@ -286,7 +323,6 @@ window.addEventListener("load", () => {
             })
             .then(() => {
               this.addMassageText = "";
-              this.button_conditions.loading = false;
               this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
               this.tmSndGpmg_11 = "Send";
             });
@@ -485,6 +521,13 @@ window.addEventListener("load", () => {
         this.moreSettingsAllControls.showMyGroups = false;
       },
       mainLocalGroups_ActiveOne_press(e) {
+        var scrollTopTopublics = document.getElementById(
+          "me_chatsContainer" //containerOfGroupChatsInputs
+        );
+        scrollTopTopublics.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
         snapCounter2 = 0;
         snapCounterPushes.push({ groupName: e });
         snapCounterPushes.forEach((data) => {
@@ -512,7 +555,25 @@ window.addEventListener("load", () => {
             .onSnapshot((data) => {
               data.docChanges().forEach((change) => {
                 if (change.type == "added") {
-                  this.publicMessageFromGroupWeb.unshift(change.doc.data());
+                  const prom112 = new Promise((resolve) => {
+                    this.publicMessageFromGroupWeb.push(change.doc.data());
+                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                    resolve(0);
+                  });
+                  prom112.then((rdata) => {
+                    if (rdata == 0) {
+                      setTimeout(() => {
+                        this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                      }, blinkingTimes);
+                      var chatScVT1_varId_1an = document.getElementById(
+                        "chatScVT1"
+                      );
+                      chatScVT1_varId_1an.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                    }
+                  });
                 }
               });
             });
@@ -522,7 +583,14 @@ window.addEventListener("load", () => {
             .get()
             .then((data) => {
               data.docs.forEach((doc) => {
-                this.publicMessageFromGroupWeb.unshift(doc.data());
+                this.publicMessageFromGroupWeb.push(doc.data());
+              });
+            })
+            .then(() => {
+              var chatScVT1_varId = document.getElementById("chatScVT1");
+              chatScVT1_varId.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
               });
             });
         }

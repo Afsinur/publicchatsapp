@@ -786,7 +786,7 @@ window.addEventListener("load", () => {
             });
         }
       },
-      find_himMemberOne_1(e1) {
+      find_himMemberOne_1(e1, e2) {
         if (this.moreSettingsAllControls.searchForAdding_Members != "") {
           db.collection("users")
             .get()
@@ -818,19 +818,25 @@ window.addEventListener("load", () => {
                               "already a member of this group!";
                           }
                         } else {
-                          last_testFrMh = "m";
-                          justForDCurrently = amn_1;
-                          this.moreSettingsAllControls.wantToaddMem = amn_1;
-                          if (last_testFrMh == "m") {
+                          if (doc.data().leader.slice(0, 5) == e2) {
                             this.moreSettingsAllControls.addTrBt = false;
-                            if (justForDCurrently == this.myName) {
-                              this.moreSettingsAllControls.searchingMem =
-                                "You are already co-leader for this group!";
-                            } else {
-                              this.moreSettingsAllControls.addTrBt = true;
-                              this.moreSettingsAllControls.searchingMem = "";
-                              this.moreSettingsAllControls.searchingMem =
-                                justForDCurrently.slice(0, 5) + "..";
+                            this.moreSettingsAllControls.searchingMem =
+                              "already leader of this group!";
+                          } else {
+                            last_testFrMh = "m";
+                            justForDCurrently = amn_1;
+                            this.moreSettingsAllControls.wantToaddMem = amn_1;
+                            if (last_testFrMh == "m") {
+                              this.moreSettingsAllControls.addTrBt = false;
+                              if (justForDCurrently == this.myName) {
+                                this.moreSettingsAllControls.searchingMem =
+                                  "You are already co-leader for this group!";
+                              } else {
+                                this.moreSettingsAllControls.addTrBt = true;
+                                this.moreSettingsAllControls.searchingMem = "";
+                                this.moreSettingsAllControls.searchingMem =
+                                  justForDCurrently.slice(0, 5) + "..";
+                              }
                             }
                           }
                         }

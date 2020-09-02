@@ -839,10 +839,10 @@
                                                     <input
                                                       type="text"
                                                       v-model.trim="moreSettingsAllControls.searchForAdding_Members"
-                                                      @keyup.13="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                      @keyup.13="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne, moreSettingsAllControls.searchForAdding_Members)"
                                                     />
                                                     <button
-                                                      @click="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                      @click="find_himMemberOne_1(moreSettingsAllControls.mainLocalGroups_ActiveOne, moreSettingsAllControls.searchForAdding_Members)"
                                                       :style="divOpacity_styles_c1.state_c1"
                                                     >
                                                       Search

@@ -701,6 +701,7 @@ window.addEventListener("load", () => {
       },
       expand_addAC(e) {
         if (e == false) {
+          this.moreSettingsAllControls.addTrBt = false;
           this.moreSettingsAllControls.ex_Ac = true;
         } else {
           this.moreSettingsAllControls.ex_Ac = false;

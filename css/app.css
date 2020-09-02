@@ -68,7 +68,85 @@ div.loading_div {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  z-index: 4;
+}
+#delmYAcDiid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#delmYAcDiid_nxt1 {
+  position: absolute;
+  background-color: #fff !important;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#delmYAcDiid_nxt1 p {
+  margin: 5px;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+  color: black !important;
+}
+#delmYAcDiid_nxt1_p {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+#delmYAcDiid_nxt1 button {
+  margin: 15px !important;
+  padding: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+#delmYAcDiid_nxt1_p button:last-child {
+  color: #000 !important;
+}
+#delmYAcDiid_nxt1_p button:last-child:hover {
+  filter: brightness(0.65);
+}
+#delmYAcDiid_nxt1_bt {
+  background-color: #fd0000 !important;
+  color: #fff !important;
+}
+#delmYAcDiid_nxt1_bt:hover {
+  background-color: #cd0000 !important;
+  color: #fff !important;
+}
+#spanLvM {
+  display: flex;
+}
+#marglSb {
+  margin: 10px 10px !important;
+  background-color: #fd0000 !important;
+  color: #fff !important;
+}
+#marglSb:hover {
+  background-color: #cd0000 !important;
+  color: #fff !important;
+}
+#dldlbtbt {
+  background-color: #fd0000 !important;
+  color: #fff !important;
+}
+#dldlbtbt:hover {
+  background-color: #cd0000 !important;
+  color: #fff !important;
 }
 #chatScVT1 {
   position: relative;
@@ -431,10 +509,6 @@ div.userN_hide_show > span > button {
 #me_LeaderID ul li,
 #me_LeaderID ul li button {
   font-weight: 500;
-}
-#me_LeaderID > ul > li > ul > li:nth-child(4) button {
-  color: #fff !important;
-  background-color: #f00 !important;
 }
 #normalGroupId_11 {
   position: relative;

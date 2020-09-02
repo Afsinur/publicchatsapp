@@ -285,6 +285,37 @@
                       </li>
                     </ul>
                   </div>
+                  <!--
+                      Delete my account..
+                    -->
+                  <div id="myAndPublicColors">
+                    <p>Delete my account</p>
+                    <ul>
+                      <li>
+                        <button @click="delTMyacall(delCaller)" id="dldlbtbt">
+                          Delete
+                        </button>
+                      </li>
+                    </ul>
+                    <div id="delmYAcDiid" v-show="delCaller">
+                      <div id="delmYAcDiid_nxt1">
+                        <p>
+                          Are you sure that you want to delete your account!
+                        </p>
+                        <p id="delmYAcDiid_nxt1_p">
+                          <button
+                            id="delmYAcDiid_nxt1_bt"
+                            @click="delTMyacallit(myName)"
+                          >
+                            Delete
+                          </button>
+                          <button @click="delCaller = !delCaller">
+                            Cancel
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!-- group -->
                 <div v-show="moreSettingsAllControls.deactiveSite">
@@ -674,10 +705,35 @@
                                           <li>
                                             Delete group:
                                             <button
-                                              @click="delG(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                              id="delmYAcDiid_nxt1_bt"
+                                              @click="delCaller3_f(delCaller3)"
                                             >
                                               Delete
                                             </button>
+                                            <div
+                                              id="delmYAcDiid"
+                                              v-show="delCaller3"
+                                            >
+                                              <div id="delmYAcDiid_nxt1">
+                                                <p>
+                                                  Are you sure that you want to
+                                                  delete this group!
+                                                </p>
+                                                <p id="delmYAcDiid_nxt1_p">
+                                                  <button
+                                                    id="delmYAcDiid_nxt1_bt"
+                                                    @click="delTMyacallit3(moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                                  >
+                                                    Delete
+                                                  </button>
+                                                  <button
+                                                    @click="delCaller3 = !delCaller3"
+                                                  >
+                                                    Cancel
+                                                  </button>
+                                                </p>
+                                              </div>
+                                            </div>
                                           </li>
                                         </ul>
                                       </li>
@@ -696,19 +752,51 @@
                                         Co-leader:
                                         <span v-show="seeMe">{{myName}}</span>
                                         <span v-show="!seeMe">Me</span>
-                                        <button
-                                          @click="partCo_f(moreSettingsAllControls.partCo)"
-                                          :style="divOpacity_styles_c1.state_c1"
+                                        <span id="spanLvM">
+                                          <button
+                                            @click="partCo_f(moreSettingsAllControls.partCo)"
+                                            :style="divOpacity_styles_c1.state_c1"
+                                          >
+                                            <span
+                                              v-show="!moreSettingsAllControls.partCo"
+                                              >Controls</span
+                                            >
+                                            <span
+                                              v-show="moreSettingsAllControls.partCo"
+                                              ><u>Controls</u></span
+                                            >
+                                          </button>
+                                          <button
+                                            id="marglSb"
+                                            @click="delCaller1_f(delCaller1)"
+                                          >
+                                            Leave
+                                          </button>
+                                        </span>
+                                        <div
+                                          id="delmYAcDiid"
+                                          v-show="delCaller1"
                                         >
-                                          <span
-                                            v-show="!moreSettingsAllControls.partCo"
-                                            >Controls</span
-                                          >
-                                          <span
-                                            v-show="moreSettingsAllControls.partCo"
-                                            ><u>Controls</u></span
-                                          >
-                                        </button>
+                                          <div id="delmYAcDiid_nxt1">
+                                            <p>
+                                              Are you sure that you want to
+                                              leave this group!
+                                            </p>
+                                            <p id="delmYAcDiid_nxt1_p">
+                                              <button
+                                                id="delmYAcDiid_nxt1_bt"
+                                                @click="delTMyacallit1(myName, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                              >
+                                                Leave
+                                              </button>
+                                              <button
+                                                @click="delCaller1 = !delCaller1"
+                                              >
+                                                Cancel
+                                              </button>
+                                            </p>
+                                          </div>
+                                        </div>
                                         <ul
                                           v-show="moreSettingsAllControls.partCo"
                                         >
@@ -799,19 +887,48 @@
                                       {{almostActiveGroup_element.coLeader.slice(0,5)+".."}}
                                     </li>
                                     <li>
-                                      <button
-                                        @click="toggleMembersInActiveGroup(moreSettingsAllControls.toggleMembersInActiveGroupFalse)"
-                                        :style="divOpacity_styles_c1.state_c1"
-                                      >
-                                        <span
-                                          v-show="!moreSettingsAllControls.toggleMembersInActiveGroupFalse"
-                                          >Members</span
+                                      <span id="spanLvM">
+                                        <button
+                                          @click="toggleMembersInActiveGroup(moreSettingsAllControls.toggleMembersInActiveGroupFalse)"
+                                          :style="divOpacity_styles_c1.state_c1"
                                         >
-                                        <span
-                                          v-show="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
-                                          ><u>Members</u></span
+                                          <span
+                                            v-show="!moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                            >Members</span
+                                          >
+                                          <span
+                                            v-show="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
+                                            ><u>Members</u></span
+                                          >
+                                        </button>
+                                        <button
+                                          id="marglSb"
+                                          @click="delCaller2_f(delCaller2)"
                                         >
-                                      </button>
+                                          Leave
+                                        </button>
+                                      </span>
+                                      <div id="delmYAcDiid" v-show="delCaller2">
+                                        <div id="delmYAcDiid_nxt1">
+                                          <p>
+                                            Are you sure that you want to leave
+                                            this group!
+                                          </p>
+                                          <p id="delmYAcDiid_nxt1_p">
+                                            <button
+                                              id="delmYAcDiid_nxt1_bt"
+                                              @click="delTMyacallit2(myName, moreSettingsAllControls.mainLocalGroups_ActiveOne)"
+                                            >
+                                              Leave
+                                            </button>
+                                            <button
+                                              @click="delCaller2 = !delCaller2"
+                                            >
+                                              Cancel
+                                            </button>
+                                          </p>
+                                        </div>
+                                      </div>
                                       <ul
                                         v-show="moreSettingsAllControls.toggleMembersInActiveGroupFalse"
                                       >

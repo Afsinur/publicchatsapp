@@ -181,6 +181,7 @@ window.addEventListener("load", () => {
             .get()
             .then((data) => {
               if (data.docs.length == 0) {
+                console.log(0);
                 // check the slice members all..
                 const promise_5 = new Promise((resolve) => {
                   var tr_or_fls = 0;
@@ -1148,513 +1149,96 @@ window.addEventListener("load", () => {
       },
       delTMyacallit(e) {
         this.button_conditions.loading = true;
-        var dlI = 1;
-        if ((dlI = 1)) {
-          var trimedE = e.trim();
-          var wanting_delete_User = trimedE;
+        var analiz_1 = 0;
+        const prDlC_after = new Promise((resolve) => {
+          var wanting_delete_User = "deleteuser123";
+          //leader
           db.collection("publicGroups")
             .where("leader", "==", wanting_delete_User)
             .get()
             .then((data) => {
-              if (data.docs.length != 0) {
-                data.docs.forEach((doc) => {
+              const prdl_1 = new Promise((resolve) => {
+                data.docs.forEach((doc, index) => {
                   var newCoLdL = doc.data().coLeader;
-                  //delete group's messages..
                   var newCoLdLGrp = doc.data().groupName;
+                  var upIDnw = doc.id;
                   db.collection(newCoLdLGrp)
                     .where("userName", "==", wanting_delete_User)
                     .get()
                     .then((data) => {
-                      data.docs.forEach((doc) => {
+                      data.docs.forEach((doc, index) => {
                         db.collection(newCoLdLGrp).doc(doc.id).delete();
                       });
-                    })
+                    }) //1st process..
                     .then(() => {
-                      db.collection("publicGroups")
-                        .doc(doc.id)
-                        .update({
+                      if (newCoLdL != "") {
+                        db.collection("publicGroups").doc(upIDnw).update({
                           leader: newCoLdL,
                           coLeader: "",
-                        })
-                        .then(() => {
-                          db.collection("publicGroups")
-                            .where("coLeader", "==", wanting_delete_User)
+                        }); //2nd process..
+                      } else if (newCoLdL == "") {
+                        db.collection("publicGroups").doc(upIDnw).delete();
+                      }
+                    });
+                  if (data.docs.length == index + 1) {
+                    analiz_1 = 1;
+                    resolve(analiz_1);
+                  }
+                });
+                if (data.docs.length == 0) {
+                  resolve(analiz_1);
+                }
+              });
+              prdl_1.then((pd_1) => {
+                if (data.docs.length == 0 || pd_1 == 1) {
+                  db.collection("publicGroups")
+                    .where("coLeader", "==", wanting_delete_User)
+                    .get()
+                    .then((data) => {
+                      const prdl_2 = new Promise((resolve) => {
+                        data.docs.forEach((doc, index) => {
+                          var newCoLdLGrp_1 = doc.data().groupName;
+                          db.collection(newCoLdLGrp_1)
+                            .where("userName", "==", wanting_delete_User)
                             .get()
                             .then((data) => {
-                              if (data.docs.length != 0) {
-                                data.docs.forEach((doc) => {
-                                  //delete group's messages..
-                                  var newCoLdLGrp_1 = doc.data().groupName;
-                                  db.collection(newCoLdLGrp_1)
-                                    .where(
-                                      "userName",
-                                      "==",
-                                      wanting_delete_User
-                                    )
-                                    .get()
-                                    .then((data) => {
-                                      data.docs.forEach((doc) => {
-                                        db.collection(newCoLdLGrp_1)
-                                          .doc(doc.id)
-                                          .delete();
-                                      });
-                                    })
-                                    .then(() => {
-                                      db.collection("publicGroups")
-                                        .doc(doc.id)
-                                        .update({
-                                          coLeader: "",
-                                        })
-                                        .then(() => {
-                                          db.collection("publicGroups")
-                                            .get()
-                                            .then((data) => {
-                                              if (data.docs.length != 0) {
-                                                data.docs.forEach((doc) => {
-                                                  var membersUpId = doc.id;
-                                                  if (
-                                                    doc
-                                                      .data()
-                                                      .members.includes(
-                                                        wanting_delete_User
-                                                      ) == true
-                                                  ) {
-                                                    var memgrP1 = doc.data()
-                                                      .groupName;
-                                                    db.collection(memgrP1)
-                                                      .where(
-                                                        "userName",
-                                                        "==",
-                                                        wanting_delete_User
-                                                      )
-                                                      .get()
-                                                      .then((data) => {
-                                                        data.docs.forEach(
-                                                          (doc) => {
-                                                            db.collection(
-                                                              memgrP1
-                                                            )
-                                                              .doc(doc.id)
-                                                              .delete();
-                                                          }
-                                                        );
-                                                      })
-                                                      .then(() => {
-                                                        var newListedMembersWithoutMe = [];
-                                                        const prms25 = new Promise(
-                                                          (resolve) => {
-                                                            doc
-                                                              .data()
-                                                              .members.forEach(
-                                                                (mbr) => {
-                                                                  if (
-                                                                    mbr !=
-                                                                    wanting_delete_User
-                                                                  ) {
-                                                                    newListedMembersWithoutMe.push(
-                                                                      mbr
-                                                                    );
-                                                                  }
-                                                                }
-                                                              );
-                                                            resolve(
-                                                              newListedMembersWithoutMe
-                                                            );
-                                                          }
-                                                        );
-                                                        prms25.then(
-                                                          (pmdata) => {
-                                                            db.collection(
-                                                              "publicGroups"
-                                                            )
-                                                              .doc(membersUpId)
-                                                              .update({
-                                                                members: pmdata,
-                                                              })
-                                                              .then(() => {
-                                                                db.collection(
-                                                                  "publicMessagesDatabase"
-                                                                )
-                                                                  .where(
-                                                                    "userName",
-                                                                    "==",
-                                                                    wanting_delete_User
-                                                                  )
-                                                                  .get()
-                                                                  .then(
-                                                                    (data) => {
-                                                                      if (
-                                                                        data
-                                                                          .docs
-                                                                          .length !=
-                                                                        0
-                                                                      ) {
-                                                                        data.docs.forEach(
-                                                                          (
-                                                                            doc
-                                                                          ) => {
-                                                                            db.collection(
-                                                                              "publicMessagesDatabase"
-                                                                            )
-                                                                              .doc(
-                                                                                doc.id
-                                                                              )
-                                                                              .delete();
-                                                                          }
-                                                                        );
-                                                                      } else {
-                                                                        db.collection(
-                                                                          "users"
-                                                                        )
-                                                                          .where(
-                                                                            "name",
-                                                                            "==",
-                                                                            wanting_delete_User
-                                                                          )
-                                                                          .get()
-                                                                          .then(
-                                                                            (
-                                                                              data
-                                                                            ) => {
-                                                                              if (
-                                                                                data
-                                                                                  .docs
-                                                                                  .length !=
-                                                                                0
-                                                                              ) {
-                                                                                data.docs.forEach(
-                                                                                  (
-                                                                                    doc
-                                                                                  ) => {
-                                                                                    db.collection(
-                                                                                      "users"
-                                                                                    )
-                                                                                      .doc(
-                                                                                        doc.id
-                                                                                      )
-                                                                                      .delete();
-                                                                                  }
-                                                                                );
-                                                                              }
-                                                                            }
-                                                                          );
-                                                                      }
-                                                                    }
-                                                                  )
-                                                                  .then(() => {
-                                                                    db.collection(
-                                                                      "users"
-                                                                    )
-                                                                      .where(
-                                                                        "name",
-                                                                        "==",
-                                                                        wanting_delete_User
-                                                                      )
-                                                                      .get()
-                                                                      .then(
-                                                                        (
-                                                                          data
-                                                                        ) => {
-                                                                          if (
-                                                                            data
-                                                                              .docs
-                                                                              .length !=
-                                                                            0
-                                                                          ) {
-                                                                            data.docs.forEach(
-                                                                              (
-                                                                                doc
-                                                                              ) => {
-                                                                                db.collection(
-                                                                                  "users"
-                                                                                )
-                                                                                  .doc(
-                                                                                    doc.id
-                                                                                  )
-                                                                                  .delete();
-                                                                              }
-                                                                            );
-                                                                          }
-                                                                        }
-                                                                      );
-                                                                  });
-                                                              });
-                                                          }
-                                                        );
-                                                      });
-                                                  }
-                                                });
-                                              } else {
-                                                db.collection(
-                                                  "publicMessagesDatabase"
-                                                )
-                                                  .where(
-                                                    "userName",
-                                                    "==",
-                                                    wanting_delete_User
-                                                  )
-                                                  .get()
-                                                  .then((data) => {
-                                                    if (data.docs.length != 0) {
-                                                      data.docs.forEach(
-                                                        (doc) => {
-                                                          db.collection(
-                                                            "publicMessagesDatabase"
-                                                          )
-                                                            .doc(doc.id)
-                                                            .delete();
-                                                        }
-                                                      );
-                                                    } else {
-                                                      db.collection("users")
-                                                        .where(
-                                                          "name",
-                                                          "==",
-                                                          wanting_delete_User
-                                                        )
-                                                        .get()
-                                                        .then((data) => {
-                                                          if (
-                                                            data.docs.length !=
-                                                            0
-                                                          ) {
-                                                            data.docs.forEach(
-                                                              (doc) => {
-                                                                db.collection(
-                                                                  "users"
-                                                                )
-                                                                  .doc(doc.id)
-                                                                  .delete();
-                                                              }
-                                                            );
-                                                          }
-                                                        });
-                                                    }
-                                                  })
-                                                  .then(() => {
-                                                    db.collection("users")
-                                                      .where(
-                                                        "name",
-                                                        "==",
-                                                        wanting_delete_User
-                                                      )
-                                                      .get()
-                                                      .then((data) => {
-                                                        if (
-                                                          data.docs.length != 0
-                                                        ) {
-                                                          data.docs.forEach(
-                                                            (doc) => {
-                                                              db.collection(
-                                                                "users"
-                                                              )
-                                                                .doc(doc.id)
-                                                                .delete();
-                                                            }
-                                                          );
-                                                        }
-                                                      });
-                                                  });
-                                              }
-                                            });
-                                        });
-                                    });
-                                });
-                              } else {
-                                db.collection("publicGroups")
-                                  .get()
-                                  .then((data) => {
-                                    if (data.docs.length != 0) {
-                                      data.docs.forEach((doc) => {
-                                        var membersUpId = doc.id;
-                                        if (
-                                          doc
-                                            .data()
-                                            .members.includes(
-                                              wanting_delete_User
-                                            ) == true
-                                        ) {
-                                          var memgrP1 = doc.data().groupName;
-                                          db.collection(memgrP1)
-                                            .where(
-                                              "userName",
-                                              "==",
-                                              wanting_delete_User
-                                            )
-                                            .get()
-                                            .then((data) => {
-                                              data.docs.forEach((doc) => {
-                                                db.collection(memgrP1)
-                                                  .doc(doc.id)
-                                                  .delete();
-                                              });
-                                            })
-                                            .then(() => {
-                                              var newListedMembersWithoutMe = [];
-                                              const prms25 = new Promise(
-                                                (resolve) => {
-                                                  doc
-                                                    .data()
-                                                    .members.forEach((mbr) => {
-                                                      if (
-                                                        mbr !=
-                                                        wanting_delete_User
-                                                      ) {
-                                                        newListedMembersWithoutMe.push(
-                                                          mbr
-                                                        );
-                                                      }
-                                                    });
-                                                  resolve(
-                                                    newListedMembersWithoutMe
-                                                  );
-                                                }
-                                              );
-                                              prms25.then((pmdata) => {
-                                                db.collection("publicGroups")
-                                                  .doc(membersUpId)
-                                                  .update({
-                                                    members: pmdata,
-                                                  })
-                                                  .then(() => {
-                                                    db.collection(
-                                                      "publicMessagesDatabase"
-                                                    )
-                                                      .where(
-                                                        "userName",
-                                                        "==",
-                                                        wanting_delete_User
-                                                      )
-                                                      .get()
-                                                      .then((data) => {
-                                                        if (
-                                                          data.docs.length != 0
-                                                        ) {
-                                                          data.docs.forEach(
-                                                            (doc) => {
-                                                              db.collection(
-                                                                "publicMessagesDatabase"
-                                                              )
-                                                                .doc(doc.id)
-                                                                .delete();
-                                                            }
-                                                          );
-                                                        } else {
-                                                          db.collection("users")
-                                                            .where(
-                                                              "name",
-                                                              "==",
-                                                              wanting_delete_User
-                                                            )
-                                                            .get()
-                                                            .then((data) => {
-                                                              if (
-                                                                data.docs
-                                                                  .length != 0
-                                                              ) {
-                                                                data.docs.forEach(
-                                                                  (doc) => {
-                                                                    db.collection(
-                                                                      "users"
-                                                                    )
-                                                                      .doc(
-                                                                        doc.id
-                                                                      )
-                                                                      .delete();
-                                                                  }
-                                                                );
-                                                              }
-                                                            });
-                                                        }
-                                                      })
-                                                      .then(() => {
-                                                        db.collection("users")
-                                                          .where(
-                                                            "name",
-                                                            "==",
-                                                            wanting_delete_User
-                                                          )
-                                                          .get()
-                                                          .then((data) => {
-                                                            if (
-                                                              data.docs
-                                                                .length != 0
-                                                            ) {
-                                                              data.docs.forEach(
-                                                                (doc) => {
-                                                                  db.collection(
-                                                                    "users"
-                                                                  )
-                                                                    .doc(doc.id)
-                                                                    .delete();
-                                                                }
-                                                              );
-                                                            }
-                                                          });
-                                                      });
-                                                  });
-                                              });
-                                            });
-                                        }
-                                      });
-                                    } else {
-                                      db.collection("publicMessagesDatabase")
-                                        .where(
-                                          "userName",
-                                          "==",
-                                          wanting_delete_User
-                                        )
-                                        .get()
-                                        .then((data) => {
-                                          if (data.docs.length != 0) {
-                                            data.docs.forEach((doc) => {
-                                              db.collection(
-                                                "publicMessagesDatabase"
-                                              )
-                                                .doc(doc.id)
-                                                .delete();
-                                            });
-                                          } else {
-                                            db.collection("users")
-                                              .where(
-                                                "name",
-                                                "==",
-                                                wanting_delete_User
-                                              )
-                                              .get()
-                                              .then((data) => {
-                                                if (data.docs.length != 0) {
-                                                  data.docs.forEach((doc) => {
-                                                    db.collection("users")
-                                                      .doc(doc.id)
-                                                      .delete();
-                                                  });
-                                                }
-                                              });
-                                          }
-                                        })
-                                        .then(() => {
-                                          db.collection("users")
-                                            .where(
-                                              "name",
-                                              "==",
-                                              wanting_delete_User
-                                            )
-                                            .get()
-                                            .then((data) => {
-                                              if (data.docs.length != 0) {
-                                                data.docs.forEach((doc) => {
-                                                  db.collection("users")
-                                                    .doc(doc.id)
-                                                    .delete();
-                                                });
-                                              }
-                                            });
-                                        });
-                                    }
-                                  })
-                                  .then(() => {
-                                    db.collection("publicMessagesDatabase")
+                              data.docs.forEach((doc) => {
+                                db.collection(newCoLdLGrp_1)
+                                  .doc(doc.id)
+                                  .delete();
+                              });
+                            }) //3rd process..
+                            .then(() => {
+                              db.collection("publicGroups").doc(doc.id).update({
+                                coLeader: "",
+                              }); //4rd process..
+                            });
+                          if (data.docs.length == index + 1) {
+                            analiz_1 = 2;
+                            resolve(analiz_1);
+                          }
+                        });
+                        if (data.docs.length == 0) {
+                          resolve(analiz_1);
+                        }
+                      });
+                      prdl_2.then((pd_2) => {
+                        if (data.docs.length == 0 || pd_2 == 2) {
+                          db.collection("publicGroups")
+                            .get()
+                            .then((data) => {
+                              const prdl_3 = new Promise((resolve) => {
+                                data.docs.forEach((doc, index) => {
+                                  var membersUpId = doc.id;
+                                  if (
+                                    doc
+                                      .data()
+                                      .members.includes(wanting_delete_User) ==
+                                    true
+                                  ) {
+                                    var memgrP1 = doc.data().groupName;
+                                    var memgrP1_ln = doc.data().members.length;
+                                    db.collection(memgrP1)
                                       .where(
                                         "userName",
                                         "==",
@@ -1662,235 +1246,85 @@ window.addEventListener("load", () => {
                                       )
                                       .get()
                                       .then((data) => {
-                                        if (data.docs.length != 0) {
-                                          data.docs.forEach((doc) => {
-                                            db.collection(
-                                              "publicMessagesDatabase"
-                                            )
-                                              .doc(doc.id)
-                                              .delete();
-                                          });
-                                        } else {
-                                          db.collection("users")
-                                            .where(
-                                              "name",
-                                              "==",
-                                              wanting_delete_User
-                                            )
-                                            .get()
-                                            .then((data) => {
-                                              if (data.docs.length != 0) {
-                                                data.docs.forEach((doc) => {
-                                                  db.collection("users")
-                                                    .doc(doc.id)
-                                                    .delete();
-                                                });
-                                              }
-                                            });
-                                        }
-                                      })
-                                      .then(() => {
-                                        db.collection("users")
-                                          .where(
-                                            "name",
-                                            "==",
-                                            wanting_delete_User
-                                          )
-                                          .get()
-                                          .then((data) => {
-                                            if (data.docs.length != 0) {
-                                              data.docs.forEach((doc) => {
-                                                db.collection("users")
-                                                  .doc(doc.id)
-                                                  .delete();
-                                              });
-                                            }
-                                          });
-                                      });
-                                  });
-                              }
-                            });
-                        });
-                    });
-                });
-              } else {
-                db.collection("publicGroups")
-                  .where("coLeader", "==", wanting_delete_User)
-                  .get()
-                  .then((data) => {
-                    if (data.docs.length != 0) {
-                      data.docs.forEach((doc) => {
-                        //delete group's messages..
-                        var newCoLdLGrp_1 = doc.data().groupName;
-                        db.collection(newCoLdLGrp_1)
-                          .where("userName", "==", wanting_delete_User)
-                          .get()
-                          .then((data) => {
-                            data.docs.forEach((doc) => {
-                              db.collection(newCoLdLGrp_1).doc(doc.id).delete();
-                            });
-                          })
-                          .then(() => {
-                            db.collection("publicGroups")
-                              .doc(doc.id)
-                              .update({
-                                coLeader: "",
-                              })
-                              .then(() => {
-                                db.collection("publicGroups")
-                                  .get()
-                                  .then((data) => {
-                                    if (data.docs.length != 0) {
-                                      data.docs.forEach((doc) => {
-                                        var membersUpId = doc.id;
-                                        if (
-                                          doc
-                                            .data()
-                                            .members.includes(
-                                              wanting_delete_User
-                                            ) == true
-                                        ) {
-                                          var memgrP1 = doc.data().groupName;
+                                        data.docs.forEach((doc) => {
                                           db.collection(memgrP1)
-                                            .where(
-                                              "userName",
-                                              "==",
-                                              wanting_delete_User
-                                            )
-                                            .get()
-                                            .then((data) => {
-                                              data.docs.forEach((doc) => {
-                                                db.collection(memgrP1)
-                                                  .doc(doc.id)
-                                                  .delete();
-                                              });
-                                            })
-                                            .then(() => {
-                                              var newListedMembersWithoutMe = [];
-                                              const prms25 = new Promise(
-                                                (resolve) => {
-                                                  doc
-                                                    .data()
-                                                    .members.forEach((mbr) => {
-                                                      if (
-                                                        mbr !=
-                                                        wanting_delete_User
-                                                      ) {
-                                                        newListedMembersWithoutMe.push(
-                                                          mbr
-                                                        );
-                                                      }
-                                                    });
+                                            .doc(doc.id)
+                                            .delete();
+                                        });
+                                      }) //5th process..
+                                      .then(() => {
+                                        var newListedMembersWithoutMe = [];
+                                        const prms25 = new Promise(
+                                          (resolve) => {
+                                            doc
+                                              .data()
+                                              .members.forEach((mbr, index) => {
+                                                if (
+                                                  mbr != wanting_delete_User
+                                                ) {
+                                                  newListedMembersWithoutMe.push(
+                                                    mbr
+                                                  );
+                                                } else if (
+                                                  memgrP1_ln ==
+                                                  index + 1
+                                                ) {
                                                   resolve(
                                                     newListedMembersWithoutMe
                                                   );
                                                 }
-                                              );
-                                              prms25.then((pmdata) => {
-                                                db.collection("publicGroups")
-                                                  .doc(membersUpId)
-                                                  .update({
-                                                    members: pmdata,
-                                                  })
-                                                  .then(() => {
-                                                    db.collection(
-                                                      "publicMessagesDatabase"
-                                                    )
-                                                      .where(
-                                                        "userName",
-                                                        "==",
-                                                        wanting_delete_User
-                                                      )
-                                                      .get()
-                                                      .then((data) => {
-                                                        if (
-                                                          data.docs.length != 0
-                                                        ) {
-                                                          data.docs.forEach(
-                                                            (doc) => {
-                                                              db.collection(
-                                                                "publicMessagesDatabase"
-                                                              )
-                                                                .doc(doc.id)
-                                                                .delete();
-                                                            }
-                                                          );
-                                                        } else {
-                                                          db.collection("users")
-                                                            .where(
-                                                              "name",
-                                                              "==",
-                                                              wanting_delete_User
-                                                            )
-                                                            .get()
-                                                            .then((data) => {
-                                                              if (
-                                                                data.docs
-                                                                  .length != 0
-                                                              ) {
-                                                                data.docs.forEach(
-                                                                  (doc) => {
-                                                                    db.collection(
-                                                                      "users"
-                                                                    )
-                                                                      .doc(
-                                                                        doc.id
-                                                                      )
-                                                                      .delete();
-                                                                  }
-                                                                );
-                                                              }
-                                                            });
-                                                        }
-                                                      })
-                                                      .then(() => {
-                                                        db.collection("users")
-                                                          .where(
-                                                            "name",
-                                                            "==",
-                                                            wanting_delete_User
-                                                          )
-                                                          .get()
-                                                          .then((data) => {
-                                                            if (
-                                                              data.docs
-                                                                .length != 0
-                                                            ) {
-                                                              data.docs.forEach(
-                                                                (doc) => {
-                                                                  db.collection(
-                                                                    "users"
-                                                                  )
-                                                                    .doc(doc.id)
-                                                                    .delete();
-                                                                }
-                                                              );
-                                                            }
-                                                          });
-                                                      });
-                                                  });
                                               });
-                                            });
+                                          }
+                                        );
+                                        prms25.then((pmdata) => {
+                                          db.collection("publicGroups")
+                                            .doc(membersUpId)
+                                            .update({
+                                              members: pmdata,
+                                            }); //6th process..
+                                        });
+                                      });
+                                  } else if (data.docs.length == index + 1) {
+                                    analiz_1 = 3;
+                                    resolve(analiz_1);
+                                  }
+                                });
+                                if (data.docs.length == 0) {
+                                  resolve(analiz_1);
+                                }
+                              });
+                              prdl_3.then((pd_3) => {
+                                if (data.docs.length == 0 || pd_3 == 3) {
+                                  db.collection("publicMessagesDatabase")
+                                    .where(
+                                      "userName",
+                                      "==",
+                                      wanting_delete_User
+                                    )
+                                    .get()
+                                    .then((data) => {
+                                      const prdl_4 = new Promise((resolve) => {
+                                        data.docs.forEach((doc, index) => {
+                                          db.collection(
+                                            "publicMessagesDatabase"
+                                          )
+                                            .doc(doc.id)
+                                            .delete();
+                                          if (data.docs.length == index + 1) {
+                                            analiz_1 = 4;
+                                            resolve(analiz_1);
+                                          }
+                                        });
+                                        if (data.docs.length == 0) {
+                                          resolve(analiz_1);
                                         }
                                       });
-                                    } else {
-                                      db.collection("publicMessagesDatabase")
-                                        .where(
-                                          "userName",
-                                          "==",
-                                          wanting_delete_User
-                                        )
-                                        .get()
-                                        .then((data) => {
-                                          if (data.docs.length != 0) {
-                                            data.docs.forEach((doc) => {
-                                              db.collection(
-                                                "publicMessagesDatabase"
-                                              )
-                                                .doc(doc.id)
-                                                .delete();
-                                            });
-                                          } else {
+                                      prdl_4.then((pd_4) => {
+                                        prdl_4.then((pd_4) => {
+                                          if (
+                                            data.docs.length == 0 ||
+                                            pd_4 == 4
+                                          ) {
                                             db.collection("users")
                                               .where(
                                                 "name",
@@ -1899,247 +1333,57 @@ window.addEventListener("load", () => {
                                               )
                                               .get()
                                               .then((data) => {
-                                                if (data.docs.length != 0) {
-                                                  data.docs.forEach((doc) => {
-                                                    db.collection("users")
-                                                      .doc(doc.id)
-                                                      .delete();
-                                                  });
-                                                }
-                                              });
-                                          }
-                                        })
-                                        .then(() => {
-                                          db.collection("users")
-                                            .where(
-                                              "name",
-                                              "==",
-                                              wanting_delete_User
-                                            )
-                                            .get()
-                                            .then((data) => {
-                                              if (data.docs.length != 0) {
-                                                data.docs.forEach((doc) => {
-                                                  db.collection("users")
-                                                    .doc(doc.id)
-                                                    .delete();
-                                                });
-                                              }
-                                            });
-                                        });
-                                    }
-                                  });
-                              });
-                          });
-                      });
-                    } else {
-                      db.collection("publicGroups")
-                        .get()
-                        .then((data) => {
-                          if (data.docs.length != 0) {
-                            data.docs.forEach((doc) => {
-                              var membersUpId = doc.id;
-                              if (
-                                doc
-                                  .data()
-                                  .members.includes(wanting_delete_User) == true
-                              ) {
-                                var memgrP1 = doc.data().groupName;
-                                db.collection(memgrP1)
-                                  .where("userName", "==", wanting_delete_User)
-                                  .get()
-                                  .then((data) => {
-                                    data.docs.forEach((doc) => {
-                                      db.collection(memgrP1)
-                                        .doc(doc.id)
-                                        .delete();
-                                    });
-                                  })
-                                  .then(() => {
-                                    var newListedMembersWithoutMe = [];
-                                    const prms25 = new Promise((resolve) => {
-                                      doc.data().members.forEach((mbr) => {
-                                        if (mbr != wanting_delete_User) {
-                                          newListedMembersWithoutMe.push(mbr);
-                                        }
-                                      });
-                                      resolve(newListedMembersWithoutMe);
-                                    });
-                                    prms25.then((pmdata) => {
-                                      db.collection("publicGroups")
-                                        .doc(membersUpId)
-                                        .update({
-                                          members: pmdata,
-                                        })
-                                        .then(() => {
-                                          db.collection(
-                                            "publicMessagesDatabase"
-                                          )
-                                            .where(
-                                              "userName",
-                                              "==",
-                                              wanting_delete_User
-                                            )
-                                            .get()
-                                            .then((data) => {
-                                              if (data.docs.length != 0) {
-                                                data.docs.forEach((doc) => {
-                                                  db.collection(
-                                                    "publicMessagesDatabase"
-                                                  )
-                                                    .doc(doc.id)
-                                                    .delete();
-                                                });
-                                              } else {
-                                                db.collection("users")
-                                                  .where(
-                                                    "name",
-                                                    "==",
-                                                    wanting_delete_User
-                                                  )
-                                                  .get()
-                                                  .then((data) => {
-                                                    if (data.docs.length != 0) {
-                                                      data.docs.forEach(
-                                                        (doc) => {
-                                                          db.collection("users")
-                                                            .doc(doc.id)
-                                                            .delete();
+                                                const prdl_5 = new Promise(
+                                                  (resolve) => {
+                                                    data.docs.forEach(
+                                                      (doc, index) => {
+                                                        db.collection("users")
+                                                          .doc(doc.id)
+                                                          .delete();
+                                                        if (
+                                                          data.docs.length ==
+                                                          index + 1
+                                                        ) {
+                                                          analiz_1 = 5;
+                                                          resolve(analiz_1);
                                                         }
-                                                      );
+                                                      }
+                                                    );
+                                                    if (data.docs.length == 0) {
+                                                      resolve(analiz_1);
+                                                    }
+                                                  }
+                                                );
+                                                prdl_5.then((pd_5) => {
+                                                  prdl_5.then((pd_5) => {
+                                                    if (
+                                                      data.docs.length == 0 ||
+                                                      pd_5 == 5
+                                                    ) {
+                                                      resolve(0);
                                                     }
                                                   });
-                                              }
-                                            })
-                                            .then(() => {
-                                              db.collection("users")
-                                                .where(
-                                                  "name",
-                                                  "==",
-                                                  wanting_delete_User
-                                                )
-                                                .get()
-                                                .then((data) => {
-                                                  if (data.docs.length != 0) {
-                                                    data.docs.forEach((doc) => {
-                                                      db.collection("users")
-                                                        .doc(doc.id)
-                                                        .delete();
-                                                    });
-                                                  }
                                                 });
-                                            });
+                                              });
+                                          }
                                         });
-                                    });
-                                  });
-                              }
-                            });
-                          } else {
-                            db.collection("publicMessagesDatabase")
-                              .where("userName", "==", wanting_delete_User)
-                              .get()
-                              .then((data) => {
-                                if (data.docs.length != 0) {
-                                  data.docs.forEach((doc) => {
-                                    db.collection("publicMessagesDatabase")
-                                      .doc(doc.id)
-                                      .delete();
-                                  });
-                                } else {
-                                  db.collection("users")
-                                    .where("name", "==", wanting_delete_User)
-                                    .get()
-                                    .then((data) => {
-                                      if (data.docs.length != 0) {
-                                        data.docs.forEach((doc) => {
-                                          db.collection("users")
-                                            .doc(doc.id)
-                                            .delete();
-                                        });
-                                      }
+                                      });
                                     });
                                 }
-                              })
-                              .then(() => {
-                                db.collection("users")
-                                  .where("name", "==", wanting_delete_User)
-                                  .get()
-                                  .then((data) => {
-                                    if (data.docs.length != 0) {
-                                      data.docs.forEach((doc) => {
-                                        db.collection("users")
-                                          .doc(doc.id)
-                                          .delete();
-                                      });
-                                    }
-                                  });
                               });
-                          }
-                        })
-                        .then(() => {
-                          db.collection("publicMessagesDatabase")
-                            .where("userName", "==", wanting_delete_User)
-                            .get()
-                            .then((data) => {
-                              if (data.docs.length != 0) {
-                                data.docs.forEach((doc) => {
-                                  db.collection("publicMessagesDatabase")
-                                    .doc(doc.id)
-                                    .delete();
-                                });
-                              } else {
-                                db.collection("users")
-                                  .where("name", "==", wanting_delete_User)
-                                  .get()
-                                  .then((data) => {
-                                    if (data.docs.length != 0) {
-                                      data.docs.forEach((doc) => {
-                                        db.collection("users")
-                                          .doc(doc.id)
-                                          .delete();
-                                      });
-                                    }
-                                  });
-                              }
-                            })
-                            .then(() => {
-                              db.collection("users")
-                                .where("name", "==", wanting_delete_User)
-                                .get()
-                                .then((data) => {
-                                  if (data.docs.length != 0) {
-                                    data.docs.forEach((doc) => {
-                                      db.collection("users")
-                                        .doc(doc.id)
-                                        .delete();
-                                    });
-                                  }
-                                });
                             });
-                        });
-                    }
-                  });
-              }
-            })
-            .then(() => {
-              db.collection("publicGroups")
-                .where("leader", "==", "")
-                .where("coLeader", "==", "")
-                .get()
-                .then((data) => {
-                  data.docs.forEach((doc) => {
-                    var thatIdM = doc.id;
-                    if (doc.data().members.length == 0) {
-                      db.collection("publicGroups").doc(thatIdM).delete();
-                    }
-                  });
-                });
+                        }
+                      });
+                    });
+                }
+              });
             });
-        }
-        setTimeout(() => {
-          this.button_conditions.loading = true;
-          location.reload();
-        }, 5000);
+        });
+        prDlC_after.then((dp) => {
+          if (dp == 0) {
+            location.reload();
+          }
+        });
       },
       delTMyacallit1(e, e1) {
         this.delCaller1 = false;

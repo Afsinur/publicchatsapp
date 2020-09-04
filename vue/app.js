@@ -14,6 +14,7 @@ window.addEventListener("load", () => {
   var snapCounter2 = 0;
   var titleCounter = 0;
   var snapCounterPushes = [];
+  var snapCounterPushesNm = [];
   var colorArr = [
     "0",
     "1",
@@ -33,6 +34,7 @@ window.addEventListener("load", () => {
     "f",
   ];
   var blinkingTimes = 250;
+  var acU = 1;
   //
   //
   //show app div..
@@ -84,6 +86,7 @@ window.addEventListener("load", () => {
         "rgba(2, 0, 20, 0.7)",
         "rgba(0, 174, 255, 0.7)",
       ],
+      activeUanperAr: [],
       opcityAgreeWith: 0,
       usersopAgr: true,
       activeImage: "flowers_bag_flower_89155_1366x768.jpg",
@@ -192,7 +195,8 @@ window.addEventListener("load", () => {
                         if (doc.data().name.slice(0, 5) == e.slice(0, 5)) {
                           tr_or_fls = 1;
                           resolve(tr_or_fls);
-                        } else if (data.docs.length == index + 1) {
+                        }
+                        if (data.docs.length == index + 1) {
                           if (tr_or_fls != 1) {
                             resolve(tr_or_fls);
                           }
@@ -206,6 +210,7 @@ window.addEventListener("load", () => {
                     db.collection("users")
                       .add({
                         name: e,
+                        active: 0,
                       })
                       .then(() => {
                         //same(onSnapshot: publicMessagesDatabase,
@@ -260,6 +265,34 @@ window.addEventListener("load", () => {
                               });
                           });
                         //----------------------------------------------
+                      })
+                      .then(() => {
+                        document.addEventListener(
+                          "visibilitychange",
+                          function () {
+                            if (document.hidden) {
+                              acU = 0;
+                            } else {
+                              acU = 1;
+                            }
+                          },
+                          false
+                        );
+                        var acUF = () => {
+                          db.collection("users")
+                            .where("name", "==", this.myName)
+                            .get()
+                            .then((data) => {
+                              if (data.docs.length != 0) {
+                                data.docs.forEach((doc) => {
+                                  db.collection("users").doc(doc.id).update({
+                                    active: acU,
+                                  });
+                                });
+                              }
+                            });
+                        };
+                        setInterval(acUF, 5000);
                       });
                   } else {
                     this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
@@ -323,6 +356,32 @@ window.addEventListener("load", () => {
                     titleCounter++;
                   });
                 //----------------------------------------------
+                document.addEventListener(
+                  "visibilitychange",
+                  function () {
+                    if (document.hidden) {
+                      acU = 0;
+                    } else {
+                      acU = 1;
+                    }
+                  },
+                  false
+                );
+                var acUF = () => {
+                  db.collection("users")
+                    .where("name", "==", this.myName)
+                    .get()
+                    .then((data) => {
+                      if (data.docs.length != 0) {
+                        data.docs.forEach((doc) => {
+                          db.collection("users").doc(doc.id).update({
+                            active: acU,
+                          });
+                        });
+                      }
+                    });
+                };
+                setInterval(acUF, 5000);
               }
             });
         } else {
@@ -610,6 +669,63 @@ window.addEventListener("load", () => {
                 }
               });
             });
+          const prLvpro = new Promise((resolve) => {
+            db.collection("publicGroups")
+              .where("groupName", "==", e)
+              .get()
+              .then((data) => {
+                data.docs.forEach((doc, index) => {
+                  var totalGpnaR = doc
+                    .data()
+                    .members.concat(doc.data().coLeader)
+                    .concat(doc.data().leader);
+                  var snapCounterPushesNm_1 = [];
+                  if (data.docs.length == index + 1) {
+                    totalGpnaR.forEach((ts1, index) => {
+                      if (snapCounterPushesNm.includes(ts1) == false) {
+                        snapCounterPushesNm.push(ts1);
+                        snapCounterPushesNm_1.push(ts1);
+                      }
+                      if (totalGpnaR.length == index + 1) {
+                        resolve(snapCounterPushesNm_1);
+                      }
+                    });
+                  }
+                });
+              });
+          });
+          prLvpro.then((vLV) => {
+            if (vLV.length != 0) {
+              vLV.forEach((lVlvSa, index) => {
+                db.collection("users")
+                  .where("name", "==", lVlvSa)
+                  .onSnapshot((data) => {
+                    data.docChanges().forEach((changes, index) => {
+                      var namesAcT = changes.doc.data().name;
+                      if (changes.type == "added") {
+                        if (changes.doc.data().active == 1) {
+                          this.activeUanperAr.push(namesAcT);
+                        }
+                      } else if (changes.type == "modified") {
+                        var nw_ac1 = [];
+                        if (changes.doc.data().active == 0) {
+                          this.activeUanperAr.forEach((s, index) => {
+                            if (s.includes(namesAcT) == false) {
+                              nw_ac1.push(s);
+                            }
+                            if (this.activeUanperAr.length == index + 1) {
+                              this.activeUanperAr = nw_ac1;
+                            }
+                          });
+                        } else if (changes.doc.data().active == 1) {
+                          this.activeUanperAr.push(namesAcT);
+                        }
+                      }
+                    });
+                  });
+              });
+            }
+          });
         } else {
           db.collection(e)
             .orderBy("newDate")
@@ -1265,10 +1381,8 @@ window.addEventListener("load", () => {
                                                   newListedMembersWithoutMe.push(
                                                     mbr
                                                   );
-                                                } else if (
-                                                  memgrP1_ln ==
-                                                  index + 1
-                                                ) {
+                                                }
+                                                if (memgrP1_ln == index + 1) {
                                                   resolve(
                                                     newListedMembersWithoutMe
                                                   );
@@ -1284,7 +1398,8 @@ window.addEventListener("load", () => {
                                             }); //6th process..
                                         });
                                       });
-                                  } else if (data.docs.length == index + 1) {
+                                  }
+                                  if (data.docs.length == index + 1) {
                                     analiz_1 = 3;
                                     resolve(analiz_1);
                                   }

@@ -70,6 +70,16 @@ div.loading_div {
   justify-content: center;
   z-index: 4;
 }
+span#activegrpUae1 {
+  position: relative;
+  background: #0f0;
+  padding: 0 3px;
+  margin: 0 5px 0 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+span.dec1 {
+  background: #303030 !important;
+}
 #delmYAcDiid {
   position: fixed;
   top: 0;
@@ -520,6 +530,7 @@ div.userN_hide_show > span > button {
 }
 #normalGroupId_11 li {
   font-weight: 500;
+  margin-top: 10px;
 }
 #anotherPartCo {
   position: relative;
@@ -531,6 +542,7 @@ div.userN_hide_show > span > button {
 }
 #anotherPartCo li {
   font-weight: 500;
+  margin-top: 10px;
 }
 #likeMorenavTypeBar > li {
   font-size: 18px;

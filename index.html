@@ -412,6 +412,15 @@
                                     <ul>
                                       <li>
                                         Leader:
+                                        <span
+                                          v-show="activeUanperAr.includes(myName)==true"
+                                          id="activegrpUae1"
+                                        ></span>
+                                        <span
+                                          v-show="activeUanperAr.includes(myName)==false"
+                                          id="activegrpUae1"
+                                          class="dec1"
+                                        ></span>
                                         <span v-show="seeMe">{{myName}}</span>
                                         <span v-show="!seeMe">Me</span>
                                         <button
@@ -432,6 +441,15 @@
                                         >
                                           <li>
                                             Co-leader:
+                                            <span
+                                              v-show="activeUanperAr.includes(almostActiveGroup_element.coLeader)==true"
+                                              id="activegrpUae1"
+                                            ></span>
+                                            <span
+                                              v-show="activeUanperAr.includes(almostActiveGroup_element.coLeader)==false"
+                                              id="activegrpUae1"
+                                              class="dec1"
+                                            ></span>
                                             {{almostActiveGroup_element.coLeader.slice(0,5)+".."}}
                                             <button
                                               @click="shoko_co(moreSettingsAllControls.changeRadio)"
@@ -554,6 +572,15 @@
                                                 >
                                                   Remove
                                                 </button>
+                                                <span
+                                                  v-show="activeUanperAr.includes(mini_member)==true"
+                                                  id="activegrpUae1"
+                                                ></span>
+                                                <span
+                                                  v-show="activeUanperAr.includes(mini_member)==false"
+                                                  id="activegrpUae1"
+                                                  class="dec1"
+                                                ></span>
                                                 {{mini_member.slice(0,5)+".."}}
                                               </li>
                                             </ul>
@@ -746,10 +773,28 @@
                                     <ul>
                                       <li>
                                         Leader:
+                                        <span
+                                          v-show="activeUanperAr.includes(almostActiveGroup_element.leader)==true"
+                                          id="activegrpUae1"
+                                        ></span>
+                                        <span
+                                          v-show="activeUanperAr.includes(almostActiveGroup_element.leader)==false"
+                                          id="activegrpUae1"
+                                          class="dec1"
+                                        ></span>
                                         {{almostActiveGroup_element.leader.slice(0,5)+".."}}
                                       </li>
                                       <li>
                                         Co-leader:
+                                        <span
+                                          v-show="activeUanperAr.includes(myName)==true"
+                                          id="activegrpUae1"
+                                        ></span>
+                                        <span
+                                          v-show="activeUanperAr.includes(myName)==false"
+                                          id="activegrpUae1"
+                                          class="dec1"
+                                        ></span>
                                         <span v-show="seeMe">{{myName}}</span>
                                         <span v-show="!seeMe">Me</span>
                                         <span id="spanLvM">
@@ -866,6 +911,15 @@
                                                 v-for="(mini_member,index) in almostActiveGroup_element.members"
                                                 :key="index"
                                               >
+                                                <span
+                                                  v-show="activeUanperAr.includes(mini_member)==true"
+                                                  id="activegrpUae1"
+                                                ></span>
+                                                <span
+                                                  v-show="activeUanperAr.includes(mini_member)==false"
+                                                  id="activegrpUae1"
+                                                  class="dec1"
+                                                ></span>
                                                 {{mini_member.slice(0,5)+".."}}
                                               </li>
                                             </ul>
@@ -880,10 +934,28 @@
                                   >
                                     <li>
                                       Group's leader:
+                                      <span
+                                        v-show="activeUanperAr.includes(almostActiveGroup_element.leader)==true"
+                                        id="activegrpUae1"
+                                      ></span>
+                                      <span
+                                        v-show="activeUanperAr.includes(almostActiveGroup_element.leader)==false"
+                                        id="activegrpUae1"
+                                        class="dec1"
+                                      ></span>
                                       {{almostActiveGroup_element.leader.slice(0,5)+".."}}
                                     </li>
                                     <li>
                                       Group's Co-leader:
+                                      <span
+                                        v-show="activeUanperAr.includes(almostActiveGroup_element.coLeader)==true"
+                                        id="activegrpUae1"
+                                      ></span>
+                                      <span
+                                        v-show="activeUanperAr.includes(almostActiveGroup_element.coLeader)==false"
+                                        id="activegrpUae1"
+                                        class="dec1"
+                                      ></span>
                                       {{almostActiveGroup_element.coLeader.slice(0,5)+".."}}
                                     </li>
                                     <li>
@@ -937,9 +1009,27 @@
                                           :key="index"
                                           v-show="memberOneInThisGroup!=myName"
                                         >
+                                          <span
+                                            v-show="activeUanperAr.includes(memberOneInThisGroup)==true"
+                                            id="activegrpUae1"
+                                          ></span>
+                                          <span
+                                            v-show="activeUanperAr.includes(memberOneInThisGroup)==false"
+                                            id="activegrpUae1"
+                                            class="dec1"
+                                          ></span>
                                           {{memberOneInThisGroup.slice(0,5)+".."}}
                                         </li>
                                         <li>
+                                          <span
+                                            v-show="activeUanperAr.includes(myName)==true"
+                                            id="activegrpUae1"
+                                          ></span>
+                                          <span
+                                            v-show="activeUanperAr.includes(myName)==false"
+                                            id="activegrpUae1"
+                                            class="dec1"
+                                          ></span>
                                           <span v-show="seeMe">{{myName}}</span>
                                           <span v-show="!seeMe">Me</span>
                                         </li>

@@ -34,7 +34,7 @@ window.addEventListener("load", () => {
     "f",
   ];
   var blinkingTimes = 250;
-  var acU = 1;
+  var acupdATER = 10000;
   //
   //
   //show app div..
@@ -208,6 +208,18 @@ window.addEventListener("load", () => {
                   if (data == 0) {
                     this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
                     db.collection("users")
+                      .where("name", "==", this.myName)
+                      .get()
+                      .then((data) => {
+                        if (data.docs.length != 0) {
+                          data.docs.forEach((doc) => {
+                            db.collection("users").doc(doc.id).update({
+                              active: 0,
+                            });
+                          });
+                        }
+                      });
+                    db.collection("users")
                       .add({
                         name: e,
                         active: 0,
@@ -267,17 +279,28 @@ window.addEventListener("load", () => {
                         //----------------------------------------------
                       })
                       .then(() => {
-                        document.addEventListener(
-                          "visibilitychange",
-                          function () {
-                            if (document.hidden) {
-                              acU = 0;
-                            } else {
-                              acU = 1;
-                            }
-                          },
-                          false
-                        );
+                        db.collection("users")
+                          .where("name", "==", this.myName)
+                          .onSnapshot((data) => {
+                            data.docChanges().forEach((change) => {
+                              if (change.type == "modified") {
+                                db.collection("users")
+                                  .where("name", "==", this.myName)
+                                  .get()
+                                  .then((data) => {
+                                    if (data.docs.length != 0) {
+                                      data.docs.forEach((doc) => {
+                                        db.collection("users")
+                                          .doc(doc.id)
+                                          .update({
+                                            active: 0,
+                                          });
+                                      });
+                                    }
+                                  });
+                              }
+                            });
+                          });
                         var acUF = () => {
                           db.collection("users")
                             .where("name", "==", this.myName)
@@ -286,13 +309,13 @@ window.addEventListener("load", () => {
                               if (data.docs.length != 0) {
                                 data.docs.forEach((doc) => {
                                   db.collection("users").doc(doc.id).update({
-                                    active: acU,
+                                    active: 1,
                                   });
                                 });
                               }
                             });
                         };
-                        setInterval(acUF, 5000);
+                        setInterval(acUF, acupdATER);
                       });
                   } else {
                     this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
@@ -305,6 +328,18 @@ window.addEventListener("load", () => {
                 //same(onSnapshot: publicMessagesDatabase,
                 // except: this.present_user) starts..
                 //---------------------------------------------
+                db.collection("users")
+                  .where("name", "==", this.myName)
+                  .get()
+                  .then((data) => {
+                    if (data.docs.length != 0) {
+                      data.docs.forEach((doc) => {
+                        db.collection("users").doc(doc.id).update({
+                          active: 0,
+                        });
+                      });
+                    }
+                  });
                 db.collection("publicMessagesDatabase")
                   .orderBy("newDate", "asc")
                   .onSnapshot((data) => {
@@ -356,17 +391,26 @@ window.addEventListener("load", () => {
                     titleCounter++;
                   });
                 //----------------------------------------------
-                document.addEventListener(
-                  "visibilitychange",
-                  function () {
-                    if (document.hidden) {
-                      acU = 0;
-                    } else {
-                      acU = 1;
-                    }
-                  },
-                  false
-                );
+                db.collection("users")
+                  .where("name", "==", this.myName)
+                  .onSnapshot((data) => {
+                    data.docChanges().forEach((change) => {
+                      if (change.type == "modified") {
+                        db.collection("users")
+                          .where("name", "==", this.myName)
+                          .get()
+                          .then((data) => {
+                            if (data.docs.length != 0) {
+                              data.docs.forEach((doc) => {
+                                db.collection("users").doc(doc.id).update({
+                                  active: 0,
+                                });
+                              });
+                            }
+                          });
+                      }
+                    });
+                  });
                 var acUF = () => {
                   db.collection("users")
                     .where("name", "==", this.myName)
@@ -375,13 +419,13 @@ window.addEventListener("load", () => {
                       if (data.docs.length != 0) {
                         data.docs.forEach((doc) => {
                           db.collection("users").doc(doc.id).update({
-                            active: acU,
+                            active: 1,
                           });
                         });
                       }
                     });
                 };
-                setInterval(acUF, 5000);
+                setInterval(acUF, acupdATER);
               }
             });
         } else {

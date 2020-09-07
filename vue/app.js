@@ -35,6 +35,43 @@ window.addEventListener("load", () => {
   ];
   var blinkingTimes = 250;
   var acupdATER = 10000;
+  var outerMyName = 0;
+  //
+  var st12, st121, innrS, innrS1, aftSi, namee1;
+  var cnt_c1 = 0;
+  innrS1 = () => {
+    db.collection(namee1)
+      .get()
+      .then((data) => {
+        data.docs.forEach((doc) => {
+          var thiIdmk = doc.id;
+          var mkar1 = doc.data().seen;
+          if (mkar1.includes(outerMyName) == false) {
+            mkar1.push(outerMyName);
+            db.collection(namee1).doc(thiIdmk).update({
+              seen: mkar1,
+            });
+          }
+        });
+      });
+  };
+  innrS = () => {
+    if (aftSi == 0) {
+      while (cnt_c1 < 1) {
+        st121 = setInterval(innrS1, 1000);
+        cnt_c1++;
+      }
+    } else if (aftSi == true) {
+      clearInterval(st121);
+      aftSi = false;
+      cnt_c1 = 0;
+    } else if (aftSi == false) {
+      aftSi = 0;
+    } else if (aftSi == 10) {
+      cnt_c1 = 0;
+      clearInterval(st121);
+    }
+  };
   //
   //
   //show app div..
@@ -89,6 +126,7 @@ window.addEventListener("load", () => {
       activeUanperAr: [],
       opcityAgreeWith: 0,
       usersopAgr: true,
+      usersTimeShowAcseen: false,
       activeImage: "flowers_bag_flower_89155_1366x768.jpg",
       activeSettings: false, //default false
       updatemyColor: {
@@ -184,7 +222,6 @@ window.addEventListener("load", () => {
             .get()
             .then((data) => {
               if (data.docs.length == 0) {
-                console.log(0);
                 // check the slice members all..
                 const promise_5 = new Promise((resolve) => {
                   var tr_or_fls = 0;
@@ -225,6 +262,7 @@ window.addEventListener("load", () => {
                         active: 0,
                       })
                       .then(() => {
+                        outerMyName = this.myName;
                         //same(onSnapshot: publicMessagesDatabase,
                         // except: this.present_user) starts..
                         //---------------------------------------------
@@ -324,6 +362,7 @@ window.addEventListener("load", () => {
                   }
                 });
               } else {
+                outerMyName = this.myName;
                 this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
                 //same(onSnapshot: publicMessagesDatabase,
                 // except: this.present_user) starts..
@@ -458,10 +497,14 @@ window.addEventListener("load", () => {
       activeTheSettings() {
         this.moreSettingsAllControls.picked = "";
         this.activeSettings = true;
+        if (this.moreSettingsAllControls.showMyGroups == true) {
+          aftSi = true;
+        }
       },
       deactiveSettings() {
         this.moreSettingsAllControls.picked = "";
         this.activeSettings = false;
+        aftSi = 10;
       },
       changemycolor(e) {
         this.activeSelectedColorMe = e;
@@ -485,6 +528,7 @@ window.addEventListener("load", () => {
         this.moreSettingsAllControls.activeSite = true;
         this.moreSettingsAllControls.activeGroup = false;
         this.moreSettingsAllControls.deactiveSite = false;
+        aftSi = 10;
       },
       activeGroupnav() {
         this.moreSettingsAllControls.activeGroup = true;
@@ -636,12 +680,17 @@ window.addEventListener("load", () => {
             });
         }
         this.moreSettingsAllControls.pushMyGroups = false;
+        if (this.moreSettingsAllControls.showMyGroups == true) {
+          aftSi = true;
+        }
       },
       func_ShowMyGroups() {
         this.moreSettingsAllControls.showMyGroups = true;
+        aftSi = true;
       },
       func_MakeGroups() {
         this.moreSettingsAllControls.showMyGroups = false;
+        aftSi = 10;
       },
       mainLocalGroups_ActiveOne_press(e) {
         var scrollTopTopublics = document.getElementById(
@@ -672,13 +721,26 @@ window.addEventListener("load", () => {
               );
             });
           });
+        //
         if (snapCounter2 == 1) {
+          if (aftSi != 0) {
+            aftSi = 0;
+            namee1 = e;
+            st12 = setInterval(innrS, 1000);
+          } else {
+            namee1 = e;
+          }
+          /*db.collection().get().then(()=>{});*/
+          //
           db.collection(e)
             .orderBy("newDate")
             .onSnapshot((data) => {
               data.docChanges().forEach((change) => {
                 var rched = change.doc.data();
+                var upSen = change.doc.id;
+                var newUpseAr = change.doc.data().seen;
                 if (change.type == "added") {
+                  //
                   const prom112 = new Promise((resolve) => {
                     this.publicMessageFromGroupWeb.push(change.doc.data());
                     this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
@@ -696,6 +758,13 @@ window.addEventListener("load", () => {
                         behavior: "smooth",
                         block: "start",
                       });
+                    }
+                  });
+                } else if (change.type == "modified") {
+                  var cNid = change.doc.data().newDate.toDate();
+                  this.publicMessageFromGroupWeb.forEach((lgDt1, index) => {
+                    if (lgDt1.newDate.toDate().toString() == cNid.toString()) {
+                      lgDt1.seen = change.doc.data().seen;
                     }
                   });
                 } else if (change.type == "removed") {
@@ -771,6 +840,8 @@ window.addEventListener("load", () => {
             }
           });
         } else {
+          aftSi = true;
+          namee1 = e;
           db.collection(e)
             .orderBy("newDate")
             .get()
@@ -1173,6 +1244,7 @@ window.addEventListener("load", () => {
               userName: e2,
               publicMessage: e3,
               newDate: new Date(),
+              seen: [this.myName],
             })
             .then(() => {
               this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;

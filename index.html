@@ -286,6 +286,30 @@
                     </ul>
                   </div>
                   <!--
+                      Show message seen..
+                    -->
+                  <div id="myAndPublicColors">
+                    <p>Message seen</p>
+                    <ul>
+                      <li>
+                        <button
+                          v-show="!usersTimeShowAcseen"
+                          @click="usersTimeShowAcseen = true"
+                          :style="divOpacity_styles_c1.state_c1"
+                        >
+                          Show seen
+                        </button>
+                        <button
+                          v-show="usersTimeShowAcseen"
+                          @click="usersTimeShowAcseen = !usersTimeShowAcseen"
+                          :style="divOpacity_styles_c1.state_c1"
+                        >
+                          Hide seen
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                  <!--
                       Delete my account..
                     -->
                   <div id="myAndPublicColors">
@@ -1073,6 +1097,17 @@
                                     >
                                       {{ groupMessage.newDate.toDate() }}
                                     </p>
+                                    <p
+                                      v-show="usersTimeShowAcseen"
+                                      id="vShsenn"
+                                    >
+                                      Message seen:
+                                      <span
+                                        v-for="(smSeenMe, index) in groupMessage.seen"
+                                        :key="index"
+                                        >{{ smSeenMe.slice(0,5)+".., " }}</span
+                                      >
+                                    </p>
                                   </div>
                                   <div
                                     v-show="groupMessage.userName!=myName"
@@ -1089,6 +1124,17 @@
                                       v-show="usersTime"
                                     >
                                       {{ groupMessage.newDate.toDate() }}
+                                    </p>
+                                    <p
+                                      v-show="usersTimeShowAcseen"
+                                      id="vShsenn"
+                                    >
+                                      Message seen:
+                                      <span
+                                        v-for="(smSeenMe, index) in groupMessage.seen"
+                                        :key="index"
+                                        >{{ smSeenMe.slice(0,5)+".., " }}</span
+                                      >
                                     </p>
                                   </div>
                                 </div>

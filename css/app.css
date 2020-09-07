@@ -532,6 +532,10 @@ div.userN_hide_show > span > button {
   font-weight: 500;
   margin-top: 10px;
 }
+#vShsenn {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
 #anotherPartCo {
   position: relative;
   display: flex;

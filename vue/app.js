@@ -12,7 +12,6 @@ window.addEventListener("load", () => {
   var publicchatsapp_idApp = document.querySelector("div#app");
   var div_loading_div = document.querySelector("div.loading_div");
   var snapCounter2 = 0;
-  var titleCounter = 0;
   var snapCounterPushes = [];
   var snapCounterPushesNm = [];
   var colorArr = [
@@ -36,9 +35,13 @@ window.addEventListener("load", () => {
   var blinkingTimes = 250;
   var acupdATER = 10000;
   var outerMyName = 0;
+  var revAr1 = [];
+  var _x = 0;
+  var _x1 = 0;
   //
   var st12, st121, innrS, innrS1, aftSi, namee1;
   var cnt_c1 = 0;
+  var x_ = 0;
   innrS1 = () => {
     db.collection(namee1)
       .get()
@@ -77,6 +80,8 @@ window.addEventListener("load", () => {
   //show app div..
   publicchatsapp_idApp.style.display = "block";
   div_loading_div.remove();
+  //
+  //
   new Vue({
     el: "#app",
     data: {
@@ -221,107 +226,204 @@ window.addEventListener("load", () => {
             .where("name", "==", e)
             .get()
             .then((data) => {
-              if (data.docs.length == 0) {
-                // check the slice members all..
-                const promise_5 = new Promise((resolve) => {
-                  var tr_or_fls = 0;
-                  db.collection("users")
-                    .get()
-                    .then((data) => {
+              var adLn1 = data.docs.length;
+              db.collection("publicMessagesDatabase")
+                .orderBy("u_id", "desc")
+                .limit(1)
+                .get()
+                .then((data) => {
+                  var id_Incr = 0;
+                  const pr11101 = new Promise((resolve) => {
+                    if (data.docs.length == 0) {
+                      id_Incr = 0;
+                      resolve(id_Incr);
+                    } else {
                       data.docs.forEach((doc, index) => {
-                        if (doc.data().name.slice(0, 5) == e.slice(0, 5)) {
-                          tr_or_fls = 1;
-                          resolve(tr_or_fls);
-                        }
                         if (data.docs.length == index + 1) {
-                          if (tr_or_fls != 1) {
-                            resolve(tr_or_fls);
-                          }
+                          id_Incr = doc.data().u_id;
+                          resolve(id_Incr);
                         }
                       });
-                    });
-                });
-                promise_5.then((data) => {
-                  if (data == 0) {
-                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
-                    db.collection("users")
-                      .where("name", "==", this.myName)
-                      .get()
-                      .then((data) => {
-                        if (data.docs.length != 0) {
-                          data.docs.forEach((doc) => {
-                            db.collection("users").doc(doc.id).update({
-                              active: 0,
+                    }
+                  });
+                  pr11101.then(() => {
+                    if (adLn1 == 0) {
+                      // check the slice members all..
+                      const promise_5 = new Promise((resolve) => {
+                        var tr_or_fls = 0;
+                        db.collection("users")
+                          .get()
+                          .then((data) => {
+                            data.docs.forEach((doc, index) => {
+                              if (
+                                doc.data().name.slice(0, 5) == e.slice(0, 5)
+                              ) {
+                                tr_or_fls = 1;
+                                resolve(tr_or_fls);
+                              }
+                              if (data.docs.length == index + 1) {
+                                if (tr_or_fls != 1) {
+                                  resolve(tr_or_fls);
+                                }
+                              }
                             });
                           });
-                        }
                       });
-                    db.collection("users")
-                      .add({
-                        name: e,
-                        active: 0,
-                      })
-                      .then(() => {
-                        outerMyName = this.myName;
-                        //same(onSnapshot: publicMessagesDatabase,
-                        // except: this.present_user) starts..
-                        //---------------------------------------------
-                        this.timeDate = new Date();
-                        db.collection("publicMessagesDatabase")
-                          .add({
-                            userName: e,
-                            publicMessage: "Welcome to Puclic Chats",
-                            newDate: this.timeDate,
-                          })
-                          .then(() => {
-                            db.collection("publicMessagesDatabase")
-                              .orderBy("newDate", "asc")
-                              .onSnapshot((data) => {
-                                data.docChanges().forEach((docChange) => {
-                                  let changeValue = docChange.doc.data();
-                                  if (docChange.type == "added") {
-                                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
-                                    const prom11255 = new Promise((resolve) => {
-                                      this.publicMessageFromWeb.push(
-                                        changeValue
-                                      );
-                                      resolve(0);
-                                    });
-                                    prom11255.then((rdata) => {
-                                      if (rdata == 0) {
-                                        setTimeout(() => {
-                                          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
-                                        }, blinkingTimes);
-                                        var chatScVT1_varId_1an = document.getElementById(
-                                          "chatScVT15"
-                                        );
-                                        chatScVT1_varId_1an.scrollIntoView({
-                                          behavior: "smooth",
-                                          block: "start",
-                                        });
-                                      }
-                                    });
-                                  }
+                      promise_5.then((data) => {
+                        if (data == 0) {
+                          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                          db.collection("users")
+                            .where("name", "==", this.myName)
+                            .get()
+                            .then((data) => {
+                              if (data.docs.length != 0) {
+                                data.docs.forEach((doc) => {
+                                  db.collection("users").doc(doc.id).update({
+                                    active: 0,
+                                  });
                                 });
-                                this.replace_unique_name_typing = false;
-                                this.button_conditions.loading = false;
-                                this.present_user = true;
-                                news_title.remove();
-                                if (titleCounter > 0) {
-                                  document.title =
-                                    "Public Chats (" + titleCounter + ")";
-                                }
-                                titleCounter++;
-                              });
-                          });
-                        //----------------------------------------------
-                      })
-                      .then(() => {
-                        db.collection("users")
-                          .where("name", "==", this.myName)
-                          .onSnapshot((data) => {
-                            data.docChanges().forEach((change) => {
-                              if (change.type == "modified") {
+                              }
+                            });
+                          //-----------------------
+                          db.collection("users")
+                            .add({
+                              name: e,
+                              active: 0,
+                            })
+                            .then(() => {
+                              outerMyName = this.myName;
+                              //same(onSnapshot: publicMessagesDatabase,
+                              // except: this.present_user) starts..
+                              //---------------------------------------------
+                              this.timeDate = new Date();
+                              db.collection("publicMessagesDatabase")
+                                .add({
+                                  u_id: id_Incr + 1,
+                                  userName: e,
+                                  publicMessage: "Welcome to Puclic Chats",
+                                  newDate: this.timeDate,
+                                })
+                                .then(() => {
+                                  db.collection("publicMessagesDatabase")
+                                    .orderBy("newDate", "desc")
+                                    .limit(10)
+                                    .get()
+                                    .then((data) => {
+                                      data.docs.forEach((doc, index) => {
+                                        let changeValue = doc.data();
+                                        this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                                        const prom1125 = new Promise(
+                                          (resolve) => {
+                                            revAr1.push(changeValue);
+                                            if (
+                                              data.docChanges().length ==
+                                              index + 1
+                                            ) {
+                                              if (x_ == 0) {
+                                                while (x_ < 1) {
+                                                  this.publicMessageFromWeb = revAr1.reverse();
+                                                  x_++;
+                                                }
+                                              } else {
+                                                this.publicMessageFromWeb = revAr1;
+                                              }
+                                            }
+                                            resolve(0);
+                                          }
+                                        );
+                                        prom1125.then((rdata) => {
+                                          if (rdata == 0) {
+                                            setTimeout(() => {
+                                              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                                            }, blinkingTimes);
+                                            var chatScVT1_varId_1an = document.getElementById(
+                                              "chatScVT15"
+                                            );
+                                            chatScVT1_varId_1an.scrollIntoView({
+                                              behavior: "smooth",
+                                              block: "start",
+                                            });
+                                          }
+                                        });
+                                      });
+                                      this.replace_unique_name_typing = false;
+                                      this.button_conditions.loading = false;
+                                      this.present_user = true;
+                                      news_title.remove();
+                                    });
+                                  //-------------------------------
+                                  db.collection("publicMessagesDatabase")
+                                    .orderBy("newDate", "desc")
+                                    .limit(1)
+                                    .onSnapshot((data) => {
+                                      data
+                                        .docChanges()
+                                        .forEach((docchange, index) => {
+                                          if (docchange.type == "added") {
+                                            let changeValue = docchange.doc.data();
+                                            this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                                            const prom1125 = new Promise(
+                                              (resolve) => {
+                                                if (x_ != 0) {
+                                                  revAr1.push(changeValue);
+                                                  console.log(x_);
+                                                }
+                                                if (
+                                                  data.docChanges().length ==
+                                                  index + 1
+                                                ) {
+                                                  this.publicMessageFromWeb = revAr1;
+                                                }
+                                                resolve(0);
+                                              }
+                                            );
+                                            prom1125.then((rdata) => {
+                                              if (rdata == 0) {
+                                                setTimeout(() => {
+                                                  this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                                                }, blinkingTimes);
+                                                var chatScVT1_varId_1an = document.getElementById(
+                                                  "chatScVT15"
+                                                );
+                                                chatScVT1_varId_1an.scrollIntoView(
+                                                  {
+                                                    behavior: "smooth",
+                                                    block: "start",
+                                                  }
+                                                );
+                                              }
+                                            });
+                                          }
+                                        });
+                                    });
+                                });
+                              //----------------------------------------------
+                            })
+                            .then(() => {
+                              db.collection("users")
+                                .where("name", "==", this.myName)
+                                .onSnapshot((data) => {
+                                  data.docChanges().forEach((change) => {
+                                    if (change.type == "modified") {
+                                      db.collection("users")
+                                        .where("name", "==", this.myName)
+                                        .get()
+                                        .then((data) => {
+                                          if (data.docs.length != 0) {
+                                            data.docs.forEach((doc) => {
+                                              db.collection("users")
+                                                .doc(doc.id)
+                                                .update({
+                                                  active: 0,
+                                                });
+                                            });
+                                          }
+                                        });
+                                    }
+                                  });
+                                });
+                              //----------------------------
+                              var acUF = () => {
                                 db.collection("users")
                                   .where("name", "==", this.myName)
                                   .get()
@@ -331,110 +433,143 @@ window.addEventListener("load", () => {
                                         db.collection("users")
                                           .doc(doc.id)
                                           .update({
-                                            active: 0,
+                                            active: 1,
                                           });
                                       });
                                     }
                                   });
-                              }
+                                //--------------------------
+                              };
+                              setInterval(acUF, acupdATER);
                             });
-                          });
-                        var acUF = () => {
-                          db.collection("users")
-                            .where("name", "==", this.myName)
-                            .get()
-                            .then((data) => {
-                              if (data.docs.length != 0) {
-                                data.docs.forEach((doc) => {
-                                  db.collection("users").doc(doc.id).update({
-                                    active: 1,
-                                  });
+                          //------------------------
+                        } else {
+                          this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
+                          alert("You can not take this name!");
+                          this.button_conditions.loading = false;
+                        }
+                      });
+                    } else {
+                      outerMyName = this.myName;
+                      this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                      //same(onSnapshot: publicMessagesDatabase,
+                      // except: this.present_user) starts..
+                      //---------------------------------------------
+                      db.collection("users")
+                        .where("name", "==", this.myName)
+                        .get()
+                        .then((data) => {
+                          if (data.docs.length != 0) {
+                            data.docs.forEach((doc) => {
+                              db.collection("users").doc(doc.id).update({
+                                active: 0,
+                              });
+                            });
+                          }
+                        });
+                      //-------------------------------
+                      db.collection("publicMessagesDatabase")
+                        .orderBy("newDate", "desc")
+                        .limit(10)
+                        .get()
+                        .then((data) => {
+                          data.docs.forEach((doc, index) => {
+                            let changeValue = doc.data();
+                            this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                            const prom1125 = new Promise((resolve) => {
+                              revAr1.push(changeValue);
+                              if (data.docChanges().length == index + 1) {
+                                if (x_ == 0) {
+                                  while (x_ < 1) {
+                                    this.publicMessageFromWeb = revAr1.reverse();
+                                    x_++;
+                                  }
+                                } else {
+                                  this.publicMessageFromWeb = revAr1;
+                                }
+                              }
+                              resolve(0);
+                            });
+                            prom1125.then((rdata) => {
+                              if (rdata == 0) {
+                                setTimeout(() => {
+                                  this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                                }, blinkingTimes);
+                                var chatScVT1_varId_1an = document.getElementById(
+                                  "chatScVT15"
+                                );
+                                chatScVT1_varId_1an.scrollIntoView({
+                                  behavior: "smooth",
+                                  block: "start",
                                 });
                               }
                             });
-                        };
-                        setInterval(acUF, acupdATER);
-                      });
-                  } else {
-                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
-                    alert("You can not take this name!");
-                    this.button_conditions.loading = false;
-                  }
-                });
-              } else {
-                outerMyName = this.myName;
-                this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
-                //same(onSnapshot: publicMessagesDatabase,
-                // except: this.present_user) starts..
-                //---------------------------------------------
-                db.collection("users")
-                  .where("name", "==", this.myName)
-                  .get()
-                  .then((data) => {
-                    if (data.docs.length != 0) {
-                      data.docs.forEach((doc) => {
-                        db.collection("users").doc(doc.id).update({
-                          active: 0,
+                          });
+                          this.replace_unique_name_typing = false;
+                          this.button_conditions.loading = false;
+                          this.present_user = false;
+                          news_title.remove();
                         });
-                      });
-                    }
-                  });
-                db.collection("publicMessagesDatabase")
-                  .orderBy("newDate", "asc")
-                  .onSnapshot((data) => {
-                    data.docChanges().forEach((docChange) => {
-                      let changeValue = docChange.doc.data();
-                      if (docChange.type == "added") {
-                        this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
-                        const prom1125 = new Promise((resolve) => {
-                          this.publicMessageFromWeb.push(changeValue);
-                          resolve(0);
+                      //-------------------------------
+                      db.collection("publicMessagesDatabase")
+                        .orderBy("newDate", "desc")
+                        .limit(1)
+                        .onSnapshot((data) => {
+                          data.docChanges().forEach((docchange, index) => {
+                            if (docchange.type == "added") {
+                              let changeValue = docchange.doc.data();
+                              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
+                              const prom1125 = new Promise((resolve) => {
+                                if (x_ != 0) {
+                                  revAr1.push(changeValue);
+                                }
+                                if (data.docChanges().length == index + 1) {
+                                  this.publicMessageFromWeb = revAr1;
+                                }
+                                resolve(0);
+                              });
+                              prom1125.then((rdata) => {
+                                if (rdata == 0) {
+                                  setTimeout(() => {
+                                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                                  }, blinkingTimes);
+                                  var chatScVT1_varId_1an = document.getElementById(
+                                    "chatScVT15"
+                                  );
+                                  chatScVT1_varId_1an.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start",
+                                  });
+                                }
+                              });
+                            }
+                          });
                         });
-                        prom1125.then((rdata) => {
-                          if (rdata == 0) {
-                            setTimeout(() => {
-                              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
-                            }, blinkingTimes);
-                            var chatScVT1_varId_1an = document.getElementById(
-                              "chatScVT15"
-                            );
-                            chatScVT1_varId_1an.scrollIntoView({
-                              behavior: "smooth",
-                              block: "start",
-                            });
-                          }
+                      //--------------------------------
+                      db.collection("users")
+                        .where("name", "==", this.myName)
+                        .onSnapshot((data) => {
+                          data.docChanges().forEach((change) => {
+                            if (change.type == "modified") {
+                              db.collection("users")
+                                .where("name", "==", this.myName)
+                                .get()
+                                .then((data) => {
+                                  if (data.docs.length != 0) {
+                                    data.docs.forEach((doc) => {
+                                      db.collection("users")
+                                        .doc(doc.id)
+                                        .update({
+                                          active: 0,
+                                        });
+                                    });
+                                  }
+                                });
+                            }
+                          });
                         });
-                      } else if (docChange.type == "removed") {
-                        var usernAmeClSs_id = document.querySelectorAll(
-                          "div#iDmessages_div > div"
-                        );
-                        usernAmeClSs_id.forEach((smNm) => {
-                          var sTvOfdel_user = smNm.innerHTML.toString();
-                          if (
-                            sTvOfdel_user.includes(
-                              changeValue.newDate.toDate()
-                            ) == true
-                          ) {
-                            smNm.remove();
-                          }
-                        });
-                      }
-                    });
-                    this.replace_unique_name_typing = false;
-                    this.button_conditions.loading = false;
-                    this.present_user = false;
-                    news_title.remove();
-                    if (titleCounter > 0) {
-                      document.title = "Public Chats (" + titleCounter + ")";
-                    }
-                    titleCounter++;
-                  });
-                //----------------------------------------------
-                db.collection("users")
-                  .where("name", "==", this.myName)
-                  .onSnapshot((data) => {
-                    data.docChanges().forEach((change) => {
-                      if (change.type == "modified") {
+                      //--------------------------------
+                      var acUF = () => {
                         db.collection("users")
                           .where("name", "==", this.myName)
                           .get()
@@ -442,30 +577,16 @@ window.addEventListener("load", () => {
                             if (data.docs.length != 0) {
                               data.docs.forEach((doc) => {
                                 db.collection("users").doc(doc.id).update({
-                                  active: 0,
+                                  active: 1,
                                 });
                               });
                             }
                           });
-                      }
-                    });
+                      };
+                      setInterval(acUF, acupdATER);
+                    }
                   });
-                var acUF = () => {
-                  db.collection("users")
-                    .where("name", "==", this.myName)
-                    .get()
-                    .then((data) => {
-                      if (data.docs.length != 0) {
-                        data.docs.forEach((doc) => {
-                          db.collection("users").doc(doc.id).update({
-                            active: 1,
-                          });
-                        });
-                      }
-                    });
-                };
-                setInterval(acUF, acupdATER);
-              }
+                });
             });
         } else {
           this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c3;
@@ -478,15 +599,38 @@ window.addEventListener("load", () => {
           this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
           this.timeDate = new Date();
           db.collection("publicMessagesDatabase")
-            .add({
-              userName: e,
-              publicMessage: this.addMassageText,
-              newDate: this.timeDate,
-            })
-            .then(() => {
-              this.addMassageText = "";
-              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
-              this.tmSndGpmg_11 = "Send";
+            .orderBy("u_id", "desc")
+            .limit(1)
+            .get()
+            .then((data) => {
+              var id_Incr = 0;
+              const pr11101 = new Promise((resolve) => {
+                if (data.docs.length == 0) {
+                  id_Incr = 0;
+                  resolve(id_Incr);
+                } else {
+                  data.docs.forEach((doc, index) => {
+                    if (data.docs.length == index + 1) {
+                      id_Incr = doc.data().u_id;
+                      resolve(id_Incr);
+                    }
+                  });
+                }
+              });
+              pr11101.then(() => {
+                db.collection("publicMessagesDatabase")
+                  .add({
+                    u_id: id_Incr + 1,
+                    userName: e,
+                    publicMessage: this.addMassageText,
+                    newDate: this.timeDate,
+                  })
+                  .then(() => {
+                    this.addMassageText = "";
+                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                    this.tmSndGpmg_11 = "Send";
+                  });
+              });
             });
         }
       },
@@ -1238,18 +1382,39 @@ window.addEventListener("load", () => {
       sendGrMg(e1, e2, e3) {
         if (e3 != "") {
           this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c2;
-          this.tmSndGpmg = "Send";
           db.collection(e1)
-            .add({
-              userName: e2,
-              publicMessage: e3,
-              newDate: new Date(),
-              seen: [this.myName],
-            })
-            .then(() => {
-              this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
-              this.sendGrMgvM = "";
-              this.tmSndGpmg = "Send";
+            .orderBy("u_id", "desc")
+            .limit(1)
+            .get()
+            .then((data) => {
+              var id_Incr = 0;
+              const pr11101 = new Promise((resolve) => {
+                if (data.docs.length == 0) {
+                  id_Incr = 0;
+                  resolve(id_Incr);
+                } else {
+                  data.docs.forEach((doc, index) => {
+                    if (data.docs.length == index + 1) {
+                      id_Incr = doc.data().u_id;
+                      resolve(id_Incr);
+                    }
+                  });
+                }
+              });
+              pr11101.then((pdts21) => {
+                db.collection(e1)
+                  .add({
+                    u_id: pdts21 + 1,
+                    userName: e2,
+                    publicMessage: e3,
+                    newDate: new Date(),
+                    seen: [this.myName],
+                  })
+                  .then(() => {
+                    this.divOpacity_styles_c1.state_c1 = this.divOpacity_styles_c1.state_c10;
+                    this.sendGrMgvM = "";
+                  });
+              });
             });
         }
       },
@@ -1383,7 +1548,7 @@ window.addEventListener("load", () => {
         this.button_conditions.loading = true;
         var analiz_1 = 0;
         const prDlC_after = new Promise((resolve) => {
-          var wanting_delete_User = "deleteuser123";
+          var wanting_delete_User = this.myName;
           //leader
           db.collection("publicGroups")
             .where("leader", "==", wanting_delete_User)
@@ -1551,53 +1716,49 @@ window.addEventListener("load", () => {
                                         }
                                       });
                                       prdl_4.then((pd_4) => {
-                                        prdl_4.then((pd_4) => {
-                                          if (
-                                            data.docs.length == 0 ||
-                                            pd_4 == 4
-                                          ) {
-                                            db.collection("users")
-                                              .where(
-                                                "name",
-                                                "==",
-                                                wanting_delete_User
-                                              )
-                                              .get()
-                                              .then((data) => {
-                                                const prdl_5 = new Promise(
-                                                  (resolve) => {
-                                                    data.docs.forEach(
-                                                      (doc, index) => {
-                                                        db.collection("users")
-                                                          .doc(doc.id)
-                                                          .delete();
-                                                        if (
-                                                          data.docs.length ==
-                                                          index + 1
-                                                        ) {
-                                                          analiz_1 = 5;
-                                                          resolve(analiz_1);
-                                                        }
+                                        if (
+                                          data.docs.length == 0 ||
+                                          pd_4 == 4
+                                        ) {
+                                          db.collection("users")
+                                            .where(
+                                              "name",
+                                              "==",
+                                              wanting_delete_User
+                                            )
+                                            .get()
+                                            .then((data) => {
+                                              const prdl_5 = new Promise(
+                                                (resolve) => {
+                                                  data.docs.forEach(
+                                                    (doc, index) => {
+                                                      db.collection("users")
+                                                        .doc(doc.id)
+                                                        .delete();
+                                                      if (
+                                                        data.docs.length ==
+                                                        index + 1
+                                                      ) {
+                                                        analiz_1 = 5;
+                                                        resolve(analiz_1);
                                                       }
-                                                    );
-                                                    if (data.docs.length == 0) {
-                                                      resolve(analiz_1);
                                                     }
+                                                  );
+                                                  if (data.docs.length == 0) {
+                                                    resolve(analiz_1);
                                                   }
-                                                );
-                                                prdl_5.then((pd_5) => {
-                                                  prdl_5.then((pd_5) => {
-                                                    if (
-                                                      data.docs.length == 0 ||
-                                                      pd_5 == 5
-                                                    ) {
-                                                      resolve(0);
-                                                    }
-                                                  });
-                                                });
+                                                }
+                                              );
+                                              prdl_5.then((pd_5) => {
+                                                if (
+                                                  data.docs.length == 0 ||
+                                                  pd_5 == 5
+                                                ) {
+                                                  resolve(0);
+                                                }
                                               });
-                                          }
-                                        });
+                                            });
+                                        }
                                       });
                                     });
                                 }
@@ -1670,6 +1831,37 @@ window.addEventListener("load", () => {
                 });
               });
           });
+      },
+      my_Function12() {
+        var iDmessages_div = document.querySelector("#iDmessages_div");
+        console.log();
+        if (iDmessages_div.scrollTop == 0) {
+          var jusyAr1 = [];
+          _x += 10;
+          if (this.publicMessageFromWeb.length - _x >= 0) {
+            this.button_conditions.loading = true;
+            var id_Incr1 = this.publicMessageFromWeb[_x1].u_id;
+            db.collection("publicMessagesDatabase")
+              .where("u_id", "<", id_Incr1 - _x1)
+              .where("u_id", ">=", id_Incr1 - _x)
+              .get()
+              .then((data) => {
+                data.docs.forEach((doc, index) => {
+                  jusyAr1.unshift(doc.data());
+                  if (data.docs.length == index + 1) {
+                    jusyAr1.forEach((datajE, index) => {
+                      this.publicMessageFromWeb.unshift(datajE);
+                      if (jusyAr1.length == index + 1) {
+                        this.button_conditions.loading = false;
+                        iDmessages_div.scrollTop = 50;
+                      }
+                    });
+                  }
+                });
+              });
+          }
+          _x1 += 10;
+        }
       },
     },
   });

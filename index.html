@@ -1101,7 +1101,7 @@
                                       v-show="usersTimeShowAcseen"
                                       id="vShsenn"
                                     >
-                                      Message seen:
+                                      Seen:
                                       <span
                                         v-for="(smSeenMe, index) in groupMessage.seen"
                                         :key="index"
@@ -1129,7 +1129,7 @@
                                       v-show="usersTimeShowAcseen"
                                       id="vShsenn"
                                     >
-                                      Message seen:
+                                      Seen:
                                       <span
                                         v-for="(smSeenMe, index) in groupMessage.seen"
                                         :key="index"
@@ -1238,7 +1238,11 @@
             </div>
           </div>
           <!-- public chat -->
-          <div id="iDmessages_div" class="messages_div">
+          <div
+            id="iDmessages_div"
+            class="messages_div"
+            @scroll="my_Function12()"
+          >
             <div
               v-for="(publicMessage_one, index) in publicMessageFromWeb"
               :key="index"
